@@ -8,9 +8,9 @@ import Login from '@/components/Login';
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 
-export default function index ({session}) {
+export default function Index ({session}) {
+  const router = useRouter();
    if(!session) return <Login/>;
-    const router = useRouter();
     const postId = router.query.postId;
   return (
     <>

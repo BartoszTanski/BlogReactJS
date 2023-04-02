@@ -2,6 +2,7 @@ import React from 'react'
 import { useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
+import Image from 'next/image';
 
 const AddComment = ({postId, newComment, setnewComment}) => {
     const COMMENT_API_ENDPOINT=`http://localhost:8080/api/v1/post/${postId}/comments`;
@@ -33,9 +34,9 @@ const AddComment = ({postId, newComment, setnewComment}) => {
         
           <div className='flex flex-row py-2 pl-2 rounded-l-xl '>
             <div className='p-2'>
-              <img src={session?.user.image} height={40}  alt="profilePic"   width={40}
+              <Image src={session?.user.image} height={40}  alt="profilePic"   width={40}
               className='rounded-full border border-gray-300'>
-              </img>
+              </Image>
             </div>
            <textarea className='p-2 mr-2 resize-none h-20 w-full rounded-md' ref={inputRef} placeholder='Write new comment'></textarea>
           </div>

@@ -104,7 +104,7 @@ const CreatePost = ({setnewPost}) => {
               </div>
 
               <div>
-                <label className="block pl-4 text-sm font-medium text-gray-500 ">Tags separated by ','</label>
+                <label className="block pl-4 text-sm font-medium text-gray-500 ">Tags separated by &apos;,&apos;</label>
                 <input className='rounded-xl h-12 w-full focus:outline-none font-medium bg-gray-100 px-4' type="text"
                 ref={inputRefTags}
                 placeholder={`Tags:`}>
@@ -116,7 +116,7 @@ const CreatePost = ({setnewPost}) => {
           <div 
           onClick={removeImage}
           className='flex items-center px-4 py-1 space-x-4 filter hover:brightness-110 transition duration-150 cursor-pointer'>
-            <img src={imageToPost} className='h-20 object-contain'></img>
+            <Image src={imageToPost} alt="postImage" className='h-20 object-contain'></Image>
             <RiDeleteBin6Line className='h-8 hover:text-red-500'/>
           </div>)}
         <div className='flex justify-evenly py-2 '>

@@ -11,7 +11,7 @@ const Post = ({post}) => {
     <div className='flex flex-col 'key={post.id}>
         <div className='bg-white mt-6 rounded-md p-3'>
             <div className='flex items-center space-x-2'>
-                <img src={post.profilePic} alt="profilePic" className='rounded-full w-12 h-12 border border-gray-300'></img>
+                <Image src={post.profilePic} alt="profilePic" className='rounded-full w-12 h-12 border border-gray-300'></Image>
                 <div className='pl-2'>
                     <p className=' font-medium text-lg'>{post.title}</p>
                     <p className='text-xs text-gray-500'>{post.author+ "  " + datetime}</p>
@@ -21,7 +21,7 @@ const Post = ({post}) => {
          </div>
             {post.tags !=null &&(<div className='pl-2 pt-2 flex space-x-1'>
                          {post.tags.map((tag) =>
-                         (<a href="https://www.facebook.com" key={tag} target="_blank">
+                         (<a href="https://www.facebook.com" key={tag} rel="noreferrer" target="_blank">
                          <div className=' px-1 bg-gray-100 text-gray-600 rounded-md border-2 text-sm hover:bg-gray-200 cursor-pointer'>{tag}
                          </div></a>
                          ))}
