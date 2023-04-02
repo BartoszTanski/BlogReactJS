@@ -9,7 +9,7 @@ import MediaEditorExample from './RichTextEdit';
 import RichTextEdit from './RichTextEdit';
 
 const SinglePost = ({postId}) => {
-    const POST_API_ENDPOINT=`http://localhost:8080/api/v1/post/${postId}`;
+    const POST_API_ENDPOINT=`https://bartosztanski.azurewebsites.net/api/v1/post/${postId}`;
     const [newComment, setnewComment] = useState(false)
     const [post, setpost] = useState(null)
     useEffect(()=>{
