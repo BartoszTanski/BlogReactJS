@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import FacebookProvider from "next-auth/providers/facebook"
 
 export const authOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   // Configure one or more authentication providers
   providers: [
     FacebookProvider({
