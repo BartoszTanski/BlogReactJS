@@ -34,9 +34,9 @@ const AddComment = ({postId, newComment, setnewComment}) => {
         
           <div className='flex flex-row py-2 pl-2 rounded-l-xl '>
             <div className='p-2'>
-              <Image src={session?.user.image} height={40}  alt="profilePic"   width={40}
+              <img src={session?.user.image} height={40}  alt="profilePic"   width={40}
               className='rounded-full border border-gray-300'>
-              </Image>
+              </img>
             </div>
            <textarea className='p-2 mr-2 resize-none h-20 w-full rounded-md' ref={inputRef} placeholder='Write new comment'></textarea>
           </div>

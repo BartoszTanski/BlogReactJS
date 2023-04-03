@@ -81,9 +81,9 @@ const CreatePost = ({setnewPost}) => {
   return (
     <div className='bg-white rounded-md shadow-md text-gray-500 p-2'>
         <div className='pt-2 flex items-center pl-5 space-x-1'>
-            <Image src={session?.user.image} height={40} width={40} alt="profilePic" className=" top-2 rounded-full border border-gray-300 "
+            <img src={session?.user.image} height={40} width={40} alt="profilePic" className=" top-2 rounded-full border border-gray-300 "
              >
-            </Image>
+            </img>
             <p className=' px-8 text-3xl text-center'>Adding new post as: {session?.user.name}</p>
          </div>
         <div className='p-4 pt-5   space-x-2'>

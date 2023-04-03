@@ -11,7 +11,7 @@ const Post = ({post}) => {
     <div className='flex flex-col 'key={post.id}>
         <div className='bg-white mt-6 rounded-md p-3'>
             <div className='flex items-center space-x-2'>
-                <Image src={post.profilePic} alt="profilePic" className='rounded-full w-12 h-12 border border-gray-300'></Image>
+                <img src={post.profilePic} alt="profilePic" className='rounded-full w-12 h-12 border border-gray-300'></img>
                 <div className='pl-2'>
                     <p className=' font-medium text-lg'>{post.title}</p>
                     <p className='text-xs text-gray-500'>{post.author+ "  " + datetime}</p>
