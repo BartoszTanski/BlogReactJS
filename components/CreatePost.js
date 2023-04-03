@@ -13,7 +13,7 @@ import RichTextEdit from './RichTextEdit';
 import BottomOfThePage from './BottomOfThePage';
 
 const CreatePost = ({setnewPost}) => {
-  const FACEBOOK_CLONE_ENDPOINT="https://bartosztanski.azurewebsites.net/api/v1/posts";
+  const FACEBOOK_CLONE_ENDPOINT="https://blogbartosz.azurewebsites.net/api/v1/posts";
   const {data: session} = useSession();
   const inputRef = useRef(null);
   const inputRefTitle = useRef(null);
