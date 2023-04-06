@@ -9,7 +9,7 @@ import MediaEditorExample from './RichTextEdit';
 import RichTextEdit from './RichTextEdit';
 
 const SinglePost = ({postId}) => {
-    const POST_API_ENDPOINT=`https://blogbartosz.azurewebsites.net/api/v1/post/${postId}`;
+    const POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/post/${postId}`;
     const [newComment, setnewComment] = useState(false)
     const [post, setpost] = useState(null)
     useEffect(()=>{
@@ -54,7 +54,19 @@ const SinglePost = ({postId}) => {
           {/*Content*/}
           <div>
               <div className='mt-2 mb-4 p-2 bg-white'>
-                 <div className='bg-gray-100 p-2 rounded-xl '><div dangerouslySetInnerHTML={{ __html: post.content}} /></div>
+                 <div className='bg-gray-100 p-2 rounded-xl '>
+                  {/*Styles for post content*/}
+                 <style>{`
+                    .myowncss p{
+                      text-indent: 50px;
+                      margin-bottom: 15px;
+                    }
+                    .myowncss span{
+
+                    }`}
+                  </style>
+                  <div className='myowncss' dangerouslySetInnerHTML={{ __html: post.content}} />
+                  </div>
               </div>
           </div>
           {/*Comments*/}
@@ -67,7 +79,8 @@ const SinglePost = ({postId}) => {
           <BottomOfThePage/>
       </div>)}
     </div>
-  )
+  )  
 }
+
 
 export default SinglePost;

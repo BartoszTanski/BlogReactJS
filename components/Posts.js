@@ -6,7 +6,7 @@ import {FiFilter} from 'react-icons/fi';
 import Post from './Post'
 
 const Posts = ({newPost}) => {
-  const POSTS_API_ENDPOINT="https://blogbartosz.azurewebsites.net/api/v1/posts";
+  const POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts`;
     const dispatch = useDispatch();
     const posts = useSelector(selectPost);
     useEffect(()=>{
@@ -22,7 +22,7 @@ const Posts = ({newPost}) => {
   return (
     
     <div>
-      <div className='bg-white flex justify-between h-8 mt-6'>
+      <div className='bg-white rounded-md flex justify-between h-8 mt-6'>
         <div className='pl-3 font-semibold pt-1'>Posts</div>
         <div className='pr-3 flex bg-gray-200 space-x-2 hover:bg-gray-300 rounded-lg flex-row w-20 m-1 text-sm pt-1'>
           <div className='w-5 px-2'>

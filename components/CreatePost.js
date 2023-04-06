@@ -1,9 +1,7 @@
 import React from 'react'
-import Image from 'next/image'
 import { useSession, } from 'next-auth/react';
 import { HiOutlineVideoCamera } from 'react-icons/hi';
 import {IoMdPhotos} from "react-icons/io";
-import {BsEmojiSmile} from 'react-icons/bs'
 import { useRef, useState } from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +11,7 @@ import RichTextEdit from './RichTextEdit';
 import BottomOfThePage from './BottomOfThePage';
 
 const CreatePost = ({setnewPost}) => {
-  const FACEBOOK_CLONE_ENDPOINT="https://blogbartosz.azurewebsites.net/api/v1/posts";
+  const BACKEND_APIEND_POINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts`;
   const {data: session} = useSession();
   const inputRef = useRef(null);
   const inputRefTitle = useRef(null);
@@ -60,11 +58,12 @@ const CreatePost = ({setnewPost}) => {
     //formData.append("email", session?.user.email);
     formData.append("profilePic", session?.user.image);
 
-    axios.post(FACEBOOK_CLONE_ENDPOINT,formData,{
+    axios.post(BACKEND_APIEND_POINT,formData,{
       headers:{
         Accept:"application/json" 
       },})
       .then((response)=>{
+        inputRef.current.setContent('<p><span style="font-size:36pt;">Title goes here...</span></p><p>Content goes here...</p>');
         inputRef.current.value = "";
         inputRefTitle.current.value = "";
         inputRefTags.current.value = "";
@@ -116,7 +115,7 @@ const CreatePost = ({setnewPost}) => {
           <div 
           onClick={removeImage}
           className='flex items-center px-4 py-1 space-x-4 filter hover:brightness-110 transition duration-150 cursor-pointer'>
-            <Image src={imageToPost} alt="postImage" className='h-20 object-contain'></Image>
+            <img src={imageToPost} alt="postImage"  className='h-20 object-contain'></img>
             <RiDeleteBin6Line className='h-8 hover:text-red-500'/>
           </div>)}
         <div className='flex justify-evenly py-2 '>

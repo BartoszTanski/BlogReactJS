@@ -5,7 +5,7 @@ import axios from 'axios';
 import Image from 'next/image';
 
 const AddComment = ({postId, newComment, setnewComment}) => {
-    const COMMENT_API_ENDPOINT=`https://blogbartosz.azurewebsites.net/api/v1/post/${postId}/comments`;
+    const COMMENT_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/post/${postId}/comments`;
     const inputRef = useRef("");
     const {data: session} = useSession();
     const handleSubmit = (e) => {

@@ -18,6 +18,7 @@ const RichTextEdit = ({editorChange}, editorRef) => {
         init={{
           height: 500,
           menubar: false,
+          paste_block_drop: false,
           plugins: [
             'advlist',' autolink','lists', 'link', 'image', 'charmap', 'preview',
             'searchreplace' ,'visualblocks' ,'code', 'fullscreen',"anchor","code","preview",
