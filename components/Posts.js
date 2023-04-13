@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import {FiFilter} from 'react-icons/fi';
 import Post from './Post'
 
-const Posts = ({newPost}) => {
-  const POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts`;
+const Posts = ({tagId, newPost}) => {
+  const SEARCH = tagId?"/tag/"+tagId:"";
+  const POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts${SEARCH}`;
     const dispatch = useDispatch();
     const posts = useSelector(selectPost);
     useEffect(()=>{
@@ -18,7 +19,7 @@ const Posts = ({newPost}) => {
         });
       };
       fetchData();
-    },[newPost]);
+    },[newPost, tagId]);
   return (
     
     <div>

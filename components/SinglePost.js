@@ -9,7 +9,7 @@ import MediaEditorExample from './RichTextEdit';
 import RichTextEdit from './RichTextEdit';
 
 const SinglePost = ({postId}) => {
-    const POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/post/${postId}`;
+    const POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/${postId}`;
     const [newComment, setnewComment] = useState(false)
     const [post, setpost] = useState(null)
     useEffect(()=>{

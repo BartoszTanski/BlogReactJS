@@ -5,7 +5,7 @@ import { useState } from 'react';
 import BottomOfThePage from './BottomOfThePage';
 
 const Feed=
- () => {
+ ({tagId, key}) => {
   const [newPost, setnewPost] = useState(false);
   return (
     <div className='flex-grow h-screen pt-6 mr-6 ml-6 overflow-y-auto no-scrollbar'>
@@ -13,7 +13,7 @@ const Feed=
             {/*Create Post Box
             <CreatePost newPost={newPost} setnewPost={setnewPost}/>
             Post*/}
-            <Posts setnewPost={setnewPost} />
+            <Posts tagId={tagId} setnewPost={setnewPost} />
             <BottomOfThePage/>
         </div>
     </div>

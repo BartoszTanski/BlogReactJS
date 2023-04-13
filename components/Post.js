@@ -1,12 +1,35 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import {FiThumbsUp} from 'react-icons/fi';
 import {FaRegCommentAlt} from 'react-icons/fa';
 import {RiShareForwardLine} from 'react-icons/ri'; 
 import Link from 'next/link';
+import axios from 'axios';
 
 const Post = ({post}) => {
+    const [liked, setLiked] = useState(false);
+    const [likes, setLikes] = useState(post.likes);
+    var API_ENDPOINT;
     var datetime =post.time?.substring(0, 10)+" "+post.time?.substring(11, 16)
+    const LIKE_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/${post.id}/like`;
+    const UNLIKE_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/${post.id}/unlike`;
+    const handleLike = async (e) => {
+        e.preventDefault();
+        liked == false?API_ENDPOINT = LIKE_API_ENDPOINT:API_ENDPOINT = UNLIKE_API_ENDPOINT;
+
+        await axios.put(API_ENDPOINT)
+          .then((response)=>{
+            setLiked(!liked);  
+            if(liked)
+            {setLikes(likes-1)}
+            else
+            {setLikes(likes+1)};
+            console.log(response);
+          })
+          .catch((error)=>{
+            console.log(error);
+          })
+      }
   return (
     <div className='flex flex-col 'key={post.id}>
         <div className='bg-white mt-6 rounded-md p-3'>
@@ -21,9 +44,13 @@ const Post = ({post}) => {
          </div>
             {post.tags !=null &&(<div className='pl-2 pt-2 flex space-x-1'>
                          {post.tags.map((tag) =>
-                         (<a href="https://www.facebook.com" key={tag} rel="noreferrer" target="_blank">
-                         <div className=' px-1 bg-gray-100 text-gray-600 rounded-md border-2 text-sm hover:bg-gray-200 cursor-pointer'>{tag}
-                         </div></a>
+                         (   <Link key={tag} href={{
+                                pathname: `/posts/tag/[tagId]`,
+                                query: { tagId: tag},
+                                }} className='text-xs sm:text-base'>
+                                <div className=' px-1 bg-gray-100 text-gray-600 rounded-md border-2 text-sm hover:bg-gray-200 cursor-pointer'>{tag}
+                                </div>
+                            </Link>
                          ))}
                 </div>)}
             <p className='pt-2 '>{post.description}</p>
@@ -38,10 +65,18 @@ const Post = ({post}) => {
         </div>)}
         {/*Footer*/}
         <div className='flex items-center justify-center bg-white p-2'>
-            <div className='flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 px-7 rounded-xl cursor-pointer'>
+            {liked == false &&(
+            <div onClick={handleLike} className='flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 px-7 rounded-xl cursor-pointer'>
+                <p className='font-semibold px-1 text-xs'>{likes!=null&&likes!=0?likes:""}</p>
                 <FiThumbsUp className='h-4'/>
                 <p className='text-xs sm:text-base'>Like</p>
-            </div>
+            </div>)}
+            {liked == true &&(
+            <div onClick={handleLike} className='flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center text-blue-400 p-2 px-7 rounded-xl cursor-pointer'>
+                <p className='font-semibold px-1 text-xs'>{likes!=null&&likes!=0?likes:""}</p>
+                <FiThumbsUp className='h-4'/>
+                <p className='text-xs sm:text-base'>Like</p>
+            </div>)}
             <div className='flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center rounded-xl cursor-pointer'>
                 <Link href={{
                     pathname: `/posts/[postId]`,

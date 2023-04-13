@@ -71,6 +71,8 @@ const CreatePost = ({setnewPost}) => {
         //dispatch(addPost(response.data));
         removeImage();
         setnewPost(current =>!current);
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        alert("Post added sucessfully!");
       })
       .catch((error)=>{
         console.log(error);

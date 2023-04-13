@@ -21,7 +21,7 @@ const Header = () => {
             <img src="/icon.png" alt="logo" className=' rounded-full' height={40} width={40}></img>
             <div className='flex items-center space-x-2 px-2 ml-2 rounded-full bg-gray-100 text-gray-500'>
             <HiOutlineSearch size={20}/>
-                <input className='hidden lg:inline-flex bg-transparent focus:outline-none' type="text" placeholder='Search Blog'></input>
+                <input className='md:inline-flex  hidden bg-transparent focus:outline-none' type="text" placeholder='Search Blog'></input>
             </div>
         </div>
         {/*Center*/}
@@ -30,28 +30,16 @@ const Header = () => {
                 <Link href={{
                 pathname: '/',
                 query: { },
-                }} className='text-xs sm:text-base'>
-                    <div className='flex items-center h-14 md:px-10 rounded-md md:hover:bg-gray-100 cursor-pointer '>
+                }} className='text-xs '>
+                    <div className='flex items-center h-14 px-3 md:px-10 lg:px-32 rounded-md hover:bg-gray-100 cursor-pointer '>
                     <HiOutlineHome size={25} className="mx-auto"/> 
                     </div>
                 </Link>
-                <div className='flex items-center h-14 md:px-10 rounded-md md:hover:bg-gray-100 cursor-pointer '>
-                <RiFlag2Line size={25} className="mx-auto"/> 
-                </div>
-                <div className='flex items-center h-14 md:px-10 rounded-md md:hover:bg-gray-100 cursor-pointer '>
-                <MdOutlineOndemandVideo size={25} className="mx-auto"/> 
-                </div>
-                <div className='flex items-center h-14 md:px-10 rounded-md md:hover:bg-gray-100 cursor-pointer '>
-                <AiOutlineShop size={25} className="mx-auto"/> 
-                </div>
-                <div className='flex items-center h-14 md:px-10 rounded-md md:hover:bg-gray-100 cursor-pointer '>
-                <IoGameControllerOutline size={25} className="mx-auto"/> 
-                </div>
                 <Link href={{
                 pathname: '/posts/createPost',
                 query: {},
                 }} className='text-xs sm:text-base'>
-                    <div className='flex items-center h-14 md:px-10 rounded-md md:hover:bg-gray-100 cursor-pointer '>
+                    <div className='flex items-center px-3 h-14 md:px-10 lg:px-32 rounded-md hover:bg-gray-100 cursor-pointer '>
                     <BsFileEarmarkPlus size={25} className="mx-auto"/> 
                     </div>
                 </Link>
@@ -66,9 +54,6 @@ const Header = () => {
                 <p className='hidden xl:inline-flex font-semibold text-sm whitespace-nowrap p-3 max-w-xs'>
                 {session?.user.name.split(" ")[0]}
                 </p>
-                <CgMenuGridO size={25} className="hidden lg:inline-flex h-10 w-10 bg-gray-200 text-gray-600 rounded-full cursor-pointer p-2 hover:bg-gray-300"/>
-                <AiFillMessage size={25} className="hidden lg:inline-flex h-10 w-10 bg-gray-200 text-gray-600 rounded-full cursor-pointer p-2 hover:bg-gray-300"/>
-                <AiFillBell size={25} className="hidden lg:inline-flex h-10 w-10 bg-gray-200 text-gray-600 rounded-full cursor-pointer p-2 hover:bg-gray-300"/>
                 <MdOutlineExpandMore size={25} className="hidden lg:inline-flex h-10 w-10 bg-gray-200 text-gray-600 rounded-full cursor-pointer p-2 hover:bg-gray-300"/>
             </div>
     </div>
