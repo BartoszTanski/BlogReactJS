@@ -9,8 +9,8 @@ const AboutMeMore = () => {
         <div className='bg-white rounded-md shadow-inner shadow-gray-300 flex flex-col justify-center px-8 pb-6 overflow-y-auto no-scrollbar mt-3'>
             <div className='font-semibold text-center text-4xl py-3'>About me</div>
             <div className='text-sm md:text-base'>
-                <p>&emsp; Hello! I am Bartosz Tański, currently I'm a student of Computer Science and Econometry - part-time
-Master's studies at the University of Gdańsk, during the week I learn programming. Right now im learning java and Spring boot as backend and react as a frontend for my applications. I can use streams and write unit tests. I am mobilized to learn and expand my knowledge in the programming area. I also know the basics of html, css, js, sql and databases (MySQL, MsSQL, MongoDb). I am able to start a full-time job immediately remotely or stationary in Bydgoszcz.</p>
+                <p>&emsp; Hello! I am Bartosz Tański, currently I&apos;m a student of Computer Science and Econometry - part-time
+Master&apos;s studies at the University of Gdańsk, during the week I learn programming. Right now im learning java and Spring boot as backend and react as a frontend for my applications. I can use streams and write unit tests. I am mobilized to learn and expand my knowledge in the programming area. I also know the basics of html, css, js, sql and databases (MySQL, MsSQL, MongoDb). I am able to start a full-time job immediately remotely or stationary in Bydgoszcz.</p>
             </div>
             <div className='font-semibold text-center text-2xl md:text-3xl mt-2 py-2'>Education</div>
             <div className='font-semibold text-xs md:text-base space-y-2'>
@@ -23,7 +23,7 @@ Master's studies at the University of Gdańsk, during the week I learn programmi
                </div>
                <div className='flex justify-between'>
                 <div>
-                    <p>Master's degree - Informatyka i ekonometria - IT applications in business</p>
+                    <p>Master&apos;s degree - Informatyka i ekonometria - IT applications in business</p>
                     <p>University of Gdańsk</p>
                 </div>
                 <p>2022-present</p>

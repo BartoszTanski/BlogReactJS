@@ -9,8 +9,8 @@ import EditPost from '@/components/EditPost';
 import { useRouter } from 'next/router';
 
 export default function Edit ({session}) {
+  const router = useRouter();
    if(!session) return <Login/>;
-   const router = useRouter();
    const postId = router.query.postId;
   return (
     <>

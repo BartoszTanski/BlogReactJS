@@ -32,7 +32,7 @@ export default function DropDownMenu() {
           <div className="py-1">
             {session != null && (<Menu.Item>
               {({ active }) => (
-                <a
+                <Link
                   href="/userSettings"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -40,12 +40,12 @@ export default function DropDownMenu() {
                   )}
                 >
                   Account settings
-                </a>
+                </Link>
               )}
             </Menu.Item>)}
             <Menu.Item>
               {({ active }) => (
-                <a
+                <Link
                   href="/privacyPolicy"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -53,7 +53,7 @@ export default function DropDownMenu() {
                   )}
                 >
                   Privacy policy
-                </a>
+                </Link>
               )}
             </Menu.Item>
             <form method="POST" action={"#"}>
