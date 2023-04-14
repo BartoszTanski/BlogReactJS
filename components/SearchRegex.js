@@ -9,6 +9,9 @@ const SearchRegex = () => {
     const searchRef = useRef("");
     const [isFocused, setIsFocused] = useState(false);
     const [searchResult, setsearchResult] = useState(null);
+    const setDelay = (delay) => {
+      return new Promise( res => setTimeout(res, delay) );
+    }
     const handleSearch = (e) => {
         console.log(BACKEND_API_ENDPOINT);
         e.preventDefault();
@@ -32,15 +35,14 @@ const SearchRegex = () => {
         }
       }
   return (
-    <div className='flex flex-col min-w-fit'>
+    <div className='relative flex flex-col min-w-fit '>
         <div className='flex flex-row'>
-        <img src="/icon.png" alt="logo" className=' rounded-full' height={40} width={40}></img>
-        <div className='flex items-center space-x-2 px-2 ml-2 rounded-full bg-gray-100 text-gray-500'>
+        <div className='flex items-center px-2 rounded-full bg-gray-100 text-gray-500'>
             <HiOutlineSearch size={20}/>
-            <input ref={searchRef} onChange={handleSearch} onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)} className='md:inline-flex hidden bg-transparent focus:outline-none' type="text" placeholder='Search Blog (min. 3 char)'></input>
+            <input ref={searchRef} onChange={handleSearch} onFocus={() => setIsFocused(true)} onBlur={async () => {await setDelay(100); setIsFocused(false)}} className=' p-1 bg-transparent focus:outline-none' type="text" placeholder='Search Blog (min. 3 char)'></input>
         </div>
         </div>
-        <div className='absolute inset-x-14 inset-y-12 w-72 flex flex-col  z-20'>
+        <div className='absolute  inset-y-8 w-72 flex flex-col  z-20'>
         {isFocused &&searchResult?.map((result) =>
         (<SearchResult result={result} key={result.id}/>))}
         </div>

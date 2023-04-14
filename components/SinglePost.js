@@ -6,6 +6,7 @@ import axios from 'axios';
 import AddComment from './AddComment';
 import BottomOfThePage from './BottomOfThePage';
 import Link from 'next/link';
+import DropDownMenuPost from './DropDownMenuPost';
 
 const SinglePost = ({postId}) => {
     const POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/${postId}`;
@@ -16,6 +17,9 @@ const SinglePost = ({postId}) => {
         const response = axios.get(POST_API_ENDPOINT)
         .then((response)=>{
           setpost(response.data);
+        }).catch((error)=>{
+          console.log(error);
+          alert("Couldn't retrive this post data");
         });
       };
       fetchData();
@@ -24,15 +28,16 @@ const SinglePost = ({postId}) => {
     <div>
       {post !=null &&(<div className='flex flex-col '>
           <div className='bg-white mt-6 rounded-md p-3'>
-              <div className='flex items-center space-x-2'>
-                  <img src={post.profilePic} alt="profilePic" className='rounded-full w-12 h-12 border border-gray-300'></img>
-                  <div className='pl-2'>
-                      <p className=' font-medium text-lg'>{post.title}</p>
-                      <p className='text-xs text-gray-500'>{post.author+ "  " + post.time?.substring(0, 10)+" "+post.time?.substring(11, 16)}</p>
-                    
+              <div className='flex items-center justify-between space-x-2'>
+                  <div className='flex'>
+                    <img src={post.profilePic} alt="profilePic" className='rounded-full w-12 h-12 border border-gray-300'></img>
+                    <div className='pl-2'>
+                        <p className=' font-medium text-lg'>{post.title}</p>
+                        <p className='text-xs text-gray-500'>{post.author+ "  " + post.time?.substring(0, 10)+" "+post.time?.substring(11, 16)}</p>
+                    </div>
                   </div>
-                
-          </div>
+                  <DropDownMenuPost postId={postId}/>
+              </div>
           {post.tags !=null &&(<div className='pl-2 pt-2 flex space-x-1'>
                          {post.tags.map((tag) =>
                          (   <Link key={tag} href={{
@@ -59,31 +64,52 @@ const SinglePost = ({postId}) => {
               <div className='mt-2 mb-4 p-2 bg-white'>
                  <div className='bg-gray-100 p-2 rounded-xl '>
                   {/*Styles for post content*/}
-                 <style>{`
+                    <style>{`
                     .myowncss p{
-                      text-indent: 50px;
+                      text-indent: 30px;
                       margin-bottom: 15px;
                     }
                     .myowncss ul {
-                        margin: 20px;
-                        text-indent: 0px;
-                        list-style-type: square;
-                        padding: 0
+                      margin: 20px;
+                      text-indent: 0px;
+                      list-style-type: square;
+                      padding: 0
                     }
                     .myowncss h1{
-                        text-indent: px;
-                        font-size:30px;
-                        text-align:center;
+                      text-indent: 20px;
+                      font-size:26px;
+                      text-align:center;
                     }
                     .myowncss h2{
-                        font-size:20px;
-                        font-weight:600;
+                      font-size:20px;
+                      font-weight:600;
                     }
-                    .myowncss span{
-
+                    .myowncssSM p{
+                      text-indent: 12px;
+                      margin-bottom: 5px;
+                      font-size:15px;
+                    }
+                    .myowncssSM ul {
+                      margin: 10px;
+                      text-indent: 0px;
+                      list-style-type: square;
+                      padding: 0
+                    }
+                    .myowncssSM h1{
+                      text-indent:20px;
+                      font-size:20px;
+                      text-align:center;
+                    }
+                    .myowncssSM h2{
+                      font-size:18px;
+                      font-weight:600;
+                    }
+                    .myowncssSM span{
+                      font-size:24px;
+                      font-weight:600;
                     }`}
                   </style>
-                  <div className='myowncss' dangerouslySetInnerHTML={{ __html: post.content}} />
+                  <div className='md:myowncss myowncssSM' dangerouslySetInnerHTML={{ __html: post.content}} />
                   </div>
               </div>
           </div>

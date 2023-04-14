@@ -66,18 +66,18 @@ const Post = ({post}) => {
         {/*Footer*/}
         <div className='flex items-center justify-center bg-white p-2'>
             {liked == false &&(
-            <div onClick={handleLike} className='flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 px-7 rounded-xl cursor-pointer'>
+            <div onClick={handleLike} className='flex w-1/3 items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2  rounded-xl cursor-pointer'>
                 <p className='font-semibold px-1 text-xs'>{likes!=null&&likes!=0?likes:""}</p>
                 <FiThumbsUp className='h-4'/>
                 <p className='text-xs sm:text-base'>Like</p>
             </div>)}
             {liked == true &&(
-            <div onClick={handleLike} className='flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center text-blue-400 p-2 px-7 rounded-xl cursor-pointer'>
+            <div onClick={handleLike} className='flex w-1/3 items-center space-x-1 hover:bg-gray-100 flex-grow justify-center text-blue-400 p-2 rounded-xl cursor-pointer'>
                 <p className='font-semibold px-1 text-xs'>{likes!=null&&likes!=0?likes:""}</p>
                 <FiThumbsUp className='h-4'/>
                 <p className='text-xs sm:text-base'>Like</p>
             </div>)}
-            <div className='flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center rounded-xl cursor-pointer'>
+            <div className='flex items-center space-x-1 w-1/3 hover:bg-gray-100 flex-grow justify-center rounded-xl cursor-pointer'>
                 <Link href={{
                     pathname: `/posts/[postId]`,
                     query: { postId: post.id},
@@ -88,7 +88,7 @@ const Post = ({post}) => {
                     </div>
                 </Link>
             </div >
-            <div className='flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center rounded-xl cursor-pointer'>
+            <div className='flex items-center space-x-1 w-1/3 hover:bg-gray-100 flex-grow justify-center rounded-xl cursor-pointer'>
             <Link href={{
                     pathname: '/posts/[postId]',
                     query: { postId: post.id},

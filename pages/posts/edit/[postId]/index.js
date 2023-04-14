@@ -5,15 +5,17 @@ import RightSideBar from '@/components/RightSideBar';
 import Login from '@/components/Login';
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
-import CreatePost from '@/components/CreatePost';
+import EditPost from '@/components/EditPost';
+import { useRouter } from 'next/router';
 
-export default function index ({session}) {
+export default function Edit ({session}) {
    if(!session) return <Login/>;
-  // if(session.user.email!="b.t4nsky@gmail.com") return <PermissionDenied/>;
+   const router = useRouter();
+   const postId = router.query.postId;
   return (
     <>
      <Head>
-        <title>Posts Creator</title>
+        <title>Posts Editor</title>
         <meta name="description" content="Creating new posts form" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/icon.png" />
@@ -26,7 +28,7 @@ export default function index ({session}) {
         <div className='flex-grow h-screen pt-6 mr-6 ml-6 overflow-y-auto no-scrollbar'>
           <div className='mx-auto max-w-md md:max-w-xl lg:max-w-2xl'>
           {/* Feed Post and Comments */}
-          <CreatePost/>
+          <EditPost postId={postId}/>
           </div>
         </div>
       {/* Right Sidebar */}
