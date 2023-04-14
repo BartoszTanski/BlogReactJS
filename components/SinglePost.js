@@ -5,8 +5,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddComment from './AddComment';
 import BottomOfThePage from './BottomOfThePage';
-import MediaEditorExample from './RichTextEdit';
-import RichTextEdit from './RichTextEdit';
+import Link from 'next/link';
 
 const SinglePost = ({postId}) => {
     const POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/${postId}`;
@@ -34,13 +33,17 @@ const SinglePost = ({postId}) => {
                   </div>
                 
           </div>
-              {post.tags !=null &&(<div className='pl-2 pt-2 flex space-x-1'>
-                          {post.tags.map((tag) =>
-                          (<a href="https://www.facebook.com" key={tag} rel="noreferrer" target="_blank">
-                          <div className=' px-1 bg-gray-100 text-gray-600 rounded-md border-2 text-sm hover:bg-gray-200 cursor-pointer'>{tag}
-                          </div></a>
-                          ))}
-                  </div>)}
+          {post.tags !=null &&(<div className='pl-2 pt-2 flex space-x-1'>
+                         {post.tags.map((tag) =>
+                         (   <Link key={tag} href={{
+                                pathname: `/posts/tag/[tagId]`,
+                                query: { tagId: tag},
+                                }} className='text-xs sm:text-base'>
+                                <div className=' px-1 bg-gray-100 text-gray-600 rounded-md border-2 text-sm hover:bg-gray-200 cursor-pointer'>{tag}
+                                </div>
+                            </Link>
+                         ))}
+                </div>)}
               <p className='pt-2 '>{post.description}</p>
           </div>
           {/*If Any Image*/}
@@ -60,6 +63,21 @@ const SinglePost = ({postId}) => {
                     .myowncss p{
                       text-indent: 50px;
                       margin-bottom: 15px;
+                    }
+                    .myowncss ul {
+                        margin: 20px;
+                        text-indent: 0px;
+                        list-style-type: square;
+                        padding: 0
+                    }
+                    .myowncss h1{
+                        text-indent: px;
+                        font-size:30px;
+                        text-align:center;
+                    }
+                    .myowncss h2{
+                        font-size:20px;
+                        font-weight:600;
                     }
                     .myowncss span{
 

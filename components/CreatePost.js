@@ -45,7 +45,6 @@ const CreatePost = ({setnewPost}) => {
     setImageToSend(null);
   };
   const handleSubmit = (e) => {
-    console.log("handelsubmit wywołany");
     e.preventDefault();
     if(!inputRef.current) return;
     const formData = new FormData();

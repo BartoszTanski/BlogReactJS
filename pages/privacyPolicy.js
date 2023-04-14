@@ -1,16 +1,12 @@
 import Head from 'next/head'
-import Login from '@/components/Login'
 import Header from '@/components/Header'
-import Sidebar from '@/components/Sidebar'
-import { getSession } from 'next-auth/react'
-import Feed from '@/components/Feed'
-import RightSideBar from '@/components/RightSideBar'
 import { useRouter } from 'next/router'
+import PrivacyPolicy from '@/components/PrivacyPolicy'
 
 
-export default function Home({session}) {
+
+export default function Home() {
   const router = useRouter()
-  //if(!session) return <Login/>
   const tagId = router.query.tagId;
   return (
     <>
@@ -21,23 +17,14 @@ export default function Home({session}) {
         <link rel="icon" href="/icon.png" />
       </Head>
       <Header></Header>
-      {tagId &&(
+     
       <main className='flex bg-gray-100 '>
         {/* Left Sidebar */}
-        <Sidebar></Sidebar>
         {/* Feed Create Post and Posts */}
-        <Feed tagId={tagId}></Feed>
+        <PrivacyPolicy/>
         {/* Right Sidebar */}
-        <RightSideBar/>
        
-      </main>)}
+      </main>
     </>
   )
-}
-
-export async function getServerSideProps(context){
-  const session = await getSession(context);
-  return {
-    props: {session,},
-  }
 }

@@ -10,7 +10,7 @@ import PermissionDenied from '@/components/PermissionDenied';
 
 export default function index ({session}) {
    if(!session) return <Login/>;
-   if(session.user.email!="b.t4nsky@gmail.com") return <PermissionDenied/>;
+  // if(session.user.email!="b.t4nsky@gmail.com") return <PermissionDenied/>;
   return (
     <>
      <Head>

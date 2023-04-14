@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 
 export default function Home({session}) {
   const router = useRouter()
-  if(!session) return <Login/>
+  //if(!session) return <Login/>
   return (
     <>
       <Head>

@@ -18,7 +18,7 @@ const AboutMe = () => {
         <AiOutlineMail  size={25} className="mx-auto"/>
     </div>
     <a href="https://github.com/BartoszTanski" rel="noreferrer" target="_blank">
-    <div className='flex space-x-16 shadow-md hover:bg-gray-200 hover:font-semibold rounded-md pb-1 pt-2 px-2 w-52'>
+    <div className='flex space-x-16 shadow-md hover:bg-gray-200 hover:font-semibold rounded-md pt-2 px-2 w-52'>
     <p>See my github</p>
         <AiFillGithub  size={30} className="pb-1 mx-auto"/>
     </div>

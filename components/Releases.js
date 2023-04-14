@@ -17,7 +17,7 @@ const Releases = ({release}) => {
                     pathname: `/posts/[postId]`,
                     query: { postId: release.id},
                   }}>
-      <div className='flex-col items-center space-x-2 pb-2 pt-1 pl-1 text-center hover:bg-gray-200 rounded-sm cursor-pointer relative'> 
+      <div className='flex-col items-center space-x-2 pb-2 pt-1 pl-1 text-center hover:bg-gray-200 shadow-inner shadow-slate-200 rounded-sm cursor-pointer relative'> 
           <p className='hidden p-1 font-semibold text-md sm:inline-flex text-sm'>{release.title}</p>
           <Image src={release.image} height={100} width={200} className=' rounded-sm  h-[100px] w-[200px]' alt="Foto"  />
           <div className='flex flex-row px-3 justify-between pt-1'>

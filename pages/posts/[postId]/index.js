@@ -10,7 +10,7 @@ import Head from 'next/head';
 
 export default function Index ({session}) {
   const router = useRouter();
-   if(!session) return <Login/>;
+   //if(!session) return <Login/>;
     const postId = router.query.postId;
   return (
     <>

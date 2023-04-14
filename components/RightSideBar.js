@@ -16,7 +16,7 @@ const RightSideBar = () => {
         fetchData();
       },[]);
   return (
-    <div className='hidden lg:inline-flex my-2 bg-gray-50 flex-col max-w-xl pt-4 px-3 rounded-md md:min-w-[200px] lg:min-w-[250px]'>
+    <div className='hidden lg:inline-flex my-2 bg-gray-50 flex-col max-w-xl pt-4 px-2 rounded-md md:min-w-[200px] lg:min-w-[250px]'>
         <div className='flex items-center text-gray-500'>
             <p className='flex text-2xl pb-1 text-gray-700 font-semibold flex-grow'>Top posts this week:</p>
         </div>

@@ -3,9 +3,10 @@ import Login from '@/components/Login'
 import Header from '@/components/Header'
 import Sidebar from '@/components/Sidebar'
 import { getSession } from 'next-auth/react'
-import Feed from '@/components/Feed'
 import RightSideBar from '@/components/RightSideBar'
 import { useRouter } from 'next/router'
+import AboutMe from '@/components/AboutMe'
+import AboutMeMore from '@/components/AboutMeMore'
 
 
 export default function Home({session}) {
@@ -21,16 +22,14 @@ export default function Home({session}) {
         <link rel="icon" href="/icon.png" />
       </Head>
       <Header></Header>
-      {tagId &&(
+     
       <main className='flex bg-gray-100 '>
         {/* Left Sidebar */}
-        <Sidebar></Sidebar>
         {/* Feed Create Post and Posts */}
-        <Feed tagId={tagId}></Feed>
+        <AboutMeMore/>
         {/* Right Sidebar */}
-        <RightSideBar/>
        
-      </main>)}
+      </main>
     </>
   )
 }
