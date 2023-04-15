@@ -32,10 +32,10 @@ const Post = ({post}) => {
       }
   return (
     <div className='flex flex-col 'key={post.id}>
-        <div className='bg-white mt-6 rounded-md p-3'>
+        <div className='bg-white mt-6 rounded-md px-3 pl-3 pb-1 pt-2'>
             <div className='flex items-center space-x-2'>
-                <img src={post.profilePic} alt="profilePic" className='rounded-full w-12 h-12 border border-gray-300'></img>
-                <div className='pl-2'>
+                <img src={post.profilePic} alt="profilePic" className='rounded-full md:w-12 md:h-12 h-10 w-10 border border-gray-300'></img>
+                <div className='pl-1'>
                     <p className=' font-medium text-lg'>{post.title}</p>
                     <p className='text-xs text-gray-500'>{post.author+ "  " + datetime}</p>
                    
@@ -53,11 +53,11 @@ const Post = ({post}) => {
                             </Link>
                          ))}
                 </div>)}
-            <p className='pt-2 '>{post.description}</p>
+            <p className='md:pt-2 py-1 '>{post.description}</p>
         </div>
         {/*If Any Image*/}
         {post.image !=null &&(
-        <div className='relative h-60 md:h-96 bg-white'>
+        <div className='relative h-60 md:h-96 lg:h-[450px] bg-white'>
             <Image 
             src={post.image} priority={true} alt="Foto" fill  sizes="(max-width: 768px) 100vw,
             (max-width: 1200px) 50vw,
