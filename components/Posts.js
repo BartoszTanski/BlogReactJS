@@ -1,33 +1,43 @@
-import { addAllPost, selectPost } from '@/public/src/features/postSlice';
+import { addAllPost, selectPost, selectUpdateTime, setUpdateTime, selectStoreTime} from '@/public/src/features/postSlice';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {FiFilter} from 'react-icons/fi';
 import Post from './Post'
 import SearchRegex from './SearchRegex';
 import LoadingCircle from './LoadingCircle';
+import ContentNotLoading from './ContentNotLoading';
 
 const Posts = ({tagId, newPost}) => {
   const SEARCH = tagId?"/tag/"+tagId:"";
+  const [fetchFailure, setfetchFailure] = useState(false)
   const POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts${SEARCH}`;
-  const [loading, setloading] = useState(false)
-    const dispatch = useDispatch();
-    const posts = useSelector(selectPost);
+  const [loading, setloading] = useState(false);
+  const dispatch = useDispatch();
+  const posts = useSelector(selectPost);
+  const storeUpdateTime = useSelector(selectStoreTime);
+  const localUpdateTime = useSelector(selectUpdateTime);
+
     useEffect(()=>{
+      if(posts.length == 0 || localUpdateTime!=storeUpdateTime){
       const fetchData = async () =>{
         setloading(true);
         const response = await axios.get(POSTS_API_ENDPOINT)
         .then((response)=>{
+          
           dispatch(addAllPost(response.data));
+          dispatch(setUpdateTime(storeUpdateTime));;
+          console.log("Fetching posts");
+          if(fetchFailure){setfetchFailure(false);}
           setloading(false)
         }).catch((error)=>{
           console.log(error);
+          setfetchFailure(true);
           setloading(false)
         })
         ;
       };
-      fetchData();
-    },[newPost, tagId]);
+      fetchData();}
+    },[]);
   return (
     
     <div>
@@ -41,9 +51,11 @@ const Posts = ({tagId, newPost}) => {
           <p>Filters</p>
         </div>  TO DO*/} 
       </div>
-      {posts.filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i).sort((a, b) => a.time > b.time ? -1 : 1).map((post) =>
-        (<Post post={post} key={post.id}/>))}
+      {posts.map((post, index) =>
+        (<Post post={post} key={post.id} postIndex={index}/>))}
         {loading&&(<LoadingCircle/>)}
+        {fetchFailure&&(<ContentNotLoading/>
+          )}
     </div>
     
   )

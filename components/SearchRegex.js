@@ -13,7 +13,6 @@ const SearchRegex = () => {
       return new Promise( res => setTimeout(res, delay) );
     }
     const handleSearch = (e) => {
-        console.log(BACKEND_API_ENDPOINT);
         e.preventDefault();
         if(searchRef.current.value.length<3){setsearchResult(null); return;}
         else{
@@ -27,7 +26,7 @@ const SearchRegex = () => {
           },})
           .then((response)=>{
             setsearchResult(response.data);
-            console.log(response.data);
+            console.log("Search results: "+response.data.length);
           })
           .catch((error)=>{
             console.log(error);

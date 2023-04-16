@@ -23,6 +23,7 @@ const AddComment = ({postId, newComment, setnewComment}) => {
           .then((response)=>{
             inputRef.current.value = "";
             setnewComment(!newComment);
+            
           })
           .catch((error)=>{
             console.log(error);

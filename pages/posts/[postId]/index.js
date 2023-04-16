@@ -12,6 +12,7 @@ export default function Index ({session}) {
   const router = useRouter();
    //if(!session) return <Login/>;
     const postId = router.query.postId;
+    const postIndex = router.query.postIndex;
   return (
     <>
      <Head>
@@ -28,7 +29,7 @@ export default function Index ({session}) {
         <div className='flex-grow h-screen pt-6 mr-6 ml-6 overflow-y-auto no-scrollbar'>
           <div className='mx-auto max-w-md md:max-w-xl lg:max-w-2xl'>
           {/* Feed Post and Comments */}
-          <SinglePost postId={postId}/>
+          <SinglePost postId={postId} postIndex={postIndex}/>
           </div>
         </div>
       {/* Right Sidebar */}

@@ -6,7 +6,7 @@ import {RiShareForwardLine} from 'react-icons/ri';
 import Link from 'next/link';
 import axios from 'axios';
 
-const Post = ({post}) => {
+const Post = ({post,postIndex}) => {
     const [liked, setLiked] = useState(false);
     const [likes, setLikes] = useState(post.likes);
     var API_ENDPOINT;
@@ -91,7 +91,7 @@ const Post = ({post}) => {
             <div className='flex items-center space-x-1 w-1/3 hover:bg-gray-100 flex-grow justify-center rounded-xl cursor-pointer'>
             <Link href={{
                     pathname: '/posts/[postId]',
-                    query: { postId: post.id},
+                    query: { postId: post.id, postIndex: postIndex},
                     }} className='text-xs sm:text-base'>
                 < div className='flex items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2 rounded-xl cursor-pointer'>
                     <RiShareForwardLine className='h-4'/>

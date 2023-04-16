@@ -4,12 +4,17 @@ import { HiOutlineVideoCamera } from 'react-icons/hi';
 import {IoMdPhotos} from "react-icons/io";
 import { useRef, useState, useEffect } from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import RichTextEdit from './RichTextEdit';
 import BottomOfThePage from './BottomOfThePage';
+import DialogBox from './DialogBox';
+import { setStoreTime } from '@/public/src/features/postSlice';
 
 const EditPost = ({postId}) => {
+  {/*message in case of error*/}
+  var errorMessageHead = "";
+  var errorMessage = "";
     const GET_POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/${postId}`;
     const [post, setpost] = useState(null)
     useEffect(()=>{
@@ -21,11 +26,23 @@ const EditPost = ({postId}) => {
           setImageToSend(null);
         }).catch((error)=>{
           console.log(error);
-          alert("Couldn't retrive this post data");
+          errorMessageHead="Couldn't retrive this post data";
+          errorMessage="Post data can't be reached, post could be already deleted";
+          setpostAddedFailure(true);
         });
       };
       fetchData();
     },[]);
+  
+  {/*Dialog box states*/}  
+  const [postAdded, setpostAdded] = useState(false)
+  const [postAddedFailure, setpostAddedFailure] = useState(false)
+  {/*Dialog box close func*/}
+  const handleSucces = (e) => { //close modal after clicking ok
+    //e.preventDefault();
+    setpostAdded(false);
+    setpostAddedFailure(false);
+  }
 
   const EDIT_POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts`;
   const {data: session} = useSession();
@@ -62,11 +79,9 @@ const EditPost = ({postId}) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(imageToSend)
     if(!inputRef.current) return;
     const formData = new FormData();
     formData.append("id",post?.id);
-    console.log(imageToSend);
     formData.append("file",imageToSend);
     formData.append("title",inputRefTitle.current.value);
     formData.append("content", inputRef.current.getContent());
@@ -82,11 +97,15 @@ const EditPost = ({postId}) => {
       },})
       .then((response)=>{
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-        alert("Post updated sucessfully!");
+        setpostAdded(true);
+        console.log("Sended post to edit")
+        dispatch(setStoreTime(1));
       })
       .catch((error)=>{
         console.log(error);
-        alert("Something went wrong :(");
+        errorMessageHead="Post edit attempt FAILURE";
+        errorMessage="Post was NOT edited, try adding diffrent(smaller) main picture.";
+        setpostAddedFailure(true);
       })
   }
 
@@ -151,6 +170,8 @@ const EditPost = ({postId}) => {
           <div className='flex flex-col px-3 py-5 '>
           <button className='rounded-md bg-gray-300 hover:bg-gray-400 hover:text-gray-700 cursor-pointer text-gray-600 h-10 text-lg font-bold' onClick={handleSubmit}>Update Post</button>
         </div>
+        {postAdded &&(<DialogBox messageHead="Post edited successfully!" message="Post was edited successfully, you can edit this post further or go to homepage." handleSucces={handleSucces}/>)}
+        {postAddedFailure &&(<DialogBox messageHead="Post edit attempt FAILURE" message="Post was NOT edited, try adding diffrent(smaller) main picture." handleSucces={handleSucces}/>)}
         <BottomOfThePage/>
     </div>
   )

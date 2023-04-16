@@ -7,19 +7,35 @@ import AddComment from './AddComment';
 import BottomOfThePage from './BottomOfThePage';
 import Link from 'next/link';
 import DropDownMenuPost from './DropDownMenuPost';
+import DialogBox from './DialogBox';
+import ContentNotLoading from './ContentNotLoading';
+import LoadingCircle from './LoadingCircle';
 
-const SinglePost = ({postId}) => {
+const SinglePost = ({postId,postIndex}) => {
+    {/*Dialog box states*/}  
+    const [postFetchFailure, setpostFetchFailure] = useState(false);
+    const [fetchFailure, setfetchFailure] = useState(false)
+    const [loading, setloading] = useState(false)
+    {/*Dialog box close func*/}
+    const handleSucces = (e) => { //close modal after clicking ok
+      setpostFetchFailure(false);
+    }
     const POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/${postId}`;
     const [newComment, setnewComment] = useState(false)
     const [post, setpost] = useState(null)
     useEffect(()=>{
       const fetchData = () =>{
+        setloading(true)
         const response = axios.get(POST_API_ENDPOINT)
         .then((response)=>{
           setpost(response.data);
+          if(fetchFailure) {setfetchFailure(false);}
+          setloading(false)
         }).catch((error)=>{
           console.log(error);
-          alert("Couldn't retrive this post data");
+          setloading(false);
+          setpostFetchFailure(true);
+          setfetchFailure(true);
         });
       };
       fetchData();
@@ -122,6 +138,9 @@ const SinglePost = ({postId}) => {
           <AddComment postId={post.id} newComment={newComment} setnewComment={setnewComment}/>
           <BottomOfThePage/>
       </div>)}
+      {postFetchFailure &&(<DialogBox messageHead="Couldn't retrive this post data" message="Post data can't be reached, post could be already deleted." handleSucces={handleSucces}/>)}
+      {loading&&(<LoadingCircle/>)}
+      {fetchFailure&&(<ContentNotLoading/>)}
     </div>
   )  
 }

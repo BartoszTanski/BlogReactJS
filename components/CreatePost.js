@@ -4,16 +4,14 @@ import { HiOutlineVideoCamera } from 'react-icons/hi';
 import {IoMdPhotos} from "react-icons/io";
 import { useRef, useState } from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
-import { useDispatch, useSelector } from 'react-redux';
-import { addPost, selectPost } from '@/public/src/features/postSlice';
+import { useDispatch } from 'react-redux';
+import { setStoreTime } from '@/public/src/features/postSlice';
 import axios from 'axios';
 import RichTextEdit from './RichTextEdit';
 import BottomOfThePage from './BottomOfThePage';
 import DialogBox from './DialogBox';
 
 const CreatePost = () => {
-  var message = "Post was added successfully, you can add other post or go to homepage."
-  var messageHead = "Post added successfully!"
   const [postAdded, setpostAdded] = useState(false)
   const [postAddedFailure, setpostAddedFailure] = useState(false)
 
@@ -83,6 +81,7 @@ const CreatePost = () => {
         removeImage();
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
         setpostAdded(true);
+        dispatch(setStoreTime(1));
       })
       .catch((error)=>{
         console.log(error);
@@ -149,7 +148,7 @@ const CreatePost = () => {
           <button className='rounded-md bg-gray-300 hover:bg-gray-400 hover:text-gray-600 cursor-pointer text-gray-500 h-10 text-lg font-bold' onClick={handleSubmit}>Add Post</button>
         </div>
         {postAdded &&(<DialogBox messageHead="Post added successfully!" message="Post was added successfully, you can add other post or go to homepage." handleSucces={handleSucces}/>)}
-        {postAddedFailure &&(<DialogBox messageHead="Post add attempt FAILURE" message="Post was NOT added, try adding diffrent(smaller) main picture." handleSucces={handleSucces}/>)}
+        {postAddedFailure &&(<DialogBox messageHead="Post add attempt FAILURE" message="Post was NOT added, make sure main image is added and its size is less than 1MB." handleSucces={handleSucces}/>)}
         <BottomOfThePage/>
     </div>
   )
