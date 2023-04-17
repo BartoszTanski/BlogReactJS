@@ -24,12 +24,14 @@ export default function Home({session}) {
                             <div className='pr-4 md:pr-20'>
                                 <p>Email: </p>
                                 <p>Username: </p>
-                                <p>To Do</p>
+                                <p>To Delete your user data - contact:</p>
                             </div>
                             <div>
                                 <p>Some email</p>
                                 <p>Some username</p>
-                                <p>To Do</p>
+                                <p>b.t4nsky@gmail.com</p>
+
+
                             </div>
                         </div>
                     </div>

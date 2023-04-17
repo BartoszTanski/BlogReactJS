@@ -1,6 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
-import {HiOutlineSearch} from 'react-icons/hi';
 import {HiOutlineHome} from 'react-icons/hi';
 import {BsFileEarmarkPlus} from 'react-icons/bs';
 import {SiAboutdotme} from 'react-icons/si'
@@ -23,7 +21,7 @@ const Header = () => {
                 <Link href={{
                 pathname: '/',
                 query: { },
-                }} className='text-xs '>
+                }} scroll={true} className='text-xs '>
                     <div className='flex items-center h-14 px-3 md:px-10 lg:px-28 rounded-md hover:bg-gray-100 cursor-pointer '>
                     <p className='text-xl font-semibold hidden md:inline-flex'>Home</p><HiOutlineHome size={25} className="mb-1 mx-auto"/> 
                     </div>
