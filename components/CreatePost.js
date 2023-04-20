@@ -71,7 +71,8 @@ const CreatePost = () => {
     formDataVideo.append("video",videoToSend);
     await axios.post(VIDEO_BACKEND_API_ENDPOINT,formDataVideo,{
       headers:{
-          Accept:"application/json" 
+          Accept:"application/json",
+          "Access-Control-Allow-Origin":"https://blogbartosz.azurewebsites.net/api/v1/video"
       },})
       .then((response)=>{
         removeVideo();
