@@ -12,9 +12,6 @@ import DialogBox from './DialogBox';
 import { setStoreTime } from '@/public/src/features/postSlice';
 
 const EditPost = ({postId}) => {
-  {/*message in case of error*/}
-  var errorMessageHead = "";
-  var errorMessage = "";
     const GET_POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/${postId}`;
     const [post, setpost] = useState(null)
     useEffect(()=>{
@@ -37,13 +34,16 @@ const EditPost = ({postId}) => {
   {/*Dialog box states*/}  
   const [postAdded, setpostAdded] = useState(false)
   const [postAddedFailure, setpostAddedFailure] = useState(false)
+  const [noPermissionModalOpen, setnoPermissionModalOpen] = useState(false);
   {/*Dialog box close func*/}
   const handleSucces = (e) => { //close modal after clicking ok
     //e.preventDefault();
     setpostAdded(false);
     setpostAddedFailure(false);
   }
-
+  const handleNoPermission = () => {
+    setnoPermissionModalOpen(false);
+  }
   const EDIT_POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts`;
   const {data: session} = useSession();
   const inputRef = useRef(null);
@@ -79,6 +79,10 @@ const EditPost = ({postId}) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(session?.user.email!=post.email) {
+      setnoPermissionModalOpen(true);
+      return;
+    }
     if(!inputRef.current) return;
     const formData = new FormData();
     formData.append("id",post?.id);
@@ -88,7 +92,8 @@ const EditPost = ({postId}) => {
     formData.append("tags", inputRefTags.current.value);
     formData.append("description", inputRefDesc.current.value);
     formData.append("author", post?.author); //.split("(edited)")[0] +"(edited by: " + session?.user.name+")")
-    //formData.append("email", session?.user.email);
+    formData.append("email", session?.user.email);
+    formData.append("video", null);
     formData.append("profilePic", post?.profilePic);
 
     axios.put(EDIT_POST_API_ENDPOINT,formData,{
@@ -172,6 +177,7 @@ const EditPost = ({postId}) => {
         </div>
         {postAdded &&(<DialogBox messageHead="Post edited successfully!" message="Post was edited successfully, you can edit this post further or go to homepage." handleSucces={handleSucces}/>)}
         {postAddedFailure &&(<DialogBox messageHead="Post edit attempt FAILURE" message="Post was NOT edited, try adding diffrent(smaller) main picture." handleSucces={handleSucces}/>)}
+        {noPermissionModalOpen &&(<DialogBox messageHead="You dont have permission to do that!" message="You are not the author of this post, so you cant delete or modify it" handleSucces={handleNoPermission}/>)}
         <BottomOfThePage/>
     </div>
   )

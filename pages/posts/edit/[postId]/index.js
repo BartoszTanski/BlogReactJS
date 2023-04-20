@@ -7,10 +7,11 @@ import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 import EditPost from '@/components/EditPost';
 import { useRouter } from 'next/router';
+import PermissionDenied from '@/components/PermissionDenied';
 
 export default function Edit ({session}) {
   const router = useRouter();
-   if(!session) return <Login/>;
+   if(!session) return <Login/>
    const postId = router.query.postId;
   return (
     <>

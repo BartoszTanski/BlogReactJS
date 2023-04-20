@@ -14,22 +14,28 @@ import DialogBox from './DialogBox';
 const CreatePost = () => {
   const [postAdded, setpostAdded] = useState(false)
   const [postAddedFailure, setpostAddedFailure] = useState(false)
+  const [videoUploadFailure, setvideoUploadFailure] = useState(false)
 
-  const handleSucces = (e) => { //close modal after clicking ok
-    //e.preventDefault();
+  const handleSucces = (e) => { //close modal after clicking ok 
     setpostAdded(false);
     setpostAddedFailure(false);
+    setvideoUploadFailure(false);
   }
 
-  const BACKEND_APIEND_POINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts`;
+  const BACKEND_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts`;
+  const VIDEO_BACKEND_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/video`;
   const {data: session} = useSession();
   const inputRef = useRef(null);
   const inputRefTitle = useRef(null);
   const inputRefTags = useRef(null);
   const inputRefDesc = useRef(null);
+  const videoId = useRef(null);
   const hiddenFileInput = useRef(null);
+  const hiddenVideoInput = useRef(null);
   const [imageToPost, setImageToPost] = useState(null);
   const [imageToSend, setImageToSend] = useState(null);
+  const [videoToPost, setVideoToPost] = useState(null);
+  const [videoToSend, setVideoToSend] = useState(null);
   const [editorState, seteditorState] = useState(false);
   const dispatch = useDispatch();
   const editorChange = () => {
@@ -38,6 +44,9 @@ const CreatePost = () => {
   const handleClick = () => {
      hiddenFileInput.current.click(); 
   }
+  const handleClickVideo = () => {
+    hiddenVideoInput.current.click(); 
+ }
   const addImageToPost = (e) => {
     const reader = new FileReader();
     if(e.target.files[0]){
@@ -45,29 +54,59 @@ const CreatePost = () => {
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = (e) => {
         setImageToPost(e.target.result);
-      }
+      }      
     }
     e.target.value = '';
+  }
+  const addVideoToPost = (e) => {
+
+    if(e.target.files[0]){
+      setVideoToSend(e.target.files[0]);
+      setVideoToPost(URL.createObjectURL(e.target.files[0]));
+    }
+    e.target.value = '';
+  }
+  const sendVideo = async () => {
+    const formDataVideo = new FormData();
+    formDataVideo.append("video",videoToSend);
+    await axios.post(VIDEO_BACKEND_API_ENDPOINT,formDataVideo,{
+      headers:{
+          Accept:"application/json" 
+      },})
+      .then((response)=>{
+        removeVideo();
+        videoId.current = response.data;
+      })
+      .catch((error)=>{
+        console.log(error);
+        setvideoUploadFailure(true);
+      })
   }
 
   const removeImage = () => {
     setImageToPost(null);
     setImageToSend(null);
   };
-  const handleSubmit = (e) => {
+  const removeVideo = () => {
+    setVideoToPost(null);
+    setVideoToSend(null);
+  };
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if(!inputRef.current) return;
+    if(videoToSend) await sendVideo();
+    if(videoToSend&&(videoId.current==null)) return;
     const formData = new FormData();
     formData.append("file",imageToSend);
     formData.append("title",inputRefTitle.current.value);
     formData.append("content", inputRef.current.getContent());
     formData.append("tags", inputRefTags.current.value);
     formData.append("description", inputRefDesc.current.value);
+    formData.append("video", videoId.current);
     formData.append("author", session?.user.name);
-    //formData.append("email", session?.user.email);
+    formData.append("email", session?.user.email);
     formData.append("profilePic", session?.user.image);
-
-    axios.post(BACKEND_APIEND_POINT,formData,{
+    axios.post(BACKEND_API_ENDPOINT,formData,{
       headers:{
         Accept:"application/json" 
       },})
@@ -123,21 +162,35 @@ const CreatePost = () => {
               </div>
             </form>
         </div>
-        {imageToPost&&(
-          <div 
-          onClick={removeImage}
-          className='flex items-center px-4 py-1 space-x-4 filter hover:brightness-110 transition duration-150 cursor-pointer'>
-            <img src={imageToPost} alt="postImage"  className='h-20 object-contain'></img>
-            <RiDeleteBin6Line className='h-8 hover:text-red-500'/>
-          </div>)}
+        <div className='flex'>
+          {imageToPost&&(
+            <div 
+              onClick={removeImage}
+              className='flex items-center px-4 py-1 space-x-4 filter hover:brightness-110 transition duration-150 cursor-pointer'>
+              <img src={imageToPost} alt="postImage"  className='h-20 object-contain'></img>
+              <RiDeleteBin6Line className='h-8 hover:text-red-500'/>
+            </div>)}
+          {videoToPost&&(
+            <div 
+              onClick={removeVideo}
+              className='flex items-center px-4 py-1 space-x-4 filter hover:brightness-110 transition duration-150 cursor-pointer'>
+              <video alt="videoImage" className='h-20 object-contain' controls >
+                    <source src={videoToPost}></source>
+                  </video>
+              <RiDeleteBin6Line className='h-8 hover:text-red-500'/>
+            </div>)}
+        </div>
         <div className='flex justify-evenly py-2 '>
-          <div className='flex items-center p-1 space-x-1 flex-grow justify-center hover:bg-gray-100 rounded-md hover:cursor-pointer'> 
+          <div 
+            onClick={handleClickVideo}
+            className='flex items-center p-1 space-x-1 flex-grow justify-center hover:bg-gray-100 rounded-md hover:cursor-pointer'> 
             <HiOutlineVideoCamera size={20} className="text-red-500"/>
             <p className='font-semibold text-gray-600 '>Add Video </p>
+            <input onChange={addVideoToPost} type="file" ref={hiddenVideoInput} hidden accept="video/mp4,video/x-m4v,video/*"></input>
           </div>
           <div 
-          onClick={handleClick}
-          className='flex items-center p-1 space-x-1 flex-grow justify-center hover:bg-gray-100 rounded-md hover:cursor-pointer'> 
+            onClick={handleClick}
+            className='flex items-center p-1 space-x-1 flex-grow justify-center hover:bg-gray-100 rounded-md hover:cursor-pointer'> 
             <IoMdPhotos size={20} className="text-green-500"/>
             <p className='font-semibold text-gray-600 '>Add Main Photo</p>
             <input onChange={addImageToPost} type="file" ref={hiddenFileInput} hidden accept='image/*'></input>
@@ -149,6 +202,7 @@ const CreatePost = () => {
         </div>
         {postAdded &&(<DialogBox messageHead="Post added successfully!" message="Post was added successfully, you can add other post or go to homepage." handleSucces={handleSucces}/>)}
         {postAddedFailure &&(<DialogBox messageHead="Post add attempt FAILURE" message="Post was NOT added, make sure main image is added and its size is less than 1MB." handleSucces={handleSucces}/>)}
+        {videoUploadFailure &&(<DialogBox messageHead="Video upload FAILURE" message="Try once again, if this problem reoccurs file size might be too big." handleSucces={handleSucces}/>)}
         <BottomOfThePage/>
     </div>
   )

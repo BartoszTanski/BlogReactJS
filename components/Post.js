@@ -34,13 +34,12 @@ const Post = ({post,postIndex}) => {
     <div className='flex flex-col 'key={post.id}>
         <div className='bg-white mt-6 rounded-md px-3 pl-3 pb-1 pt-2'>
             <div className='flex items-center space-x-2'>
-                <img src={post.profilePic} alt="profilePic" className='rounded-full md:w-12 md:h-12 h-10 w-10 border border-gray-300'></img>
+                {/*<img src={post.profilePic} alt="profilePic" className='rounded-full md:w-12 md:h-12 h-10 w-10 border border-gray-300'></img>*/}
                 <div className='pl-1'>
                     <p className=' font-medium text-lg'>{post.title}</p>
                     <p className='text-xs text-gray-500'>{post.author+ "  " + datetime}</p>
                    
                 </div>
-               
          </div>
             {post.tags !=null &&(<div className='pl-2 pt-2 flex space-x-1'>
                          {post.tags.map((tag) =>

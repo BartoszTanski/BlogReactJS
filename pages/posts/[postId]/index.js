@@ -4,13 +4,11 @@ import React from 'react'
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import RightSideBar from '@/components/RightSideBar';
-import Login from '@/components/Login';
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 
 export default function Index ({session}) {
   const router = useRouter();
-   //if(!session) return <Login/>;
     const postId = router.query.postId;
     const postIndex = router.query.postIndex;
   return (

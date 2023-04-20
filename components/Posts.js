@@ -54,7 +54,7 @@ const Posts = ({tagId}) => {
         </div>  TO DO*/} 
          <button className="fixed md:right-1/3 z-50 bottom-0 right-0 p-5 m-5">
           <Link className='scroll-smooth ' href={"/#first-section"}>
-            <FaArrowUp className='md:h-14 md:w-10 w-8 h-12' />
+            <FaArrowUp className='md:h-14 text-gray-800 md:w-10 w-8 h-12' />
           </Link>   
         </button>
       </div>

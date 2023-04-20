@@ -13,7 +13,7 @@ const RichTextEdit = ({postContent,editorChange}, editorRef) => {
     <>
       <Editor id="contentArea" onChange={editorChange} apiKey='jn2rvsmgm9a83b3446osxtuydmh1029afuavco7ndbb4aw77'
         onInit={(evt, editor) => editorRef.current = editor}
-        initialValue= {postContent?postContent:'<p><span style="font-size:36pt;">Title goes here...</span></p><p>Content goes here...</p>'}
+        initialValue= {postContent?postContent:'<span style="font-size:30px;">Title goes here...</span><p>Content goes here...</p>'}
         init={{
           height: 500,
           menubar: false,
@@ -26,7 +26,8 @@ const RichTextEdit = ({postContent,editorChange}, editorRef) => {
           toolbar:[ '| undo redo | fontfamily fontsize blocks | ',' | bold italic underline | backcolor forecolor \
           | align \
           bullist numlist removeformat | code media image preview'],
-          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px } p{text-indent: 30px; margin-bottom: 15px;}'
+          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px } p{text-indent: 15px; font-size: 16px; margin-bottom: 15px;}'+
+          'h1{text-indent: 20px;font-size:26px;text-align:center;} span{ font-size:26px; font-weight:500;}'
         }}
       />
       {/* <p className='pt-2'>Preview:</p>

@@ -30,8 +30,6 @@ export default function Home({session}) {
                                 <p>Some email</p>
                                 <p>Some username</p>
                                 <p>b.t4nsky@gmail.com</p>
-
-
                             </div>
                         </div>
                     </div>

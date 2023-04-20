@@ -11,6 +11,8 @@ const Login = () => {
         <div className='items-center justify-center bg-emerald-500 p-2 rounded-md'><a onClick={signIn} className='px-20 py-2 w-56 text-2xl cursor-pointer text-center rounded-md text-white'>
         <p>Sign in with Social media</p>
         <p>(Facebook, Github, Google)</p>
+        <p>or</p>
+        <p>as Jack (anonymous)</p>
         </a>
         </div>
         <div className=' h-14 w-56  mt-10 mb-2 justify-center text-center text-white text-bold text-xl bg-gray-700 rounded-lg p-4'>
