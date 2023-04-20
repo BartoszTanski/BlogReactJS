@@ -1,6 +1,6 @@
 import { addAllPost, selectPost, selectUpdateTime, setUpdateTime, selectStoreTime, setStoreTime} from '@/public/src/features/postSlice';
 import axios from 'axios';
-import React, { useEffect,useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Post from './Post'
 import SearchRegex from './SearchRegex';
@@ -14,10 +14,11 @@ const Posts = ({tagId}) => {
   const [fetchFailure, setfetchFailure] = useState(false)
   const POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts${SEARCH}`;
   const [loading, setloading] = useState(false);
-  const firstSection = useRef(0)
   const dispatch = useDispatch();
   const posts = useSelector(selectPost);
+  {/*global posts update timer*/}
   const storeUpdateTime = useSelector(selectStoreTime);
+  {/*current posts update timer*/}
   const localUpdateTime = useSelector(selectUpdateTime);
 
     useEffect(()=>{
@@ -36,7 +37,6 @@ const Posts = ({tagId}) => {
           setfetchFailure(true);
           setloading(false)
         })
-        ;
       };
       fetchData();}
     },[]);
@@ -46,23 +46,20 @@ const Posts = ({tagId}) => {
       <div className='bg-white rounded-md flex justify-between text-xs md:text-md pl-3 h-10 items-center mt-6'>
         <div id="first-section" className='hidden md:inline-flex  font-semibold text-lg'>Posts</div>
         <div id="second-section" className='lg:hidden'><SearchRegex/></div>
-        {/* <div className='pr-3 flex bg-gray-200 space-x-2 hover:bg-gray-300 cursor-pointer rounded-lg flex-row w-20 m-1 text-sm pt-1'>
-          <div className='w-5 px-2'>
-          <FiFilter size={18} className="mx-auto"/>
-          </div>
-          <p>Filters</p>
-        </div>  TO DO*/} 
-         <button className="fixed md:right-1/3 z-50 bottom-0 right-0 p-5 m-5">
+        {/*Go to TOP arrow button*/}
+        <button className="fixed md:right-1/3 z-50 bottom-0 right-0 p-5 m-5">
           <Link className='scroll-smooth ' href={"/#first-section"}>
             <FaArrowUp className='md:h-14 text-gray-800 md:w-10 w-8 h-12' />
           </Link>   
         </button>
       </div>
-      {posts.map((post, index) =>
+      {/*While data fetching*/}
+      {loading&&(<LoadingCircle/>)}
+      {/*While posts fetched*/}
+      {posts?.map((post, index) =>
         (<Post post={post} key={post.id} postIndex={index}/>))}
-        {loading&&(<LoadingCircle/>)}
-        {fetchFailure&&(<ContentNotLoading/>
-          )}
+      {/*While data fetch failure*/}
+      {fetchFailure&&(<ContentNotLoading/>)}
     </div>
     
   )

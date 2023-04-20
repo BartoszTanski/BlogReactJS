@@ -10,22 +10,26 @@ import axios from 'axios';
 import RichTextEdit from './RichTextEdit';
 import BottomOfThePage from './BottomOfThePage';
 import DialogBox from './DialogBox';
+import PostInputFields from './PostInputFields';
 
 const CreatePost = () => {
+
+  {/*DIALOG BOXES STATES*/}
   const [postAdded, setpostAdded] = useState(false)
   const [postAddedFailure, setpostAddedFailure] = useState(false)
   const [videoUploadFailure, setvideoUploadFailure] = useState(false)
-
+  {/*CLOSING DIALOG BOXES*/}
   const handleSucces = (e) => { //close modal after clicking ok 
-    setpostAdded(false);
-    setpostAddedFailure(false);
-    setvideoUploadFailure(false);
+    if(postAdded)setpostAdded(false);
+    if(postAddedFailure)setpostAddedFailure(false);
+    if(videoUploadFailure)setvideoUploadFailure(false);
   }
 
   const BACKEND_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts`;
   const VIDEO_BACKEND_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/video`;
   const {data: session} = useSession();
-  const inputRef = useRef(null);
+
+  const inputRefContent = useRef(null);
   const inputRefTitle = useRef(null);
   const inputRefTags = useRef(null);
   const inputRefDesc = useRef(null);
@@ -94,13 +98,14 @@ const CreatePost = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!inputRef.current) return;
+    if(!inputRefContent.current) return;
+    {/*IF THERE IS VIDEO ATTACHED*/}
     if(videoToSend) await sendVideo();
     if(videoToSend&&(videoId.current==null)) return;
     const formData = new FormData();
     formData.append("file",imageToSend);
     formData.append("title",inputRefTitle.current.value);
-    formData.append("content", inputRef.current.getContent());
+    formData.append("content", inputRefContent.current.getContent());
     formData.append("tags", inputRefTags.current.value);
     formData.append("description", inputRefDesc.current.value);
     formData.append("video", videoId.current);
@@ -112,13 +117,14 @@ const CreatePost = () => {
         Accept:"application/json" 
       },})
       .then((response)=>{
-        inputRef.current.setContent('<p><span style="font-size:36pt;">Title goes here...</span></p><p>Content goes here...</p>');
-        inputRef.current.value = "";
+        inputRefContent.current.setContent('<p><span style="font-size:36pt;">Title goes here...</span></p><p>Content goes here...</p>');
+        inputRefContent.current.value = "";
         inputRefTitle.current.value = "";
         inputRefTags.current.value = "";
         inputRefDesc.current.value = "";
         //dispatch(addPost(response.data));
         removeImage();
+        removeVideo();
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
         setpostAdded(true);
         dispatch(setStoreTime(1));
@@ -131,56 +137,35 @@ const CreatePost = () => {
 
   return (
     <div className='bg-white rounded-md shadow-md text-gray-500 p-2'>
+        {/*Current User Image & Name*/}
         <div className='pt-2 flex items-center pl-5 space-x-1'>
             <img src={session?.user.image} height={40} width={40} alt="profilePic" className=" top-2 rounded-full border border-gray-300 "
              >
             </img>
             <p className=' px-8 text-3xl text-center'>Adding new post as: {session?.user.name}</p>
-         </div>
-        <div className='p-4 pt-5   space-x-2'>
-            <form className='flex flex-col space-y-2 pr-2'>
-              <div>
-                  <label className="block pl-4 text-sm font-medium text-gray-500 ">Title</label>
-                  <input id="title" className='rounded-xl h-12 w-full focus:outline-none font-medium bg-gray-100 px-4' type="text"
-                   ref={inputRefTitle}
-                   placeholder={`Title:`}>
-                  </input> 
-              </div>
-              <div>
-                <label className="block pl-4 text-sm font-medium text-gray-500 ">Description</label>
-                <input className='rounded-xl h-12 w-full focus:outline-none font-medium bg-gray-100 px-4' type="text"
-                  ref={inputRefDesc}
-                  placeholder={`Description:`}>
-                </input> 
-              </div>
-
-              <div>
-                <label className="block pl-4 text-sm font-medium text-gray-500 ">Tags separated by &apos;,&apos;</label>
-                <input className='rounded-xl h-12 w-full focus:outline-none font-medium bg-gray-100 px-4' type="text"
-                ref={inputRefTags}
-                placeholder={`Tags:`}>
-                </input>  
-              </div>
-            </form>
         </div>
+        {/*TITLE | DESCRIPTION | TAGS INPUT FIELDS */}
+        <PostInputFields inputRefTitle={inputRefTitle} inputRefDesc={inputRefDesc} inputRefTags={inputRefTags}/>
+        {/*CURRENT POST IMAGE & VIDEO MINIATURES*/}
         <div className='flex'>
           {imageToPost&&(
             <div 
               onClick={removeImage}
               className='flex items-center px-4 py-1 space-x-4 filter hover:brightness-110 transition duration-150 cursor-pointer'>
-              <img src={imageToPost} alt="postImage"  className='h-20 object-contain'></img>
+              <img src={imageToPost} alt="postImage"  className='h-16 object-contain'></img>
               <RiDeleteBin6Line className='h-8 hover:text-red-500'/>
             </div>)}
           {videoToPost&&(
-            <div 
+            <div
               onClick={removeVideo}
               className='flex items-center px-4 py-1 space-x-4 filter hover:brightness-110 transition duration-150 cursor-pointer'>
-              <video alt="videoImage" className='h-20 object-contain' controls >
+              <video alt="videoImage" className='h-16 object-contain' controls >
                     <source src={videoToPost}></source>
-                  </video>
+              </video>
               <RiDeleteBin6Line className='h-8 hover:text-red-500'/>
             </div>)}
         </div>
+        {/*ADD VIDEO | IMAGE BUTTONS*/}
         <div className='flex justify-evenly py-2 '>
           <div 
             onClick={handleClickVideo}
@@ -197,10 +182,13 @@ const CreatePost = () => {
             <input onChange={addImageToPost} type="file" ref={hiddenFileInput} hidden accept='image/*'></input>
           </div>
         </div>
-          <RichTextEdit onChange={editorChange} ref={inputRef}/>
-          <div className='flex flex-col px-3 py-5 '>
+        {/*RICH TEXT EDITOR*/}
+        <RichTextEdit onChange={editorChange} ref={inputRefContent}/>
+        {/*SUBMIT FORM BUTTON*/}
+        <div className='flex flex-col px-3 py-5 '>
           <button className='rounded-md bg-gray-300 hover:bg-gray-400 hover:text-gray-600 cursor-pointer text-gray-500 h-10 text-lg font-bold' onClick={handleSubmit}>Add Post</button>
         </div>
+        {/*DIALOG BOXES*/}
         {postAdded &&(<DialogBox messageHead="Post added successfully!" message="Post was added successfully, you can add other post or go to homepage." handleSucces={handleSucces}/>)}
         {postAddedFailure &&(<DialogBox messageHead="Post add attempt FAILURE" message="Post was NOT added, make sure main image is added and its size is less than 1MB." handleSucces={handleSucces}/>)}
         {videoUploadFailure &&(<DialogBox messageHead="Video upload FAILURE" message="Try once again, if this problem reoccurs file size might be too big." handleSucces={handleSucces}/>)}

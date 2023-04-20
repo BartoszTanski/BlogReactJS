@@ -8,32 +8,40 @@ import DialogBox from './DialogBox';
 import { useDispatch } from 'react-redux';
 import { deletePost } from '@/public/src/features/postSlice';
 import { useSession } from 'next-auth/react';
+import { deleteVideo } from '@/actions/videoActions';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function DropDownMenuPost({postId, authorEmail}) {
+export default function DropDownMenuPost({postId, authorEmail, postVideoId}) {
     const DELETE_API_ENDPOINT =`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/${postId}`;
-    const [modalOpen, setModalOpen] = useState(false);
-    const [noPermissionModalOpen, setnoPermissionModalOpen] = useState(false);
     const {data: session} = useSession();
-    const handleSucces = () => {
+    const dispatch = useDispatch();
+    {/*Dialog Boxes states*/}
+    const [deleteSuccessModalOpen, setdeleteSuccessModalOpen] = useState(false);
+    const [noPermissionModalOpen, setnoPermissionModalOpen] = useState(false);
+    {/*If deleted successfully redirect*/}
+    const handleDeleteSucces = () => {
       Router.push('/')
     }
-    const handleEdit = () => {
+    {/*close no permission dialogBox*/}
+    const handleNoPermission = () => {
+      setnoPermissionModalOpen(false);
+    }
+    {/*On EDIT BUTTON click*/}
+    const handleEdit = (e) => {
+      e.preventDefault();
       if(session?.user.email!=authorEmail) {
         setnoPermissionModalOpen(true);
         return;
       }
-      Router.push(`/posts/edit/${postId}`);
+      Router.push("/posts/edit/"+postId);
     }
-    const handleNoPermission = () => {
-      setnoPermissionModalOpen(false);
-    }
-    const dispatch = useDispatch();
+    {/*On DELETE BUTTON click*/} 
     const deletePostById = (e) => {
         e.preventDefault();
+        {/*If author!=currentUser return*/}
         if(session?.user.email!=authorEmail) {
           setnoPermissionModalOpen(true);
           return;
@@ -42,14 +50,17 @@ export default function DropDownMenuPost({postId, authorEmail}) {
             headers:{
               Accept:"application/json" 
             },})
-            .then((response)=>{
+        .then((response)=>{
               window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-              setModalOpen(true);
+              setdeleteSuccessModalOpen(true);
               dispatch(deletePost(postId));
-            })
-            .catch((error)=>{
+              deleteVideo(postVideoId);
+        })
+        .catch((error)=>{
               console.log(error);
-            })
+              //TO DO DIALOG BOX
+        })
+
     }
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -94,7 +105,7 @@ export default function DropDownMenuPost({postId, authorEmail}) {
           </div>
         </Menu.Items>
       </Transition>
-      {modalOpen &&(<DialogBox messageHead="Post deleted sucessfully!" message="Post was deleted sucessfully. You will now be redirected to homepage" handleSucces={handleSucces}/>)}
+      {deleteSuccessModalOpen &&(<DialogBox messageHead="Post deleted sucessfully!" message="Post was deleted sucessfully. You will now be redirected to homepage" handleSucces={handleDeleteSucces}/>)}
       {noPermissionModalOpen &&(<DialogBox messageHead="You dont have permission to do that!" message="You are not the author of this post, so you can't delete or modify it." handleSucces={handleNoPermission}/>)}
     </Menu>
   )

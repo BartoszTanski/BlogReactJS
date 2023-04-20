@@ -1,6 +1,7 @@
 import React from 'react'
 import StackItem from './StackItem';
 import { AiOutlineMail,AiFillGithub, AiOutlineDownload, AiOutlinePhone} from 'react-icons/ai';
+import { deleteVideo, getVideo } from '@/actions/videoActions';
 
 const AboutMe = () => {
   return (

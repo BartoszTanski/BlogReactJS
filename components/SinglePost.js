@@ -54,7 +54,7 @@ const SinglePost = ({postId,postIndex}) => {
                         <p className='text-xs text-gray-500'>{post.author+ "  " + post.time?.substring(0, 10)+" "+post.time?.substring(11, 16)}</p>
                     </div>
                   </div>
-                  <DropDownMenuPost postId={postId} authorEmail={post.email}/>
+                  <DropDownMenuPost postId={postId} authorEmail={post.email} postVideoId={post.video}/>
               </div>
           {post.tags !=null &&(<div className='pl-2 pt-2 flex space-x-1'>
                          {post.tags.map((tag) =>
@@ -80,7 +80,7 @@ const SinglePost = ({postId,postIndex}) => {
           </div>)}
           {/*If Any Video*/}
           {post?.video!=null &&post.video!="null" &&(
-          <div className='reltive h-60 lg:h-96 pt-6 bg-white'>
+          <div className='relative h-60 lg:h-72 pt-6 bg-white'>
               <video  alt="Video" sizes="(max-width: 768px) 100vw,
                 (max-width: 1200px) 50vw,
                 33vw" controls>
