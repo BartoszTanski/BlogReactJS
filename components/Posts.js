@@ -44,7 +44,7 @@ const Posts = ({tagId}) => {
     
     <div>
       <div className='bg-white rounded-md flex justify-between text-xs md:text-md pl-3 h-10 items-center mt-6'>
-        <div id="first-section" className='hidden md:inline-flex  font-semibold text-lg'>Posts</div>
+        <div id="first-section" className='hidden md:inline-flex  font-semibold text-lg'>Most recent Posts</div>
         <div id="second-section" className='lg:hidden'><SearchRegex/></div>
         {/*Go to TOP arrow button*/}
         <button className="fixed md:right-1/3 z-50 bottom-0 right-0 p-5 m-5">

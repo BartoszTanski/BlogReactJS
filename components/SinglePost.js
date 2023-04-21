@@ -80,7 +80,7 @@ const SinglePost = ({postId,postIndex}) => {
           </div>)}
           {/*If Any Video*/}
           {post?.video!=null &&post.video!="null" &&(
-          <div className='relative h-60 lg:h-72 pt-6 bg-white'>
+          <div className='relative h-60 lg:h-72 pt-6  mb-2 lg:mb-32 bg-white'>
               <video  alt="Video" sizes="(max-width: 768px) 100vw,
                 (max-width: 1200px) 50vw,
                 33vw" controls>
