@@ -1,12 +1,8 @@
 import Head from 'next/head'
-import Login from '@/components/Login'
 import Header from '@/components/Header'
-import Sidebar from '@/components/Sidebar'
 import { getSession } from 'next-auth/react'
-import RightSideBar from '@/components/RightSideBar'
 import { useRouter } from 'next/router'
-import AboutMe from '@/components/AboutMe'
-import AboutMeMore from '@/components/AboutMeMore'
+import AboutMeMore from '@/componentsContainers/AboutMeMore'
 
 
 export default function Home({session}) {

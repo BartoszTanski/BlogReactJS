@@ -1,5 +1,5 @@
 import React from 'react'
-import StackItem from './StackItem'
+import StackItem from '../components/StackItem'
 import { AiOutlineMail,AiFillGithub, AiOutlineDownload, AiOutlinePhone} from 'react-icons/ai';
 
 const AboutMeMore = () => {

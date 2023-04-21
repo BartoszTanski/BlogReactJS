@@ -10,7 +10,7 @@ import DropDownMenuPost from './DropDownMenuPost';
 import DialogBox from './DialogBox';
 import ContentNotLoading from './ContentNotLoading';
 import LoadingCircle from './LoadingCircle';
-import styles from './content.module.css';
+import styles from '../cssModules/content.module.css';
 
 const SinglePost = ({postId,postIndex}) => {
     {/*Dialog box states*/}  

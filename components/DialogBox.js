@@ -9,10 +9,6 @@ export default function DialogBox({message, messageHead, handleSucces}) {
     handleSucces();
   }
 
-  function openModal() {
-    setIsOpen(true)
-  }
-
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center">

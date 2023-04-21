@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Header from '@/components/Header'
 import { useRouter } from 'next/router'
-import PrivacyPolicy from '@/components/PrivacyPolicy'
+import PrivacyPolicy from '@/componentsContainers/PrivacyPolicy'
 
 
 

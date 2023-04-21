@@ -11,23 +11,20 @@ import RichTextEdit from './RichTextEdit';
 import BottomOfThePage from './BottomOfThePage';
 import DialogBox from './DialogBox';
 import PostInputFields from './PostInputFields';
+import { deleteVideo } from '@/actions/videoActions';
+import { dialogBoxMessages } from '@/constants/dialogBoxMessages';
+import LoadingCircle from './LoadingCircle';
 
 const CreatePost = () => {
 
-  {/*DIALOG BOXES STATES*/}
-  const [postAdded, setpostAdded] = useState(false)
-  const [postAddedFailure, setpostAddedFailure] = useState(false)
-  const [videoUploadFailure, setvideoUploadFailure] = useState(false)
-  {/*CLOSING DIALOG BOXES*/}
-  const handleSucces = (e) => { //close modal after clicking ok 
-    if(postAdded)setpostAdded(false);
-    if(postAddedFailure)setpostAddedFailure(false);
-    if(videoUploadFailure)setvideoUploadFailure(false);
-  }
+  {/*DIALOG BOX STATES*/}
+  const [dialogBoxMessage, setdialogBoxMessage] = useState(null);
+  const [dialogBoxOpen, setdialogBoxOpen] = useState(false);
 
   const BACKEND_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts`;
   const VIDEO_BACKEND_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/video`;
   const {data: session} = useSession();
+  const dispatch = useDispatch();
 
   const inputRefContent = useRef(null);
   const inputRefTitle = useRef(null);
@@ -41,7 +38,7 @@ const CreatePost = () => {
   const [videoToPost, setVideoToPost] = useState(null);
   const [videoToSend, setVideoToSend] = useState(null);
   const [editorState, seteditorState] = useState(false);
-  const dispatch = useDispatch();
+  const [loading, setloading] = useState(false);
   const editorChange = () => {
     seteditorState(!editorState);
   }
@@ -50,7 +47,8 @@ const CreatePost = () => {
   }
   const handleClickVideo = () => {
     hiddenVideoInput.current.click(); 
- }
+  }
+  //Adds image miniature to postCreator
   const addImageToPost = (e) => {
     const reader = new FileReader();
     if(e.target.files[0]){
@@ -62,6 +60,7 @@ const CreatePost = () => {
     }
     e.target.value = '';
   }
+  //Adds video miniature to postCreator
   const addVideoToPost = (e) => {
 
     if(e.target.files[0]){
@@ -75,32 +74,34 @@ const CreatePost = () => {
     formDataVideo.append("video",videoToSend);
     await axios.post(VIDEO_BACKEND_API_ENDPOINT,formDataVideo,{
       headers:{
-          Accept:"application/json",
-          "Access-Control-Allow-Origin":'*'
+            Accept:"application/json",
+            "Access-Control-Allow-Origin":'*'
       },})
       .then((response)=>{
-        removeVideo();
-        videoId.current = response.data;
+          videoId.current = response.data;
       })
       .catch((error)=>{
-        console.log(error);
-        setvideoUploadFailure(true);
+          console.log(error);
+          setdialogBoxMessage(dialogBoxMessages.videoUploadFailure);
+          setdialogBoxOpen(true);
       })
   }
 
-  const removeImage = () => {
+  const removeImage = () => { //removes image to send and image miniature
     setImageToPost(null);
     setImageToSend(null);
   };
-  const removeVideo = () => {
+  const removeVideo = () => { //removes video to send and video miniature
     setVideoToPost(null);
     setVideoToSend(null);
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { 
     e.preventDefault();
     if(!inputRefContent.current) return;
-    {/*IF THERE IS VIDEO ATTACHED*/}
+    setloading(true);
+    {/*IF THERE IS VIDEO ATTACHED - UPLOAD VIDEO*/}
     if(videoToSend) await sendVideo();
+    {/*IF VIDEO UPLOAD FAILS - RETURN*/}
     if(videoToSend&&(videoId.current==null)) return;
     const formData = new FormData();
     formData.append("file",imageToSend);
@@ -125,13 +126,19 @@ const CreatePost = () => {
         //dispatch(addPost(response.data));
         removeImage();
         removeVideo();
+        setloading(false)
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-        setpostAdded(true);
+        setdialogBoxMessage(dialogBoxMessages.postUploadSuccess);
+        setdialogBoxOpen(true);
         dispatch(setStoreTime(1));
       })
       .catch((error)=>{
         console.log(error);
-        setpostAddedFailure(true);
+        setloading(false)
+        setdialogBoxMessage(dialogBoxMessages.postUploadFailure);
+        setdialogBoxOpen(true);
+        //If post create error delete uploaded video
+        if(videoId.current!=null)deleteVideo(videoId.current);
       })
   }
 
@@ -188,10 +195,9 @@ const CreatePost = () => {
         <div className='flex flex-col px-3 py-5 '>
           <button className='rounded-md bg-gray-300 hover:bg-gray-400 hover:text-gray-600 cursor-pointer text-gray-500 h-10 text-lg font-bold' onClick={handleSubmit}>Add Post</button>
         </div>
+        {loading&&(<LoadingCircle/>)}
         {/*DIALOG BOXES*/}
-        {postAdded &&(<DialogBox messageHead="Post added successfully!" message="Post was added successfully, you can add other post or go to homepage." handleSucces={handleSucces}/>)}
-        {postAddedFailure &&(<DialogBox messageHead="Post add attempt FAILURE" message="Post was NOT added, make sure main image is added and its size is less than 1MB." handleSucces={handleSucces}/>)}
-        {videoUploadFailure &&(<DialogBox messageHead="Video upload FAILURE" message="Try once again, if this problem reoccurs file size might be too big." handleSucces={handleSucces}/>)}
+        {dialogBoxOpen &&(<DialogBox messageHead={dialogBoxMessage?.messageHead} message={dialogBoxMessage?.message} handleSucces={()=>setdialogBoxOpen(false)}/>)}
         <BottomOfThePage/>
     </div>
   )
