@@ -21,11 +21,13 @@ const RightSideBar = () => {
           .then((response)=>{
             dispatch(addTopPosts(response.data));
             if(fetchFailure){setfetchFailure(false);}
+            setloading(false)
             //setReleases(response.data);
           }).catch((error)=>{
             console.log(error);
             setfetchFailure(true);
-          }).finally(setloading(false));
+            setloading(false)
+          });
         };
         fetchData();}
       },[]);
@@ -34,12 +36,12 @@ const RightSideBar = () => {
         <div className='flex items-center text-gray-500'>
             <p className='flex text-2xl pb-1 text-gray-700 font-semibold flex-grow'>Top posts this week:</p>
         </div>
-        {loading&&(<LoadingCircle/>)}
+        {loading&&(<LoadingCircle className="text-center py-24 m-auto pl-14"/>)}
         {fetchFailure&&(<ContentNotLoading/>
           )}
         {/*here releases*/}
         {releases !=null &&(
-        <div className='py-1 pr-2 overflow-y-auto no-scrollbar h-4/6'>
+        <div className='py-1 pr-2 overflow-y-auto no-scrollbar h-5/6'>
         {releases.filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i).sort((a, b) => a.likes > b.likes ? -1 : 1).map((release) =>
         (<Releases release={release} key={release.id}/>))}
         </div>)}

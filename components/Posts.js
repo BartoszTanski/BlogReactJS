@@ -54,7 +54,7 @@ const Posts = ({tagId}) => {
         </button>
       </div>
       {/*While data fetching*/}
-      {loading&&(<LoadingCircle/>)}
+      {loading&&(<LoadingCircle className="text-center absolute top-1/2 left-1/2 m-auto"/>)}
       {/*While posts fetched*/}
       {posts?.map((post, index) =>
         (<Post post={post} key={post.id} postIndex={index}/>))}

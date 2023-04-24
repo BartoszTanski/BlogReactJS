@@ -195,7 +195,7 @@ const CreatePost = () => {
         <div className='flex flex-col px-3 py-5 '>
           <button className='rounded-md bg-gray-300 hover:bg-gray-400 hover:text-gray-600 cursor-pointer text-gray-500 h-10 text-lg font-bold' onClick={handleSubmit}>Add Post</button>
         </div>
-        {loading&&(<LoadingCircle/>)}
+        {loading&&(<LoadingCircle className="text-center absolute top-1/2 left-1/2 m-auto"/>)}
         {/*DIALOG BOXES*/}
         {dialogBoxOpen &&(<DialogBox messageHead={dialogBoxMessage?.messageHead} message={dialogBoxMessage?.message} handleSucces={()=>setdialogBoxOpen(false)}/>)}
         <BottomOfThePage/>

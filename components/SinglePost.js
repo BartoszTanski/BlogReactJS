@@ -105,7 +105,7 @@ const SinglePost = ({postId,postIndex}) => {
           <BottomOfThePage/>
       </div>)}
       {postFetchFailure &&(<DialogBox messageHead="Couldn't retrive this post data" message="Post data can't be reached, post could be already deleted." handleSucces={handleSucces}/>)}
-      {loading&&(<LoadingCircle/>)}
+      {loading&&(<LoadingCircle className="text-center absolute top-1/2 left-1/2 m-auto"/>)}
       {fetchFailure&&(<ContentNotLoading/>)}
     </div>
   )  
