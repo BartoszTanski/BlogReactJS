@@ -27,6 +27,7 @@ const Posts = ({tagId}) => {
         setloading(true);
         const response = await axios.get(POSTS_API_ENDPOINT)
         .then((response)=>{
+          console.log(response)
           dispatch(addAllPost(response.data));
           dispatch(setUpdateTime(storeUpdateTime));
           if(tagId!==undefined){dispatch(setStoreTime(1));}

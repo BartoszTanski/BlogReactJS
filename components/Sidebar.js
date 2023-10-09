@@ -7,6 +7,7 @@ import {AiOutlineShop} from 'react-icons/ai';
 import {BsStopwatch} from 'react-icons/bs';
 import { useSession } from 'next-auth/react'
 import AboutMe from './AboutMe'
+import AdTest from './AdTest'
 
 
 
@@ -21,7 +22,8 @@ const Sidebar = () => {
             <p className='hidden sm:inline-flex font-medium'>{session?.user.name}</p>
 
         </div> */}
-        <AboutMe></AboutMe>
+        {/*<AboutMe></AboutMe>*/}
+        <AdTest/>
         {/* <SidebarItem Icon={ImUsers} value='Friends'/>
         <SidebarItem Icon={MdGroups} value='Groups'/>
         <SidebarItem Icon={AiOutlineShop} value='Marketplace'/>

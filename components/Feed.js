@@ -1,6 +1,7 @@
 import React from 'react'
 import Posts from './Posts';
 import BottomOfThePage from './BottomOfThePage';
+import ByPage from './ByPage';
 
 const Feed=
  ({tagId}) => {
@@ -10,7 +11,8 @@ const Feed=
             {/*Create Post Box
             <CreatePost newPost={newPost} setnewPost={setnewPost}/>
             Post*/}
-            <Posts tagId={tagId} />
+            {/*<Posts tagId={tagId} />*/}
+            <ByPage/>
             <BottomOfThePage/>
         </div>
     </div>

@@ -13,8 +13,9 @@ export const postSlice = createSlice({
             state.value.unshift(action.payload);
         },
         addAllPost: (state,action) => {
-            const postsArray = [...action.payload];
-            state.value=postsArray;
+            const postsArray = action.payload;
+            state.value = [...state.value, ...postsArray];
+
         },
         deletePost:(state, action) =>{
             let id  = action.payload;

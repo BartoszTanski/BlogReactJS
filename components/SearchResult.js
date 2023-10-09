@@ -11,12 +11,13 @@ const SearchResult = ({result}) => {
       }}>
     <div className='bg-white pl-2 flex flex-col justify-between align-middle mt-1 rounded-md hover:bg-gray-100 border text-gray-500'>
         <div className='w-64 px-1 pt-1'>
-            <p className=' w-64 text-md font-semibold overflow-x-hidden'>{result.title}</p>
+            <p className='w-64 text-sm font-semibold overflow-x-hidden'>{result.title}</p>
+            <p className='text-xs font-normal'>{result.description}</p>
         </div>
         <div className='flex flex-row justify-start'>
         <p className='py-1 pl-2 pr-1 text-xs text-blue-400'>{result.likes}</p>
         <FiThumbsUp className='h-4 my-1 text-blue-400'/>
-        <p className='py-1 pl-36 text-xs'>{datetime}</p>
+        <p className='py-1 pl-16 text-xs'>{result.author+" "+datetime}</p>
         </div>
     </div>
     </Link>

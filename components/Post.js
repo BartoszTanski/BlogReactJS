@@ -5,6 +5,7 @@ import {FaRegCommentAlt} from 'react-icons/fa';
 import {RiShareForwardLine} from 'react-icons/ri'; 
 import Link from 'next/link';
 import axios from 'axios';
+import { comment } from 'postcss';
 
 const Post = ({post,postIndex}) => {
     const [liked, setLiked] = useState(false);
@@ -72,7 +73,7 @@ const Post = ({post,postIndex}) => {
             </div>)}
             {liked == true &&(
             <div onClick={handleLike} className='flex w-1/3 items-center space-x-1 hover:bg-gray-100 flex-grow justify-center text-blue-400 p-2 rounded-xl cursor-pointer'>
-                <p className='font-semibold px-1 text-xs'>{likes!=null&&likes!=0?likes:""}</p>
+                <p className='font-semibold px-1 text-sm'>{likes!=null&&likes!=0?likes:""}</p>
                 <FiThumbsUp className='h-4'/>
                 <p className='text-xs sm:text-base'>Like</p>
             </div>)}
@@ -82,6 +83,7 @@ const Post = ({post,postIndex}) => {
                     query: { postId: post.id},
                     }} className='text-xs sm:text-base'>
                     <div className='flex items-center space-x-1 hover:bg-gray-100 justify-center p-2 rounded-xl cursor-pointer'>
+                    <p className='font-semibold px-1 text-sm'>{post.comments?.length}</p>{/*<p>post.comments?.reduce(curr=>curr+1,0)}</p>*/}
                     <FaRegCommentAlt className='h-4'/>
                     <p className='text-xs sm:text-base'>Comment</p>
                     </div>
