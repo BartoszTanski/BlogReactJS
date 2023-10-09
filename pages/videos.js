@@ -4,12 +4,12 @@ import Sidebar from '@/components/Sidebar'
 import { getSession } from 'next-auth/react'
 import Feed from '@/components/Feed'
 import RightSideBar from '@/components/RightSideBar'
-import { useRouter } from 'next/router'
+//import { useRouter } from 'next/router'
 import Videos from '@/components/shortVideos/Videos'
 
 
 export default function videos({session}) {
-  const router = useRouter()
+  //const router = useRouter()
   return (
     <>
       <Head>
