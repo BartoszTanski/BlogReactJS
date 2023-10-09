@@ -94,13 +94,12 @@ useEffect(() => {
         </button>
       </div>
       {/*While data fetching*/}
-      {loading&&(<LoadingCircle className="text-center absolute top-1/2 left-1/2 m-auto"/>)}
+      {loading&&(<LoadingCircle className="text-center pl-10  pt-16 m-auto"/>)}
       {/*While posts fetched*/}
       {posts?.map((post, index) =>
         (<Post post={post} key={post.id} postIndex={index}/>))}
       {/*While data fetch failure*/}
       {fetchFailure&&(<ContentNotLoading/>)}
-      {loading&&(<LoadingCircle className="text-center pl-10  pt-16 m-auto"/>)}
       <div ref={observerTarget} className='h-1'></div>
     </div>
     
