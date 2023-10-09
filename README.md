@@ -1,4 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# React/NextJS project - frontend for https://github.com/BartoszTanski/BlogSB project - deployed on azure 
+
+### Application enables CRUD operations on posts and comments. Backend is connected to MongoDB database (Azure Cosmos DB).
+
+#### Application functionalites:
+- CRUD operations on posts
+- video and image upload
+- streaming videos 
+
+#### Frontend application is deployed on azure web services and accesible (_[here](https://bartosztanski.azurewebsites.net "bartosztanski.azurewebsites.net")_)
 
 ## Getting Started
 
