@@ -13,28 +13,28 @@ const RightSideBar = () => {
     const [fetchFailure, setfetchFailure] = useState(false)
     const TOP_POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/top`;
     const dispatch = useDispatch();
+
+    async function getData () {
+      setloading(true);
+      try {
+      const response = await axios.get(TOP_POSTS_API_ENDPOINT)
+        setReleases(response.data);
+        dispatch(addTopPosts(response.data));
+      } 
+      catch(error) {
+        console.log("Data Fetch Error: "+error);
+        setfetchFailure(true);
+      }
+      finally {
+        setloading(false);
+      }
+    }
     useEffect(()=>{
-        if (releases.length==0 && !loading){
-        const fetchData = () =>{
-          if (fetchFailure) setfetchFailure(false);
-          setloading(true);
-          try {
-          axios.get(TOP_POSTS_API_ENDPOINT)
-          .then((response)=>{
-            dispatch(addTopPosts(response.data));
-            setReleases(response.data);
-          })
-          } 
-          catch(error) {
-            console.log("Data Fetch Error: "+error);
-            setfetchFailure(true);
-          }
-          finally {
-            setloading(false);
-          }
-        };
-        fetchData();}
+        if (releases.length>0) return;
+        if (loading) return;
+        getData();
       },[]);
+
   return (
     <div className='hidden lg:inline-flex my-2 bg-gray-50 flex-col max-w-[250px] pt-4 px-2 rounded-md md:min-w-[200px] lg:min-w-[250px]'>
         <div className='flex items-center text-gray-500'>
