@@ -9,25 +9,29 @@ import { addTopPosts, selectTop } from '@/public/src/features/postSlice';
 
 const RightSideBar = () => {
     const [loading, setloading] = useState(false)
+    const [releases, setReleases] = useState(useSelector(selectTop))
     const [fetchFailure, setfetchFailure] = useState(false)
     const TOP_POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/top`;
     const dispatch = useDispatch();
-    const releases = useSelector(selectTop);
     useEffect(()=>{
-        if (releases.length==0){
+        if (releases.length==0 && !loading){
         const fetchData = () =>{
+          if (fetchFailure) setfetchFailure(false);
           setloading(true);
+          try {
           axios.get(TOP_POSTS_API_ENDPOINT)
           .then((response)=>{
             dispatch(addTopPosts(response.data));
-            if(fetchFailure){setfetchFailure(false);}
-            setloading(false)
-            //setReleases(response.data);
-          }).catch((error)=>{
-            console.log(error);
+            setReleases(response.data);
+          })
+          } 
+          catch(error) {
+            console.log("Data Fetch Error: "+error);
             setfetchFailure(true);
-            setloading(false)
-          });
+          }
+          finally {
+            setloading(false);
+          }
         };
         fetchData();}
       },[]);
@@ -42,10 +46,12 @@ const RightSideBar = () => {
         {/*here releases*/}
         {releases !=null &&(
         <div className='py-1 pr-2 overflow-y-auto no-scrollbar h-5/6'>
-        {releases.filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i).sort((a, b) => a.likes > b.likes ? -1 : 1).map((release) =>
-        (<Releases release={release} key={release.id}/>))}
+          <div> 
+            {releases.filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i).sort((a, b) => a.likes > b.likes ? -1 : 1).map((release) =>
+          (<Releases release={release} key={release.id}/>))}
+          <div className='h-[20rem]'></div>
+          </div>
         </div>)}
-        <div className='h-60'></div>
     </div>
   )
 }

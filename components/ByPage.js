@@ -8,6 +8,7 @@ import LoadingCircle from './LoadingCircle';
 import ContentNotLoading from './ContentNotLoading';
 import Link from 'next/link';
 import { FaArrowUp } from 'react-icons/fa';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 const ByPage = (/*{tagId}*/) => {
   //const SEARCH = tagId?"/tag/"+tagId:"";
@@ -47,9 +48,10 @@ useEffect(() => {
   {/*current posts update timer*/}
   const localUpdateTime = useSelector(selectUpdateTime);
 
+
   async function getData() {
     if (loading) return;
-    setloading(true);
+    setloading(true);   
     try {
       const response = await axios.get(POSTS_API_ENDPOINT);
       console.log(response)
@@ -94,11 +96,11 @@ useEffect(() => {
           </Link>   
         </button>
       </div>
-      {/*While data fetching*/}
-      {loading&&(<LoadingCircle className="text-center pl-10  pt-16 m-auto"/>)}
       {/*While posts fetched*/}
       {posts?.map((post, index) =>
         (<Post post={post} key={post.id} postIndex={index}/>))}
+      {/*While data fetching*/}
+      {loading&&(<LoadingCircle className="text-center pl-10  pt-16 m-auto"/>)}
       {/*While data fetch failure*/}
       {fetchFailure&&(<ContentNotLoading/>)}
       <div ref={observerTarget} className='h-1'></div>
