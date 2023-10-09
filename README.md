@@ -1,4 +1,5 @@
-# React/NextJS project - frontend for https://github.com/BartoszTanski/BlogSB project - deployed on azure 
+## React/NextJS project - frontend for https://github.com/BartoszTanski/BlogSB project 
+* deployed on azure (not by github actions)
 
 ### Application enables CRUD operations on posts and comments. Backend is connected to MongoDB database (Azure Cosmos DB).
 
