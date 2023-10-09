@@ -48,11 +48,12 @@ useEffect(() => {
   const localUpdateTime = useSelector(selectUpdateTime);
 
   async function getData() {
+    if (loading) return;
     setloading(true);
     try {
       const response = await axios.get(POSTS_API_ENDPOINT);
       console.log(response)
-      console.log(page);
+      console.log("Current page loaded: "+page);
       setPagesCount(response.data.size);
       return response.data.posts;
     }
@@ -66,7 +67,7 @@ useEffect(() => {
     }
   }
   useEffect(() => {
-    console.log(posts.length)
+    console.log("posts in db: " +posts.length)
     if (posts.length==0|posts.length<=pagesCount)
     fetchData();
   }, [page])
