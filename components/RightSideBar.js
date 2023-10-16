@@ -40,7 +40,7 @@ const RightSideBar = () => {
         <div className='flex items-center text-gray-500'>
             <p className='flex text-2xl pb-1 text-gray-700 font-semibold flex-grow'>Top posts this week:</p>
         </div>
-        {loading&&(<LoadingCircle className="text-center py-24 m-auto pl-14"/>)}
+        {loading&&(<LoadingCircle className="text-center py-24 m-auto"/>)}
         {fetchFailure&&(<ContentNotLoading/>
           )}
         {/*here releases*/}

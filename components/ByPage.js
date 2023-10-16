@@ -69,7 +69,8 @@ useEffect(() => {
     }
   }
   useEffect(() => {
-    console.log("posts in db: " +posts.length)
+    if (loading) return;
+    console.log("posts in db: " +pagesCount)
     if (posts.length==0|posts.length<=pagesCount)
     fetchData();
   }, [page])
@@ -100,7 +101,7 @@ useEffect(() => {
       {posts?.map((post, index) =>
         (<Post post={post} key={post.id} postIndex={index}/>))}
       {/*While data fetching*/}
-      {loading&&(<LoadingCircle className="text-center pl-10  pt-16 m-auto"/>)}
+      {loading&&(<LoadingCircle className="text-center  pt-16 m-auto"/>)}
       {/*While data fetch failure*/}
       {fetchFailure&&(<ContentNotLoading/>)}
       <div ref={observerTarget} className='h-1'></div>
