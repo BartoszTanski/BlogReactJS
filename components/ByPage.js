@@ -20,6 +20,7 @@ useEffect(() => {
   const observer = new IntersectionObserver(
     entries => {
       if (entries[0].isIntersecting) {
+        if(page<pagesCount||page==0)
         setPage(prevPage => prevPage + 1)
       }
     },
