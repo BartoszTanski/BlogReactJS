@@ -3,7 +3,7 @@ import React from 'react'
 const AdTest = () => {
   return (
     <div>
-        <div className='flex-row h-screen text-center relative items-center border-x-zinc-200 border-4 border-solid font-extrabold text-4xl space-y-60 text-black bg-amber-300'>
+        <div className='flex-row h-screen text-center relative items-center border-x-zinc-200 border-4 border-solid font-extrabold text-4xl space-y-60 text-black bg-amber-300 max-w-[250px] md:min-w-[200px] lg:min-w-[250px]'>
             <div className=' items-center  h-full space-y-10  px-4'>
                 <div className='h-1/5 pt-12 font-semibold italic text-4xl text-slate-100'> SPECIAL OFFER</div>
                 <p className=' -rotate-45'>-50%</p>

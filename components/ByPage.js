@@ -16,6 +16,66 @@ const ByPage = (/*{tagId}*/) => {
   const [page,setPage] = useState(0);
   const [pagesCount,setPagesCount] = useState(0);
 
+  const [startPoint, setStartPoint] = useState(0);
+  const [pullChange, setPullChange] = useState();
+  const refreshCont = useRef(0);
+  useEffect(() => {
+    window.addEventListener("touchstart", pullStart);
+    window.addEventListener("touchmove", pull);
+    window.addEventListener("touchend", endPull);
+    return () => {
+      window.removeEventListener("touchstart", pullStart);
+      window.removeEventListener("touchmove", pull);
+      window.removeEventListener("touchend", endPull);
+    };
+  });
+  const initLoading = () => {
+    setreloading(true);
+    refreshCont.current.classList.add("loads");
+    setTimeout(() => {
+      window.location.reload();
+    }, 100000);
+  };
+  const pullStart = (e) => {
+    const { screenY } = e.targetTouches[0];
+    setStartPoint(screenY);
+  };
+  const pull = (e) => {
+    /**
+     * get the current user touch event data
+     */
+    const touch = e.targetTouches[0];
+    /**
+     * get the touch position on the screen's Y axis
+     */
+    const { screenY } = touch;
+    /**
+     * The length of the pull
+     *
+     * if the start touch position is lesser than the current touch position, calculate the difference, which gives the `pullLength`
+     *
+     * This tells us how much the user has pulled
+     */
+    let pullLength = startPoint < screenY ? Math.abs(screenY - startPoint) : 0;
+    setPullChange(pullLength);
+    console.log({ screenY, startPoint, pullLength, pullChange });
+  };
+  const endPull = (e) => {
+    setStartPoint(0);
+    setPullChange(0);
+    if (pullChange > 320) initLoading();
+  };
+  const loads = {
+    color: "black",
+    backgroundColor: "DodgerBlue",
+    padding: "10px",
+    fontFamily: "Arial",
+    visibility: "visible"
+
+  };
+  
+  
+
 useEffect(() => {
   const observer = new IntersectionObserver(
     entries => {
@@ -42,6 +102,7 @@ useEffect(() => {
   //const POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts${SEARCH}`;
   const POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/page/${page}`;
   const [loading, setloading] = useState(false);
+  const [reloading, setreloading] = useState(false);
   const dispatch = useDispatch();
   const posts = useSelector(selectPost);
   {/*global posts update timer*/}
@@ -98,6 +159,31 @@ useEffect(() => {
           </Link>   
         </button>
       </div>
+<div
+ref={refreshCont}
+className="refresh-container w-fit -mt-10 m-auto"
+style={{ marginTop: pullChange / 3.118 -40 || "",
+visibility: pullChange?"visible":"hidden" }}
+>
+<div className="refresh-icon text-gray-800 p-2 rounded-full">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className="w-6 h-6"
+    style={{ transform: `rotate(${pullChange}deg)` }}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+    />
+  </svg>
+</div>
+</div>
+{reloading&&(<LoadingCircle className="text-center absolute  left-0 right-0  z-50  py-12 m-auto"/>)}
       {/*While posts fetched*/}
       {posts?.map((post, index) =>
         (<Post post={post} key={post.id} postIndex={index}/>))}
