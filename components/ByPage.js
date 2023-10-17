@@ -62,7 +62,7 @@ const ByPage = (/*{tagId}*/) => {
   const endPull = (e) => {
     setStartPoint(0);
     setPullChange(0);
-    if (pullChange > 320) initLoading();
+    if (pullChange > 280) initLoading();
   };
   const loads = {
     color: "black",
