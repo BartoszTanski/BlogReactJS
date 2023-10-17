@@ -31,10 +31,9 @@ const ByPage = (/*{tagId}*/) => {
   });
   const initLoading = () => {
     setreloading(true);
-    refreshCont.current.classList.add("loads");
     setTimeout(() => {
       window.location.reload();
-    }, 100000);
+    }, 1000);
   };
   const pullStart = (e) => {
     const { screenY } = e.targetTouches[0];
