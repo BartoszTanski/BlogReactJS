@@ -10,6 +10,9 @@ export const dialogBoxMessages = {
     postUploadFailure:{messageHead:"Post add attempt FAILURE",message:"Post was NOT added, make sure main image is added and its size is less than 3MB."},
     postEditSuccess:{messageHead:"Post edited succesfully.",message:"Post was edited, you can continue editing it or go to homepage."},
     postDeleteSuccess:{messageHead:"Post deleted successfully!",message:"Post was deleted sucessfully. You will now be redirected to homepage"},
-    noPermissionToModify:{messageHead:"You dont have permission to do that!",message:"You are not the author of this post, so you can't delete or modify it."}
+    noPermissionToModify:{messageHead:"You dont have permission to do that!",message:"You are not the author of this post, so you can't delete or modify it."},
+    pleaseUploadMainImage:{messageHead:"There is no image attached!",message:"You can't upload post without a main image."},
+    pleaseFillAllFields:{messageHead:"Some input fields are blank!",message:"Please make sure all necessary input fields are filled."},
+    commentUploadFailure:{messageHead:"Comment upload failure!",message:"There was some error during comment upload."}
 }
 

@@ -5,20 +5,19 @@ import axios from 'axios';
 import LoadingCircle from './LoadingCircle';
 import ContentNotLoading from './ContentNotLoading';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTopPosts, selectTop } from '@/public/src/features/postSlice';
+import { addTopPosts, selectTop, selectTopPosts } from '@/public/src/features/postSlice';
 
 const RightSideBar = () => {
     const [loading, setloading] = useState(false)
-    const [releases, setReleases] = useState(useSelector(selectTop))
     const [fetchFailure, setfetchFailure] = useState(false)
     const TOP_POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/top`;
+    const releases = useSelector(selectTopPosts);
     const dispatch = useDispatch();
 
     async function getData () {
       setloading(true);
       try {
       const response = await axios.get(TOP_POSTS_API_ENDPOINT)
-        setReleases(response.data);
         dispatch(addTopPosts(response.data));
       } 
       catch(error) {

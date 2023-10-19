@@ -21,27 +21,37 @@ const SinglePost = ({postId,postIndex}) => {
     const handleSucces = (e) => { //close modal after clicking ok
       setpostFetchFailure(false);
     }
+
     const VIDEO_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/video/stream/`;
     const POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/${postId}`;
-    const [newComment, setnewComment] = useState(false)
-    const [post, setpost] = useState(null)
+    const [post, setpost] = useState(null);
+    const [comments, setComments] = useState(null);
+    const addNewComment = (newComment) => {
+      if (comments?.length>0){
+      setComments([...comments, newComment]);
+      }
+      else setComments([newComment]);
+    }
+    const fetchData = async () =>{
+      setloading(true)
+      await axios.get(POST_API_ENDPOINT)
+      .then((response)=>{
+        setpost(response.data);
+        setComments(response.data.comments);
+        if(fetchFailure) {setfetchFailure(false);}
+        setloading(false)
+      }).catch((error)=>{
+        console.log(error);
+        setloading(false);
+        setpostFetchFailure(true);
+        setfetchFailure(true);
+      });
+    };
     useEffect(()=>{
-      const fetchData = () =>{
-        setloading(true)
-        const response = axios.get(POST_API_ENDPOINT)
-        .then((response)=>{
-          setpost(response.data);
-          if(fetchFailure) {setfetchFailure(false);}
-          setloading(false)
-        }).catch((error)=>{
-          console.log(error);
-          setloading(false);
-          setpostFetchFailure(true);
-          setfetchFailure(true);
-        });
-      };
+      if (post==null)
       fetchData();
-    },[newComment]);
+    },[]);
+
   return (
     <div className=''>
       {post !=null &&(<div className='flex flex-col '>
@@ -97,14 +107,18 @@ const SinglePost = ({postId,postIndex}) => {
           </div>
           {/*Comments*/}
           <div id="comments" className='p-2 space-y-2'>
-            {post.comments?.sort((a, b) => a.time > b.time ? 1 : -1).map((comment) =>
+            {comments?.sort((a, b) => a.time > b.time ? 1 : -1).map((comment) =>
             (<Comment comment={comment} key={comment.id}/>))}
           </div>
           {/*Add new comment*/}
-          <AddComment postId={post.id} newComment={newComment} setnewComment={setnewComment}/>
+          <AddComment postId={post.id} addNewComment={addNewComment}/>
           <BottomOfThePage/>
       </div>)}
-      {postFetchFailure &&(<DialogBox messageHead="Couldn't retrive this post data" message="Post data can't be reached, post could be already deleted." handleSucces={handleSucces}/>)}
+      {postFetchFailure &&(
+        <DialogBox messageHead="Couldn't retrive this post data" 
+          message="Post data can't be reached, post could be already deleted." 
+          handleSucces={handleSucces}
+        />)}
       {loading&&(<LoadingCircle className="text-center absolute top-1/2 left-1/2 m-auto"/>)}
       {fetchFailure&&(<ContentNotLoading/>)}
     </div>

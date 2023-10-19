@@ -71,7 +71,7 @@ Master&apos;s studies at the University of Gdańsk, during the week I learn prog
                             <AiFillGithub  size={30} className="pb-1 mx-auto"/>
                     </div>
                     </a>
-                    <a href="/Bartosz_Tański_Resume.pdf" download>
+                    <a href="/resources/Bartosz_Tański_Resume.pdf" download>
                         <div className='flex px-2 space-x-10 shadow-md hover:bg-gray-200 hover:font-semibold rounded-md pb-1 pt-2 w-52'>
                         <p>Download my CV</p>
                         <AiOutlineDownload  size={25} className="mx-auto"/>

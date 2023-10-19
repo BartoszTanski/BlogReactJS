@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <div className='bg-white flex items-center p-2 shadow-md top-0 sticky z-50 h-16 '>
         {/*Left*/}
-        <img src="/icon.png" alt="logo" className=' rounded-full' height={40} width={40}></img>
+        <img src="/resources/icon.png" alt="logo" className=' rounded-full' height={40} width={40}></img>
         <div className='hidden pl-6 lg:inline-flex'><SearchRegex/></div>
         {/*Center*/}
         <div className='flex flex-grow justify-center mx-2'>
@@ -46,7 +46,7 @@ const Header = () => {
         </div>
         {/*Right*/}
             <div className='flex items-center justify-end min-w-fit space-x-4'>
-             <img src={session?session.user.image:"/anonimousUser.jpg"} height={40} width={40} alt="profilePic" className="rounded-full border border-gray-300"
+             <img src={session?session.user.image:"/resources/anonimousUser.jpg"} height={40} width={40} alt="profilePic" className="rounded-full border border-gray-300"
              >
             </img>
                 <p className='hidden xl:inline-flex font-semibold text-sm whitespace-nowrap p-3 max-w-xs'>

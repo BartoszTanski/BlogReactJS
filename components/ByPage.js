@@ -104,10 +104,6 @@ useEffect(() => {
   const [reloading, setreloading] = useState(false);
   const dispatch = useDispatch();
   const posts = useSelector(selectPost);
-  {/*global posts update timer*/}
-  const storeUpdateTime = useSelector(selectStoreTime);
-  {/*current posts update timer*/}
-  const localUpdateTime = useSelector(selectUpdateTime);
 
 
   async function getData() {
@@ -132,15 +128,14 @@ useEffect(() => {
   useEffect(() => {
     if (loading) return;
     console.log("posts in db: " +pagesCount)
-    if (posts.length==0|posts.length<=pagesCount)
+    if (posts.length==0|posts.length+2<=pagesCount*2)
     fetchData();
   }, [page])
   
   const fetchData = async () =>{
     const res = await getData();
         if(res!=null){
-        dispatch(addAllPost(res));
-        dispatch(setUpdateTime(storeUpdateTime));
+        dispatch(addAllPost(res));;
         }
         if(fetchFailure){setfetchFailure(false);}
   };

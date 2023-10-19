@@ -16,7 +16,7 @@ export default function videos({session}) {
         <title>Videos</title>
         <meta name="description" content="Simple blog app with sb and nextjs" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/icon.png" />
+        <link rel="icon" href="/resources/icon.png" />
 
       </Head>
       <Header></Header>

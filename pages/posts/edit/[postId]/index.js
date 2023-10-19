@@ -19,7 +19,7 @@ export default function Edit ({session}) {
         <title>Posts Editor</title>
         <meta name="description" content="Creating new posts form" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/icon.png" />
+        <link rel="icon" href="/resources/icon.png" />
       </Head>
    <div>
       <Header></Header>

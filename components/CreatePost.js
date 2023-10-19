@@ -5,7 +5,6 @@ import {IoMdPhotos} from "react-icons/io";
 import { useRef, useState } from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
-import { setStoreTime } from '@/public/src/features/postSlice';
 import axios from 'axios';
 import RichTextEdit from './RichTextEdit';
 import BottomOfThePage from './BottomOfThePage';
@@ -20,6 +19,7 @@ const CreatePost = () => {
   {/*DIALOG BOX STATES*/}
   const [dialogBoxMessage, setdialogBoxMessage] = useState(null);
   const [dialogBoxOpen, setdialogBoxOpen] = useState(false);
+  const [loading, setloading] = useState(false);
 
   const BACKEND_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts`;
   const VIDEO_BACKEND_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/video`;
@@ -38,7 +38,7 @@ const CreatePost = () => {
   const [videoToPost, setVideoToPost] = useState(null);
   const [videoToSend, setVideoToSend] = useState(null);
   const [editorState, seteditorState] = useState(false);
-  const [loading, setloading] = useState(false);
+
   const editorChange = () => {
     seteditorState(!editorState);
   }
@@ -79,6 +79,7 @@ const CreatePost = () => {
       },})
       .then((response)=>{
           videoId.current = response.data;
+          console.log(response.data);
       })
       .catch((error)=>{
           console.log(error);
@@ -94,17 +95,38 @@ const CreatePost = () => {
   const removeVideo = () => { //removes video to send and video miniature
     setVideoToPost(null);
     setVideoToSend(null);
+    videoId.current = null;
   };
+  const validInputFields = () => {
+    if (videoToSend&&(videoId.current==null)) return false; //IF VIDEO UPLOAD FAILED - RETURN
+    else if (imageToSend==null) {
+      setdialogBoxMessage(dialogBoxMessages.pleaseUploadMainImage);
+      setdialogBoxOpen(true); 
+      return false; //IF NO MAIN IMAGE - RETURN
+    }
+    else if ((inputRefTitle.current.value=="") 
+      ||(inputRefTags.current.value=="")
+      ||(inputRefDesc.current.value=="") 
+      ||(inputRefContent.current==false)) {
+        setdialogBoxMessage(dialogBoxMessages.pleaseFillAllFields);
+        setdialogBoxOpen(true); 
+        return false; //IF INPUT FIELDS BLANK - RETURN
+    }
+    else return true;
+ }
+
   const handleSubmit = async (e) => { 
     e.preventDefault();
-    if(!inputRefContent.current) return;
     setloading(true);
-    {/*IF THERE IS VIDEO ATTACHED - UPLOAD VIDEO*/}
+    {/*IF VIDEO ATTACHED -> UPLOAD VIDEO*/}
     if(videoToSend) await sendVideo();
-    {/*IF VIDEO UPLOAD FAILS - RETURN*/}
-    if(videoToSend&&(videoId.current==null)) return;
+
+    if (!validInputFields()) {
+      setloading(false);
+      return;
+    }
     const formData = new FormData();
-    formData.append("file",imageToSend);
+    formData.append("image",imageToSend);
     formData.append("title",inputRefTitle.current.value);
     formData.append("content", inputRefContent.current.getContent());
     formData.append("tags", inputRefTags.current.value);
@@ -113,6 +135,7 @@ const CreatePost = () => {
     formData.append("author", session?.user.name);
     formData.append("email", session?.user.email);
     formData.append("profilePic", session?.user.image);
+
     axios.post(BACKEND_API_ENDPOINT,formData,{
       headers:{
         Accept:"application/json" 
@@ -123,22 +146,20 @@ const CreatePost = () => {
         inputRefTitle.current.value = "";
         inputRefTags.current.value = "";
         inputRefDesc.current.value = "";
-        //dispatch(addPost(response.data));
         removeImage();
         removeVideo();
         setloading(false)
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
         setdialogBoxMessage(dialogBoxMessages.postUploadSuccess);
         setdialogBoxOpen(true);
-        dispatch(setStoreTime(1));
       })
       .catch((error)=>{
         console.log(error);
         setloading(false)
         setdialogBoxMessage(dialogBoxMessages.postUploadFailure);
         setdialogBoxOpen(true);
-        //If post create error delete uploaded video
-        if(videoId.current!=null)deleteVideo(videoId.current);
+        //IF POST CREATION ERROR -> DELETE UPLOADED VIDEO
+        if (videoId.current!=null)deleteVideo(videoId.current);
       })
   }
 
