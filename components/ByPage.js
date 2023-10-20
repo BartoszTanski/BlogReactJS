@@ -73,7 +73,7 @@ useEffect(() => {
 
   const posts = useSelector(selectPost);
   const POSTS_IN_PAGE = 2;
-  const [page,setPage] = useState(posts?.length==0?0:posts?.length/2-1);
+  const [page,setPage] = useState(posts?.length==0?0:Math.ceil(posts?.length/POSTS_IN_PAGE-1));
   const [pagesCount,setPagesCount] = useState(null);
   const [fetchFailure, setfetchFailure] = useState(false)
   const POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/page/${page}`;
