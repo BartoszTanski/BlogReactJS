@@ -6,6 +6,7 @@ import {useSession } from 'next-auth/react';
 import Link from 'next/link';
 import DropDownMenu from './DropDownMenu';
 import SearchRegex from './SearchRegex';
+
  
 
 const Header = () => {
@@ -20,7 +21,7 @@ const Header = () => {
             <div className='flex items-center'>
                 <Link href={{
                 pathname: '/',
-                query: { },
+                query: {time : new Date().getMilliseconds()},
                 }} scroll={true} className='text-xs '>
                     <div className='flex items-center h-14 px-3 md:px-10 lg:px-28 rounded-md hover:bg-gray-100 cursor-pointer '>
                     <p className='text-xl font-semibold hidden md:inline-flex'>Home</p><HiOutlineHome size={25} className="mb-1 mx-auto"/> 

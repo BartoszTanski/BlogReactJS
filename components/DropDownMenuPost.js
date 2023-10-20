@@ -20,7 +20,6 @@ export default function DropDownMenuPost({postId, authorEmail, postVideoId}) {
   const {data: session} = useSession();
   const dispatch = useDispatch();
   {/*Dialog Boxes states*/}
-  const [deleteSuccessModalOpen, setdeleteSuccessModalOpen] = useState(false);
   const [dialogBoxMessage, setdialogBoxMessage] = useState(null);
   const [dialogBoxOpen, setdialogBoxOpen] = useState(false);
   {/*If deleted successfully redirect*/}
@@ -54,7 +53,8 @@ export default function DropDownMenuPost({postId, authorEmail, postVideoId}) {
             window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
             dispatch(deletePost(postId));
             deleteVideo(postVideoId);
-            setdeleteSuccessModalOpen(true);
+            setdialogBoxMessage(dialogBoxMessages.postDeleteSuccess);
+            setdialogBoxOpen(true);
       })
       .catch((error)=>{
             console.log(error);
@@ -105,8 +105,6 @@ export default function DropDownMenuPost({postId, authorEmail, postVideoId}) {
           </div>
         </Menu.Items>
       </Transition>
-      {deleteSuccessModalOpen &&(<DialogBox messageHead={dialogBoxMessages?.postDeleteSuccess.messageHead} message={dialogBoxMessages?.postDeleteSuccess.message}
-       handleSucces={handleDeleteSucces}/>)}
       {dialogBoxOpen &&(<DialogBox messageHead={dialogBoxMessage?.messageHead} message={dialogBoxMessage?.message} handleSucces={()=>setdialogBoxOpen(false)}/>)}
     </Menu>
   )

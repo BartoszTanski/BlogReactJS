@@ -7,6 +7,7 @@ import axios from 'axios';
 // }
 export const deleteVideo = async (id) => {
     const DELETE_VIDEO_API_ENDPOINT =`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/video/${id}`;
+    if (id==null) return;
     await axios.delete(DELETE_VIDEO_API_ENDPOINT,{
       headers:{
         Accept:"application/json" 

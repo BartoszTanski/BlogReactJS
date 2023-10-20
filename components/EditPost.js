@@ -21,7 +21,6 @@ const EditPost = ({postId}) => {
     const VIDEO_BACKEND_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/video`;
     const VIDEO_STREAM_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/video/stream/`;
     const {data: session} = useSession();
-    const dispatch = useDispatch();
     const [post, setpost] = useState(null);
     const [imageToPost, setImageToPost] = useState(null);
     const [imageToSend, setImageToSend] = useState(null);
@@ -39,8 +38,9 @@ const EditPost = ({postId}) => {
     const hiddenVideoInput = useRef(null);
     {/*Fetch post to edit*/}
     useEffect(()=>{
-      const fetchData = () =>{
-        const response = axios.get(GET_POST_API_ENDPOINT)
+      const fetchData = async () =>{
+        setloading(true)
+        await axios.get(GET_POST_API_ENDPOINT)
         .then((response)=>{
           setpost(response.data);
           setImageToPost(response.data.image);
@@ -52,6 +52,7 @@ const EditPost = ({postId}) => {
           setdialogBoxMessage(dialogBoxMessages.singlePostFetchFailure);
           setdialogBoxOpen(true);
         });
+        setloading(false)
       };
       fetchData();
     },[]);
@@ -97,10 +98,26 @@ const EditPost = ({postId}) => {
     setImageToPost(null);
     setImageToSend(null);
   };
+  const validInputFields = () => {
+    if (videoToSend&&(currentVideoId.current==null)) return false; //IF VIDEO UPLOAD FAILED - RETURN
+    else if (imageToSend==null&&imageToPost==null) {
+      setdialogBoxMessage(dialogBoxMessages.pleaseUploadMainImage);
+      setdialogBoxOpen(true); 
+      return false; //IF NO MAIN IMAGE - RETURN
+    }
+    else if ((inputRefTitle.current.value=="") 
+      ||(inputRefTags.current.value=="")
+      ||(inputRefDesc.current.value=="") 
+      ||(inputRefContent.current==false)) {
+        setdialogBoxMessage(dialogBoxMessages.pleaseFillAllFields);
+        setdialogBoxOpen(true); 
+        return false; //IF INPUT FIELDS BLANK - RETURN
+    }
+    else return true;
+ }
   const sendVideo = async () => {
     const formDataVideo = new FormData();
     formDataVideo.append("video",videoToSend);
-    console.log("proba wysyłki wideo" + videoToSend);
     await axios.post(VIDEO_BACKEND_API_ENDPOINT,formDataVideo,{
       headers:{
           Accept:"application/json",
@@ -124,12 +141,14 @@ const EditPost = ({postId}) => {
       setdialogBoxOpen(true);
       return;
     }
-    if(!inputRefContent.current) return;
     if(videoToSend){await sendVideo();}
-    if(videoToSend&&(currentVideoId.current==null)) return;
+    if (!validInputFields()) {
+      setloading(false);
+      return;
+    }
     const formData = new FormData();
     formData.append("id",post?.id);
-    formData.append("file",imageToSend);
+    formData.append("image",imageToSend);
     formData.append("title",inputRefTitle.current.value);
     formData.append("content", inputRefContent.current.getContent());
     formData.append("tags", inputRefTags.current.value);
@@ -145,9 +164,8 @@ const EditPost = ({postId}) => {
       },})
       .then((response)=>{
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-        dispatch(setStoreTime(1));
         setloading(false);
-        //If new video was sent delete previous video when POST EDIT SUCCES
+        //If new video sent - delete previous video when POST EDIT SUCCES
         if(currentVideoId.current!=prevVideoId.current&&prevVideoId.current!=null)deleteVideo(prevVideoId.current);
         prevVideoId.current = currentVideoId.current;
         setdialogBoxMessage(dialogBoxMessages.postEditSuccess);
@@ -156,8 +174,8 @@ const EditPost = ({postId}) => {
       .catch((error)=>{
         console.log(error);
         setloading(false);
-        //If new video was send delete that video when POST EDIT ERROR
-        if(currentVideoId!=null&&currentVideoId.current!=prevVideoId.current)deleteVideo(currentVideoId.current);
+        //If new video send - delete that video when POST EDIT ERROR
+        if(currentVideoId.current!=prevVideoId.current)deleteVideo(currentVideoId.current);
         setdialogBoxMessage(dialogBoxMessages.postEditFailure);
         setdialogBoxOpen(true);
       })
@@ -217,7 +235,7 @@ const EditPost = ({postId}) => {
             <button className='rounded-md bg-gray-300 hover:bg-gray-400 hover:text-gray-700 cursor-pointer text-gray-600 h-10 text-lg font-bold' onClick={handleSubmit}>
             Update Post</button>
         </div>
-        {loading&&(<LoadingCircle className="text-center absolute top-1/2 left-1/2 m-auto"/>)}
+        {loading&&(<LoadingCircle className="text-center absolute left-0 top-1/2 right-0  z-50 m-auto"/>)}
           {/*Dialog Boxes*/}
         {dialogBoxOpen &&(<DialogBox messageHead={dialogBoxMessage?.messageHead} message={dialogBoxMessage?.message} handleSucces={()=>setdialogBoxOpen(false)}/>)}
         <BottomOfThePage/>
