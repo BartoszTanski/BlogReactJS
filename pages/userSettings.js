@@ -2,8 +2,10 @@ import Head from 'next/head'
 import Login from '@/components/Login'
 import Header from '@/components/Header'
 import { getSession } from 'next-auth/react'
+import { FiMoreHorizontal } from 'react-icons/fi';
 
 export default function Home({session}) {
+
   if(!session) return <Login/>
   return (
     <>
@@ -21,7 +23,7 @@ export default function Home({session}) {
                     <div className='flex flex-col flex-grow justify-center '>
                         <p className='font-semibold text-center p-3 text-4xl'>User Settings</p>
                         <div className='p-2 flex flex-row justify-center text-lg font-semibold'>
-                            <div className='pr-4 md:pr-20'>
+                            {/* <div className='pr-4 md:pr-20'>
                                 <p>Email: </p>
                                 <p>Username: </p>
                                 <p>To Delete your user data - contact:</p>
@@ -30,7 +32,20 @@ export default function Home({session}) {
                                 <p>Some email</p>
                                 <p>Some username</p>
                                 <p>b.t4nsky@gmail.com</p>
-                            </div>
+                            </div> */}
+                            <table className="">
+                              <tr>
+                                <td>Username:</td>
+                                <td>{session.user.name}</td>
+                                <td><FiMoreHorizontal/></td>
+
+                              </tr>
+                              <tr>
+                                <td>Password:</td>
+                                <td>*********</td>
+                                <td><FiMoreHorizontal/></td>
+                              </tr>
+                            </table>
                         </div>
                     </div>
                </div>

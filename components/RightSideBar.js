@@ -6,6 +6,7 @@ import LoadingCircle from './LoadingCircle';
 import ContentNotLoading from './ContentNotLoading';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTopPosts, selectTop, selectTopPosts } from '@/public/src/features/postSlice';
+import { fetchData } from 'next-auth/client/_utils';
 
 const RightSideBar = () => {
     const [loading, setloading] = useState(false)
@@ -16,6 +17,7 @@ const RightSideBar = () => {
 
     async function getData () {
       setloading(true);
+      if(fetchFailure) setfetchFailure(false);
       try {
       const response = await axios.get(TOP_POSTS_API_ENDPOINT)
         dispatch(addTopPosts(response.data));
@@ -39,8 +41,8 @@ const RightSideBar = () => {
         <div className='flex items-center text-gray-500'>
             <p className='flex text-2xl pb-1 text-gray-700 font-semibold flex-grow'>Top posts this week:</p>
         </div>
-        {loading&&(<LoadingCircle className="text-center relative  left-0 top-1/3 right-0  z-50 m-auto"/>)}
-        {fetchFailure&&(<ContentNotLoading/>
+        {loading&&(<LoadingCircle className="text-center relative  left-0 top-1/4 right-0  z-50 m-auto"/>)}
+        {fetchFailure&&(<ContentNotLoading reload={()=>getData()}/>
           )}
         {/*here releases*/}
         {releases !=null &&(

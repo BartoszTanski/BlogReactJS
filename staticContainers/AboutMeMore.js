@@ -5,9 +5,9 @@ import { AiOutlineMail,AiFillGithub, AiOutlineDownload, AiOutlinePhone} from 're
 const AboutMeMore = () => {
   return (
     <div className='flex-grow h-screen pt-4 mr-6 ml-6'>
-    <div className='mx-auto max-w-md h-5/6 md:max-w-xl overflow-y-auto no-scrollbar lg:max-w-3xl'>
+    <div className='mx-auto max-w-md md:max-w-xl overflow-y-auto no-scrollbar lg:max-w-3xl' style={{height: "91%"}}>
         <div className='bg-white rounded-md shadow-inner shadow-gray-300 flex flex-col justify-center px-8 pb-6 overflow-y-auto no-scrollbar mt-3'>
-            <div className='font-semibold text-center text-4xl py-3'>About me</div>
+            <div className='font-semibold text-center text-4xl pb-8 pt-10'>About me</div>
             <div className='text-sm md:text-base'>
                 <p>&emsp; Hello! I am Bartosz Tański, currently I&apos;m a student of Computer Science and Econometry - part-time
 Master&apos;s studies at the University of Gdańsk, during the week I learn programming. Right now im learning java and Spring boot as backend and react as a frontend for my applications. I can use streams and write unit tests. I am mobilized to learn and expand my knowledge in the programming area. I also know the basics of html, css, js, sql and databases (MySQL, MsSQL, MongoDb). I am able to start a full-time job immediately remotely or stationary in Bydgoszcz.</p>
@@ -81,6 +81,7 @@ Master&apos;s studies at the University of Gdańsk, during the week I learn prog
             </div>
             <div className='mt-12 text-center'>
             <p className=' font-normal text-lg'>Thank you for visiting my website!</p>
+            <div className=' py-10'></div>
             </div>
         </div>
     </div>

@@ -14,7 +14,14 @@ const Header = () => {
   return (
     <div className='bg-white flex items-center p-2 shadow-md top-0 sticky z-50 h-16 '>
         {/*Left*/}
-        <img src="/resources/icon.png" alt="logo" className=' rounded-full' height={40} width={40}></img>
+        <Link href={{
+                pathname: '/',
+                query: {time : new Date().getMilliseconds()},
+                }} scroll={true} >
+                    <div className='cursor-pointer '>
+                    <img src="/resources/icon.png" alt="logo" className=' rounded-full' height={40} width={40}></img>
+                    </div>
+                </Link>
         <div className='hidden pl-6 lg:inline-flex'><SearchRegex/></div>
         {/*Center*/}
         <div className='flex flex-grow justify-center mx-2'>

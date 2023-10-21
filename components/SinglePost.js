@@ -119,7 +119,7 @@ const SinglePost = ({postId,postIndex}) => {
           message="Post data can't be reached, post could be already deleted." 
           handleSucces={handleSucces}
         />)}
-      {loading&&(<LoadingCircle className="text-center absolute top-1/2 left-1/2 m-auto"/>)}
+      {loading&&(<LoadingCircle className="text-center  py-20 m-auto"/>)}
       {fetchFailure&&(<ContentNotLoading/>)}
     </div>
   )  

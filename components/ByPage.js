@@ -92,11 +92,11 @@ useEffect(() => {
     const res = await getData();
         if (res!=null) {
           dispatch(addAllPost(res));
-          if (fetchFailure) setfetchFailure(false);
         }
   }
   async function getData() {
-    setloading(true);   
+    setloading(true);
+    if (fetchFailure) setfetchFailure(false);   
     try {
       const response = await axios.get(POSTS_API_ENDPOINT);
       setPagesCount(response.data.size);
@@ -156,9 +156,9 @@ useEffect(() => {
       {posts?.map((post, index) =>
         (<Post post={post} key={post.id} postIndex={index}/>))}
       {/*If data fetching*/}
-      {loading&&(<LoadingCircle className="text-center  pt-16 m-auto"/>)}
+      {loading&&(<LoadingCircle className="text-center  py-16 m-auto"/>)}
       {/*If data fetch failure*/}
-      {fetchFailure&&(<ContentNotLoading/>)}
+      {fetchFailure&&(<ContentNotLoading reload = {()=>fetchData()}/>)}
       <div ref={observerTarget} className='h-1'></div>
     </div>
     
