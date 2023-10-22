@@ -6,6 +6,7 @@ import {useSession } from 'next-auth/react';
 import Link from 'next/link';
 import DropDownMenu from './DropDownMenu';
 import SearchRegex from './SearchRegex';
+import ReloadPage from './ReloadPage';
 
  
 
@@ -13,6 +14,7 @@ const Header = () => {
     const {data: session} = useSession();
   return (
     <div className='bg-white flex items-center p-2 shadow-md top-0 sticky z-50 h-16 '>
+        <ReloadPage/>
         {/*Left*/}
         <Link href={{
                 pathname: '/',

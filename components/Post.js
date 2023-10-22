@@ -67,7 +67,7 @@ const Post = ({post,postIndex}) => {
         <div className='flex items-center justify-center bg-white p-2'>
             {liked == false &&(
             <div onClick={handleLike} className='flex w-1/3 items-center space-x-1 hover:bg-gray-100 flex-grow justify-center p-2  rounded-xl cursor-pointer'>
-                <p className='font-semibold px-1 text-xs'>{likes!=null&&likes!=0?likes:""}</p>
+                {likes!=null&&likes!=0&&(<p className='font-semibold px-1 text-xs'>{likes}</p>)}
                 <FiThumbsUp className='h-4'/>
                 <p className='text-xs sm:text-base'>Like</p>
             </div>)}

@@ -22,7 +22,7 @@ export default function Home({session}) {
                <div className='flex p-1'>
                     <div className='flex flex-col flex-grow justify-center '>
                         <p className='font-semibold text-center p-3 text-4xl'>User Settings</p>
-                        <div className='p-2 flex flex-row justify-center text-lg font-semibold'>
+                        <div className='p-2 flex flex-row justify-center lg:text-lg text-sm font-semibold'>
                             {/* <div className='pr-4 md:pr-20'>
                                 <p>Email: </p>
                                 <p>Username: </p>
@@ -33,17 +33,39 @@ export default function Home({session}) {
                                 <p>Some username</p>
                                 <p>b.t4nsky@gmail.com</p>
                             </div> */}
-                            <table className="">
+                            <style>{`
+                              .myowncss table{
+                                font-family: arial, sans-serif;
+                                border-collapse: collapse;
+                                width: 100%;
+                                padding: 5px;
+                              }
+                              .myowncss tr{
+                              }
+                              .myowncss tr:nth-child(even) {
+                                background-color: #dddddd;
+                              }
+                              .myowncss td{ 
+                                  text-align:left;
+                                  padding: 5px;
+                                  border: 1px solid #dddddd;
+                              }`}
+                            </style>
+                            <table className="myowncss">
                               <tr>
                                 <td>Username:</td>
                                 <td>{session.user.name}</td>
-                                <td><FiMoreHorizontal/></td>
-
+                                <td className='hover:text-rose-900'><FiMoreHorizontal/></td>
+                              </tr>
+                              <tr>
+                                <td>Email:</td>
+                                <td>{session.user.email}</td>
+                                <td className='hover:text-rose-900'><FiMoreHorizontal/></td>
                               </tr>
                               <tr>
                                 <td>Password:</td>
                                 <td>*********</td>
-                                <td><FiMoreHorizontal/></td>
+                                <td className='hover:text-rose-900'><FiMoreHorizontal/></td>
                               </tr>
                             </table>
                         </div>

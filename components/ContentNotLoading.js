@@ -2,7 +2,7 @@ import React from 'react'
 import { BiErrorAlt } from 'react-icons/bi'
 
 const ContentNotLoading = ({reload}) => {
-  //var message = "Couldn't retrive posts data. Please contact us if this problem reoccurs.";
+  var message = "Sorry something went wrong, please try reloading.";
   //var messageHead = "Sorry, something went wrong :(";
   return (
     <div className='flex h-2/3 px-5 pt-8 font-semibold items-center justify-center flex-col'>
@@ -14,7 +14,7 @@ const ContentNotLoading = ({reload}) => {
           href='https://blogbartosz.azurewebsites.net/api/v1/hello'>
           <p>Link</p>
           </a> */}
-          <p className='px-3 pt-6 text-center'>Sorry something went wrong, please try reloading.</p>
+          <p className='px-3 pt-6 text-center'>{message}</p>
           <div >
             <button className='mt-4 py-3 px-6 rounded-lg bg-slate-300 hover:bg-slate-400' onClick={reload}>Reload</button>
           </div>

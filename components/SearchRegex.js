@@ -38,7 +38,7 @@ const SearchRegex = () => {
         <div className='flex flex-row'>
         <div className='flex items-center px-2 rounded-full bg-gray-100 text-gray-500'>
             <HiOutlineSearch size={20}/>
-            <input ref={searchRef} onChange={handleSearch} onFocus={() => setIsFocused(true)} onBlur={async () => {await setDelay(100); setIsFocused(false)}} className=' p-1 bg-transparent focus:outline-none' type="text" placeholder='Search Blog (min. 3 char)'></input>
+            <input name="search" ref={searchRef} onChange={handleSearch} onFocus={() => setIsFocused(true)} onBlur={async () => {await setDelay(100); setIsFocused(false)}} className=' p-1 bg-transparent focus:outline-none' type="text" placeholder='Search Blog (min. 3 char)'></input>
         </div>
         </div>
         <div className='absolute  inset-y-8 w-72 flex flex-col  z-20'>

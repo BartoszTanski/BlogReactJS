@@ -2,9 +2,9 @@ import React from 'react'
 
 const PrivacyPolicy = () => {
   return (
-    <div className='flex-grow h-screen pt-4 mr-6 ml-6'>
-    <div className='mx-auto max-w-md h-5/6 md:max-w-xl overflow-y-auto no-scrollbar lg:max-w-3xl'>
-        <div className='bg-white rounded-md shadow-inner shadow-gray-300 flex flex-col justify-center px-8 pb-6 overflow-y-auto no-scrollbar mt-3'>
+    <div className='flex-grow h-screen pt-4 mx-6'>
+    <div className='mx-auto max-w-md md:max-w-xl overflow-y-auto lg:max-w-3xl'style={{height: "91%"}}>
+        <div className='bg-white rounded-md shadow-inner shadow-gray-300 flex flex-col justify-center px-8 pb-6 overflow-y-auto no-scrollbar'>
         <style>{`
                     .myowncss p{
                       margin-bottom: 15px;
@@ -27,7 +27,25 @@ const PrivacyPolicy = () => {
                         font-weight:600;
                     }
                     .myowncss span{
+                    }
+                        /* width */
+                    ::-webkit-scrollbar {
+                    width: 13px;
+                    }
 
+                    /* Track */
+                    ::-webkit-scrollbar-track {
+                    background: #c9c5c7; 
+                    }
+                    
+                    /* Handle */
+                    ::-webkit-scrollbar-thumb {
+                    background: #888; 
+                    }
+
+                    /* Handle on hover */
+                    ::-webkit-scrollbar-thumb:hover {
+                    background: #555; 
                     }`}
                   </style>
             <div className='myowncss pt-3 px-1'>
