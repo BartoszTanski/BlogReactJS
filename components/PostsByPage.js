@@ -6,8 +6,7 @@ import Post from './Post'
 import SearchRegex from './SearchRegex';
 import LoadingCircle from './LoadingCircle';
 import ContentNotLoading from './ContentNotLoading';
-import Link from 'next/link';
-import { FaArrowUp } from 'react-icons/fa';
+import { GoToTopArrow } from './GoToTopArrow';
 
 const PostsByPage = () => {
   const observerTarget = useRef(null);
@@ -91,11 +90,7 @@ const PostsByPage = () => {
         <div className='hidden md:inline-flex  font-semibold text-lg'>Most recent Posts</div>
         <div className='lg:hidden'><SearchRegex/></div>
         {/*Go to TOP arrow button*/}
-        <button className="fixed md:right-1/3 z-50 bottom-0 right-0 p-5 m-5">
-          <Link className='scroll-smooth ' href={"/#home"}>
-            <FaArrowUp className='md:h-14 text-gray-800 md:w-10 w-8 h-12' />
-          </Link>   
-        </button>
+        <GoToTopArrow/>
       </div>      
       {/*If posts fetched*/}
       {posts?.map((post, index) =>

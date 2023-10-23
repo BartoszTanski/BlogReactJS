@@ -13,6 +13,7 @@ export const dialogBoxMessages = {
     noPermissionToModify:{messageHead:"You dont have permission to do that!",message:"You are not the author of this post, so you can't delete or modify it."},
     pleaseUploadMainImage:{messageHead:"There is no image attached!",message:"You can't upload post without a main image."},
     pleaseFillAllFields:{messageHead:"Some input fields are blank!",message:"Please make sure all necessary input fields are filled."},
-    commentUploadFailure:{messageHead:"Comment upload failure!",message:"There was some error during comment upload."}
+    commentUploadFailure:{messageHead:"Comment upload failure!",message:"There was some error during comment upload."},
+    postFetchFailure:{messageHead:"Couldn't retrieve post data",message:"There was some error during retrieving this post data. This post could be already deleted."}
 }
 

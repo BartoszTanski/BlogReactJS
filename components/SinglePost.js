@@ -11,16 +11,14 @@ import DialogBox from './DialogBox';
 import ContentNotLoading from './ContentNotLoading';
 import LoadingCircle from './LoadingCircle';
 import styles from '../cssModules/content.module.css';
+import { dialogBoxMessages } from '@/constants/dialogBoxMessages';
 
 const SinglePost = ({postId,postIndex}) => {
     {/*Dialog box states*/}  
-    const [postFetchFailure, setpostFetchFailure] = useState(false);
+    const [dialogBoxMessage, setdialogBoxMessage] = useState(null);
+    const [dialogBoxOpen, setdialogBoxOpen] = useState(false);
     const [fetchFailure, setfetchFailure] = useState(false)
     const [loading, setloading] = useState(false)
-    {/*Dialog box close func*/}
-    const handleSucces = (e) => { //close modal after clicking ok
-      setpostFetchFailure(false);
-    }
 
     const VIDEO_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/video/stream/`;
     const POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/${postId}`;
@@ -43,13 +41,14 @@ const SinglePost = ({postId,postIndex}) => {
       }).catch((error)=>{
         console.log(error);
         setloading(false);
-        setpostFetchFailure(true);
+        setdialogBoxMessage(dialogBoxMessages.postFetchFailure);
+        setdialogBoxOpen(true);
         setfetchFailure(true);
       });
     };
     useEffect(()=>{
       if (post==null)
-      fetchData();
+        fetchData();
     },[]);
 
   return (
@@ -114,13 +113,10 @@ const SinglePost = ({postId,postIndex}) => {
           <AddComment postId={post.id} addNewComment={addNewComment}/>
           <BottomOfThePage/>
       </div>)}
-      {postFetchFailure &&(
-        <DialogBox messageHead="Couldn't retrive this post data" 
-          message="Post data can't be reached, post could be already deleted." 
-          handleSucces={handleSucces}
-        />)}
+      {/*Dialog Boxes*/}
+        {dialogBoxOpen &&(<DialogBox messageHead={dialogBoxMessage?.messageHead} message={dialogBoxMessage?.message} handleSucces={()=>setdialogBoxOpen(false)}/>)}
       {loading&&(<LoadingCircle className="text-center  py-20 m-auto"/>)}
-      {fetchFailure&&(<ContentNotLoading/>)}
+      {fetchFailure&&(<ContentNotLoading reload = {()=>fetchData()}/>)}
     </div>
   )  
 }

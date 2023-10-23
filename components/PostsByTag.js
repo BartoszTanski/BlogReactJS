@@ -1,13 +1,10 @@
-import { addAllPost, selectPost} from '@/public/src/features/postSlice';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import Post from './Post'
 import SearchRegex from './SearchRegex';
 import LoadingCircle from './LoadingCircle';
 import ContentNotLoading from './ContentNotLoading';
-import Link from 'next/link';
-import { FaArrowUp } from 'react-icons/fa';
+import { GoToTopArrow } from './GoToTopArrow';
 
 const PostsByTag = ({tagId}) => {
   const tag = tagId;
@@ -17,6 +14,7 @@ const PostsByTag = ({tagId}) => {
   const [posts, setposts] = useState(null);
 
   const fetchData = async () =>{
+    if (loading) return;
     setloading(true);
     await axios.get(POSTS_BY_TAG_API_ENDPOINT)
     .then((response)=>{
@@ -39,14 +37,12 @@ const PostsByTag = ({tagId}) => {
     <div>
       <div className='absolute top-0 hidden' id="home"></div>
       <div className='bg-white rounded-md flex justify-between text-xs md:text-md pl-3 h-10 items-center mt-6'>
-        <div className='hidden md:inline-flex  font-semibold text-lg'>Most recent Posts on Tag {tagId}</div>
+        <div className='hidden md:inline-flex  font-semibold text-lg'>
+          Most recent Posts on Tag {tagId}
+        </div>
         <div className='lg:hidden'><SearchRegex/></div>
         {/*Go to TOP arrow button*/}
-        <button className="fixed md:right-1/3 z-50 bottom-0 right-0 p-5 m-5">
-          <Link className='scroll-smooth ' href={"/#home"}>
-            <FaArrowUp className='md:h-14 text-gray-800 md:w-10 w-8 h-12' />
-          </Link>   
-        </button>
+        <GoToTopArrow/>
       </div>
       {/*While data fetching*/}
       {loading&&(<LoadingCircle className="text-center absolute top-1/2 left-1/2 m-auto"/>)}
