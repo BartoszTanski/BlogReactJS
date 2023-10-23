@@ -4,7 +4,7 @@ import { useRef,useState } from 'react';
 import axios from 'axios';
 import SearchResult from './SearchResult';
 
-const SearchRegex = () => {
+const SearchRegex = ({className}) => {
     const BACKEND_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/search/regex`;
     const searchRef = useRef("");
     const [isFocused, setIsFocused] = useState(false);
@@ -34,7 +34,8 @@ const SearchRegex = () => {
         }
       }
   return (
-    <div className='relative flex flex-col min-w-fit '>
+    <div className={className} >
+      <div className='relative flex flex-col min-w-fit '>
         <div className='flex flex-row'>
         <div className='flex items-center px-2 rounded-full bg-gray-100 text-gray-500'>
             <HiOutlineSearch size={20}/>
@@ -45,6 +46,7 @@ const SearchRegex = () => {
         {isFocused &&searchResult?.map((result) =>
         (<SearchResult result={result} key={result.id}/>))}
         </div>
+    </div>
     </div>
   )
 }

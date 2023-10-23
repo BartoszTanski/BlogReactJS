@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Best posts about {tagId}</title>
+        <title>Recent posts about {tagId}</title>
         <meta name="description" content="Simple blog app with sb and nextjs" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/resources/icon.png" />

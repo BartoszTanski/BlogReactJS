@@ -8,7 +8,7 @@ import LoadingCircle from './LoadingCircle';
 import ContentNotLoading from './ContentNotLoading';
 import { GoToTopArrow } from './GoToTopArrow';
 
-const PostsByPage = () => {
+const PostsByPage = ({className}) => {
   const observerTarget = useRef(null);
   const byPageRef = useRef(null);
 
@@ -88,7 +88,7 @@ const PostsByPage = () => {
       <div className='absolute top-0 hidden' id="home"></div>
       <div className='bg-white rounded-md flex justify-between text-xs md:text-md pl-3 h-10 items-center mt-6'>
         <div className='hidden md:inline-flex  font-semibold text-lg'>Most recent Posts</div>
-        <div className='lg:hidden'><SearchRegex/></div>
+        <SearchRegex className='lg:hidden'/>
         {/*Go to TOP arrow button*/}
         <GoToTopArrow/>
       </div>      

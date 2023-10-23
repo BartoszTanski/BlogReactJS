@@ -10,21 +10,21 @@ import ReloadPage from '../components/ReloadPage';
 
  
 
-const Header = () => {
+const Header = ({className}) => {
     const {data: session} = useSession();
   return (
-    <div className='bg-white flex items-center p-2 shadow-md top-0 sticky z-50 h-16 '>
+    <div className='bg-white flex items-center p-2 shadow-md top-0 sticky z-50 h-16 className'>
         <ReloadPage/>
         {/*Left*/}
         <Link href={{
-                pathname: '/',
-                query: {time : new Date().getMilliseconds()},
-                }} scroll={true} >
-                    <div className='cursor-pointer'>
-                    <img src="/resources/icon.png" alt="logo" className='rounded-full' height={40} width={40}></img>
-                    </div>
-                </Link>
-        <div className='hidden pl-6 lg:inline-flex'><SearchRegex/></div>
+            pathname: '/',
+            query: {time : new Date().getMilliseconds()},
+            }} scroll={true} >
+                <div className='cursor-pointer'>
+                <img src="/resources/icon.png" alt="logo" className='rounded-full' height={40} width={40}></img>
+                </div>
+        </Link>
+        <SearchRegex className='hidden pl-6 lg:inline-flex'/>
         {/*Center*/}
         <div className='flex flex-grow justify-center mx-2'>
             <div className='flex items-center'>
@@ -33,7 +33,10 @@ const Header = () => {
                 query: {time : new Date().getMilliseconds()},
                 }} scroll={true} className='text-xs '>
                     <div className='flex items-center h-14 px-3 md:px-10 lg:px-28 rounded-md hover:bg-gray-100 cursor-pointer '>
-                    <p className='text-xl font-semibold hidden md:inline-flex'>Home</p><HiOutlineHome size={25} className="mb-1 mx-auto"/> 
+                    <p className='text-xl font-semibold hidden md:inline-flex'>
+                        Home
+                    </p>
+                    <HiOutlineHome size={25} className="mb-1 mx-auto"/> 
                     </div>
                 </Link>
                 <Link href={{ //Link to AddNewPost
@@ -56,11 +59,10 @@ const Header = () => {
         </div>
         {/*Right*/}
         <div className='flex items-center justify-end min-w-fit space-x-4'>
-            <img src={session?session.user.image:"/resources/anonimousUser.jpg"} height={40} width={40} alt="profilePic" className="rounded-full border border-gray-300"
-            >
+            <img src={session?session.user.image:"/resources/anonimousUser.jpg"} height={40} width={40} alt="profilePic" className="rounded-full    border border-gray-300">
             </img>
             <p className='hidden xl:inline-flex font-semibold text-sm whitespace-nowrap p-3 max-w-xs'>
-            {session?session.user.name.split(" ")[0]:"Not logged in"}
+                {session?session.user.name.split(" ")[0]:"Not logged in"}
             </p>
             <DropDownMenu/>
         </div>

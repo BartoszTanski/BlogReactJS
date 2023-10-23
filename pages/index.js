@@ -17,7 +17,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/resources/icon.png" />
       </Head>
-      <Header></Header>
+      <Header/>
       <main className='flex bg-gray-100 '>
         {/* Left Sidebar */}
         <LeftSidebar></LeftSidebar>
