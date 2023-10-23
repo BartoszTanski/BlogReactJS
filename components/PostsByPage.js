@@ -46,36 +46,30 @@ const PostsByPage = ({className}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (loading) return;
+    if (posts.length>0&&page+1>pagesCount&&pagesCount!=null) return;
+    //console.log(posts.length>0&&(page+1)*POSTS_IN_PAGE>pagesCount*POSTS_IN_PAGE&&pagesCount!=null)
+    //if(posts.length>0) console.log("wiecej niz 0 postów")
+    //if(page+1>pagesCount) console.log("w db wiecej nie ma")
+    //if(pagesCount!=null) console.log("mamy liczbe stron")
     // If we dont have any post || have less pages than in db || dont know how many pages are in db
-    if (posts.length==0||posts.length+POSTS_IN_PAGE<=pagesCount*POSTS_IN_PAGE||pagesCount==null)
+    //if (posts.length==0||posts.length+POSTS_IN_PAGE<=pagesCount*POSTS_IN_PAGE||pagesCount==null)
       fetchData();
-    // If we have posts && have the same count of pages that in db && know how many pages are in db
-    if (posts.length!=0&&posts.length+POSTS_IN_PAGE>pagesCount*POSTS_IN_PAGE&&pagesCount!=null){
-        if(byPageRef.current.lastChild == (observerTarget.current))
-          byPageRef.current.removeChild((observerTarget.current));
-    }
   }, [page])
   
-  const fetchData = async () =>{
-    const res = await getData();
-        if (res!=null) {
-          dispatch(addAllPost(res));
-        }
-  }
-  async function getData() {
+  const fetchData = async () => {
+    console.log("fetching" + page)
+    if (loading) return;
     setloading(true);
     if (fetchFailure) setfetchFailure(false);   
     try {
       const response = await axios.get(POSTS_API_ENDPOINT);
+      dispatch(addAllPost(response.data.posts));
       setPagesCount(response.data.size);
-      return response.data.posts;
     } 
     catch(error){
       console.log(error);
       console.log(error.response?.data);
       setfetchFailure(true);
-      return null;
     }
     finally {
       setloading(false);
