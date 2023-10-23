@@ -7,10 +7,10 @@ import { useRouter } from 'next/router'
 export default function App({ Component, pageProps }) {
   const router = useRouter()
   return (
-  <SessionProvider session={pageProps.session}>
-    <Provider store={store}>
-      <Component key={router.asPath} {...pageProps} />
-    </Provider>
-  </SessionProvider>
+    <SessionProvider session={pageProps.session}>
+      <Provider store={store}>
+        <Component key={router.asPath} {...pageProps} />
+      </Provider>
+    </SessionProvider>
   )
 }
