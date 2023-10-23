@@ -1,16 +1,14 @@
 import Head from 'next/head'
-import Login from '@/components/Login'
-import Header from '@/components/Header'
-import Sidebar from '@/components/Sidebar'
-import { getSession } from 'next-auth/react'
-import Feed from '@/components/Feed'
-import RightSideBar from '@/components/RightSideBar'
+import Header from '@/containers/Header'
+import LeftSidebar from '@/containers/LeftSidebar'
+import Feed from '@/containers/Feed'
+import RightSideBar from '@/containers/RightSideBar'
 import { useRouter } from 'next/router'
+import PostsByPage from '@/components/PostsByPage'
 
 
-export default function Home({session}) {
+export default function Home() {
   const router = useRouter()
-  //if(!session) return <Login/>
   return (
     <>
       <Head>
@@ -22,20 +20,14 @@ export default function Home({session}) {
       <Header></Header>
       <main className='flex bg-gray-100 '>
         {/* Left Sidebar */}
-        <Sidebar></Sidebar>
+        <LeftSidebar></LeftSidebar>
         {/* Feed Create Post and Posts */}
-        <Feed></Feed>
+        <Feed>
+          <PostsByPage/>
+        </Feed>
         {/* Right Sidebar */}
-        <RightSideBar/>
-       
+        <RightSideBar/> 
       </main>
     </>
   )
-}
-
-export async function getServerSideProps(context){
-  const session = await getSession(context);
-  return {
-    props: {session,},
-  }
 }

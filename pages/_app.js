@@ -9,8 +9,8 @@ export default function App({ Component, pageProps }) {
   return (
   <SessionProvider session={pageProps.session}>
     <Provider store={store}>
-  <Component key={router.asPath} {...pageProps} />
-  </Provider>
+      <Component key={router.asPath} {...pageProps} />
+    </Provider>
   </SessionProvider>
   )
 }

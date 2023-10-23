@@ -1,14 +1,9 @@
 import Head from 'next/head'
-import Header from '@/components/Header'
-import { getSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
+import Header from '@/containers/Header'
 import AboutMeMore from '@/staticContainers/AboutMeMore'
 
 
-export default function Home({session}) {
-  const router = useRouter()
-  //if(!session) return <Login/>
-  const tagId = router.query.tagId;
+export default function Home() {
   return (
     <>
       <Head>
@@ -18,21 +13,9 @@ export default function Home({session}) {
         <link rel="icon" href="/resources/icon.png" />
       </Head>
       <Header></Header>
-     
       <main className='flex bg-gray-100 '>
-        {/* Left Sidebar */}
-        {/* Feed Create Post and Posts */}
         <AboutMeMore/>
-        {/* Right Sidebar */}
-       
       </main>
     </>
   )
-}
-
-export async function getServerSideProps(context){
-  const session = await getSession(context);
-  return {
-    props: {session,},
-  }
 }

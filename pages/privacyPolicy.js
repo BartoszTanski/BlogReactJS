@@ -1,13 +1,8 @@
 import Head from 'next/head'
-import Header from '@/components/Header'
-import { useRouter } from 'next/router'
+import Header from '@/containers/Header'
 import PrivacyPolicy from '@/staticContainers/PrivacyPolicy'
 
-
-
 export default function Home() {
-  const router = useRouter()
-  const tagId = router.query.tagId;
   return (
     <>
       <Head>
@@ -16,14 +11,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/resources/icon.png" />
       </Head>
-      <Header></Header>
-     
+      <Header/>
       <main className='flex bg-gray-100 '>
-        {/* Left Sidebar */}
-        {/* Feed Create Post and Posts */}
-        <PrivacyPolicy/>
-        {/* Right Sidebar */}
-       
+        <PrivacyPolicy/>   
       </main>
     </>
   )

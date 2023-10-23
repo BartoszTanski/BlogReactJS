@@ -5,10 +5,9 @@ import axios from 'axios';
 import LoadingCircle from './LoadingCircle';
 import ContentNotLoading from './ContentNotLoading';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTopPosts, selectTop, selectTopPosts } from '@/public/src/features/postSlice';
-import { fetchData } from 'next-auth/client/_utils';
+import { addTopPosts, selectTopPosts } from '@/public/src/features/postSlice';
 
-const RightSideBar = () => {
+const TopPosts = () => {
     const [loading, setloading] = useState(false)
     const [fetchFailure, setfetchFailure] = useState(false)
     const TOP_POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/top`;
@@ -37,7 +36,7 @@ const RightSideBar = () => {
       },[]);
 
   return (
-    <div className='hidden lg:inline-flex my-2 bg-gray-50 flex-col max-w-[250px] pt-4 px-2 rounded-md md:min-w-[200px] lg:min-w-[250px]'>
+    <div>
         <div className='flex items-center text-gray-500'>
             <p className='flex text-2xl pb-1 text-gray-700 font-semibold flex-grow'>Top posts this week:</p>
         </div>
@@ -57,4 +56,4 @@ const RightSideBar = () => {
   )
 }
 
-export default RightSideBar
+export default TopPosts

@@ -1,4 +1,4 @@
-import { addAllPost, selectPost, selectUpdateTime, setUpdateTime, selectStoreTime, setStoreTime} from '@/public/src/features/postSlice';
+import { addAllPost, selectPost} from '@/public/src/features/postSlice';
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,33 +8,33 @@ import LoadingCircle from './LoadingCircle';
 import ContentNotLoading from './ContentNotLoading';
 import Link from 'next/link';
 import { FaArrowUp } from 'react-icons/fa';
-import { BsThreeDotsVertical } from 'react-icons/bs';
 
-const ByPage = () => {
-   const observerTarget = useRef(null);
+const PostsByPage = () => {
+  const observerTarget = useRef(null);
+  const byPageRef = useRef(null);
 
-useEffect(() => {
-  const observer = new IntersectionObserver(
-    entries => {
-      if (entries[0].isIntersecting) {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting) {
           if (!loading){
-          setPage(prevPage => prevPage+1)
+            setPage(prevPage => prevPage+1)
           }
-      }
-    },
-    { threshold: 1 }
-  );
+        }
+      },
+      { threshold: 1 }
+    );
 
-  if (observerTarget.current) {
-    observer.observe(observerTarget.current);
-  }
-
-  return () => {
     if (observerTarget.current) {
-      observer.unobserve(observerTarget.current);
+      observer.observe(observerTarget.current);
     }
-  };
-}, [observerTarget]);
+
+    return () => {
+      if (observerTarget.current) {
+        observer.unobserve(observerTarget.current);
+      }
+    };
+  }, [observerTarget]);
 
 
   const posts = useSelector(selectPost);
@@ -44,7 +44,6 @@ useEffect(() => {
   const [fetchFailure, setfetchFailure] = useState(false)
   const POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/page/${page}`;
   const [loading, setloading] = useState(false);
-  //const [reloading, setreloading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -52,6 +51,11 @@ useEffect(() => {
     // If we dont have any post || have less pages than in db || dont know how many pages are in db
     if (posts.length==0||posts.length+POSTS_IN_PAGE<=pagesCount*POSTS_IN_PAGE||pagesCount==null)
       fetchData();
+    // If we have posts && have the same count of pages that in db && know how many pages are in db
+    if (posts.length!=0&&posts.length+POSTS_IN_PAGE>pagesCount*POSTS_IN_PAGE&&pagesCount!=null){
+        if(byPageRef.current.lastChild == (observerTarget.current))
+          byPageRef.current.removeChild((observerTarget.current));
+    }
   }, [page])
   
   const fetchData = async () =>{
@@ -81,7 +85,7 @@ useEffect(() => {
     
   return (
     
-    <div>
+    <div ref = {byPageRef}>
       <div className='absolute top-0 hidden' id="home"></div>
       <div className='bg-white rounded-md flex justify-between text-xs md:text-md pl-3 h-10 items-center mt-6'>
         <div className='hidden md:inline-flex  font-semibold text-lg'>Most recent Posts</div>
@@ -106,4 +110,4 @@ useEffect(() => {
   )
 }
 
-export default ByPage
+export default PostsByPage

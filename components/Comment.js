@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 
 const Comment = ({comment}) => {
     var datetime =comment.time?.substring(11, 16)+" "+comment.time?.substring(8, 10)+comment.time?.substring(4, 8)+comment.time?.substring(0, 4)

@@ -1,15 +1,9 @@
 import Head from 'next/head'
-import Header from '@/components/Header'
-import Sidebar from '@/components/Sidebar'
-import { getSession } from 'next-auth/react'
-import Feed from '@/components/Feed'
-import RightSideBar from '@/components/RightSideBar'
-//import { useRouter } from 'next/router'
+import Header from '@/containers/Header'
 import Videos from '@/components/shortVideos/Videos'
 
 
-export default function videos({session}) {
-  //const router = useRouter()
+export default function videos() {
   return (
     <>
       <Head>
@@ -17,21 +11,11 @@ export default function videos({session}) {
         <meta name="description" content="Simple blog app with sb and nextjs" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/resources/icon.png" />
-
       </Head>
-      <Header></Header>
+      <Header/>
       <main className='flex flex-grow justify-center h-screen bg-black '>
-
-       <Videos/> 
-
+        <Videos/> 
       </main>
     </>
   )
-}
-
-export async function getServerSideProps(context){
-  const session = await getSession(context);
-  return {
-    props: {session,},
-  }
 }

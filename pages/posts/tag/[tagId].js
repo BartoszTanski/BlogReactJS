@@ -1,33 +1,31 @@
 import Head from 'next/head'
-import Login from '@/components/Login'
-import Header from '@/components/Header'
-import Sidebar from '@/components/Sidebar'
+import Header from '@/containers/Header'
+import LeftSidebar from '@/containers/LeftSidebar'
 import { getSession } from 'next-auth/react'
-import Feed from '@/components/Feed'
-import RightSideBar from '@/components/RightSideBar'
+import Feed from '@/containers/Feed'
+import RightSideBar from '@/containers/RightSideBar'
 import { useRouter } from 'next/router'
+import PostsByTag from '@/components/PostsByTag'
 
 
-export default function Home({session}) {
+export default function Home() {
   const router = useRouter()
-  //if(!session) return <Login/>
-  const tagId = router.query.tagId;
+  const tagId = router?.query.tagId;
   return (
     <>
       <Head>
-        <title>Blog Bartosz</title>
+        <title>Best posts about {tagId}</title>
         <meta name="description" content="Simple blog app with sb and nextjs" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/resources/icon.png" />
       </Head>
-      <Header></Header>
+      <Header/>
       {tagId &&(
       <main className='flex bg-gray-100 '>
-        {/* Left Sidebar */}
-        <Sidebar></Sidebar>
-        {/* Feed Create Post and Posts */}
-        <Feed tagId={tagId}></Feed>
-        {/* Right Sidebar */}
+        <LeftSidebar/>
+        <Feed>
+          <PostsByTag tagId={tagId}/>
+        </Feed>
         <RightSideBar/>
        
       </main>)}

@@ -29,7 +29,7 @@ const AddComment = ({postId, addNewComment}) => {
             addNewComment({
               id: response.data+"",
               author: session?session.user.name:"Anonymous",
-              profilePic: session?session.user.image:"/anonimousUser.jpg",
+              profilePic: session?session.user.image:"/resources/anonimousUser.jpg",
               content: inputRef.current.value,
               time: response.data
             });

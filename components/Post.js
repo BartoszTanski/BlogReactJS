@@ -5,7 +5,6 @@ import {FaRegCommentAlt} from 'react-icons/fa';
 import {RiShareForwardLine} from 'react-icons/ri'; 
 import Link from 'next/link';
 import axios from 'axios';
-import { comment } from 'postcss';
 
 const Post = ({post,postIndex}) => {
     const [liked, setLiked] = useState(false);

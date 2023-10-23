@@ -3,7 +3,6 @@ import FacebookProvider from "next-auth/providers/facebook"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials";
-import { CreditCardIcon } from "@heroicons/react/20/solid";
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,

@@ -7,10 +7,10 @@ const Releases = ({release}) => {
   let newDate = new Date();
   let hour = newDate.getHours()+1-parseInt(release.time?.substring(11, 13),10);
   let minutes = newDate.getMinutes()-parseInt(release.time?.substring(14, 16),10);
-  let dated = newDate.getDate()-parseInt(release.time?.substring(8, 10),10);
+  let date = newDate.getDate()-parseInt(release.time?.substring(8, 10),10);
   let month = newDate.getMonth() + 1-parseInt(release.time?.substring(5, 7),10);
   let year = newDate.getFullYear()-parseInt(release.time?.substring(0, 4),10);
-  const datetime = year>0?year+" years ago":(month>0?month+" months ago":(dated>0?dated+" days ago":(hour>0?hour+" hours ago":(minutes>0?minutes+" minutes ago":"now"))));
+  const datetime = year>0?year+" years ago":(month>0?month+" months ago":(date>0?date+" days ago":(hour>0?hour+" hours ago":(minutes>0?minutes+" minutes ago":"now"))));
   return (
     <div key={release.id}>
       <Link href={{

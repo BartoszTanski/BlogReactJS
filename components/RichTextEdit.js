@@ -30,10 +30,6 @@ const RichTextEdit = ({postContent,editorChange}, editorRef) => {
           'h1{text-indent: 20px;font-size:26px;text-align:center;} span{ font-size:26px; font-weight:500;}'
         }}
       />
-      {/* <p className='pt-2'>Preview:</p>
-      <div className='bg-gray-100 p-2 rounded-xl '>{editorRef.current!=null &&(<div dangerouslySetInnerHTML={{ __html: editorRef.current.getContent() }} />)}</div>
-      <div>
-      </div> */}
     </>
   );
 }
