@@ -12,7 +12,7 @@ const PostsByPage = () => {
   const observerTarget = useRef(null);
   const posts = useSelector(selectPost);
   const POSTS_IN_PAGE = 3;
-  const [page,setPage] = useState(posts?.length==0?0:Math.ceil(posts?.length/POSTS_IN_PAGE)-1);
+  const [page,setPage] = useState(posts?.length==0?0:Math.ceil(posts?.length/POSTS_IN_PAGE));
   const [pagesCount,setPagesCount] = useState(null);
   const [fetchFailure, setfetchFailure] = useState(false)
   const [loading, setloading] = useState(false);
