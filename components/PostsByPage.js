@@ -21,8 +21,9 @@ const PostsByPage = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
-        if (entries[0].isIntersecting) {
-          setPage(prev => prev +1);
+        if (entries[0].isIntersecting&&!loading&&(pagesCount==null||pagesCount>page)) {
+          console.log("trying, "+ pagesCount+">"+page)
+          setloading(true);
         }
       },
       { threshold: 1 }
@@ -37,32 +38,33 @@ const PostsByPage = () => {
         observer.unobserve(observerTarget.current);
       }
     };
-  }, [observerTarget]);
+  }, [observerTarget, pagesCount, page]);
 
   useEffect(() => {
     if (posts.length==0||page<pagesCount||pagesCount==null)
       fetchData();
-  }, [page])
+  }, [loading,page,pagesCount])
 
   const fetchData = useCallback(async () => {
-    if (loading&&posts.length!=0) return;
-    setloading(true);
+    if (!loading) return;
     if (fetchFailure) setfetchFailure(false);   
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/page/${page}?size=${POSTS_IN_PAGE}`);
-      dispatch(addAllPost(response.data.posts));
-      console.log(page)
-      setPagesCount(response.data.size);
-    } 
-    catch(error){
+      await axios.get(`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/page/${page}?size=${POSTS_IN_PAGE}`)
+      .then((res) => {
+        dispatch(addAllPost(res.data.posts));
+        console.log(page);
+        setPagesCount(res.data.size);
+        setPage(prev => prev +1);
+      })
+    } catch (error) {
       console.log(error);
-      console.log(error.response?.data);
       setfetchFailure(true);
     }
     finally {
       setloading(false);
-    }
-  }, [page]);
+      console.log("executed")
+    };
+  }, [loading]);
     
   return (
     
