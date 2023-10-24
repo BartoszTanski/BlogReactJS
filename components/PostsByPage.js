@@ -49,6 +49,7 @@ const PostsByPage = ({className}) => {
       const response = await axios.get(POSTS_API_ENDPOINT);
       console.log(POSTS_API_ENDPOINT)
       dispatch(addAllPost(response.data.posts));
+      console.log(response.data.posts.length)
       setPagesCount(response.data.size);
       console.log("fetched" + page)
     } 
