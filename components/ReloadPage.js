@@ -4,7 +4,6 @@ import LoadingCircle from './LoadingCircle';
 
 const ReloadPage = () => {
 
-const observerTarget = useRef(null);
   const [startPoint, setStartPoint] = useState(0);
   const [pullChange, setPullChange] = useState();
   const [reloading, setreloading] = useState(false);
