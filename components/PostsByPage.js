@@ -11,14 +11,20 @@ import { GoToTopArrow } from './GoToTopArrow';
 const PostsByPage = ({className}) => {
   const observerTarget = useRef(null);
   const byPageRef = useRef(null);
+  const posts = useSelector(selectPost);
+  const POSTS_IN_PAGE = 3;
+  const [page,setPage] = useState(posts?.length==0?0:Math.ceil(posts?.length/POSTS_IN_PAGE-1));
+  const [pagesCount,setPagesCount] = useState(null);
+  const [fetchFailure, setfetchFailure] = useState(false)
+  const POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/page/${page+"?size="+POSTS_IN_PAGE}`;
+  const [loading, setloading] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
         if (entries[0].isIntersecting) {
-          if (!loading){
             setPage(prevPage => prevPage+1)
-          }
         }
       },
       { threshold: 1 }
@@ -34,37 +40,17 @@ const PostsByPage = ({className}) => {
       }
     };
   }, [observerTarget]);
-
-
-  const posts = useSelector(selectPost);
-  const POSTS_IN_PAGE = 2;
-  const [page,setPage] = useState(posts?.length==0?0:Math.ceil(posts?.length/POSTS_IN_PAGE-1));
-  const [pagesCount,setPagesCount] = useState(null);
-  const [fetchFailure, setfetchFailure] = useState(false)
-  const POSTS_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/page/${page}`;
-  const [loading, setloading] = useState(false);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (posts.length>0&&page+1>pagesCount&&pagesCount!=null) return;
-    //console.log(posts.length>0&&(page+1)*POSTS_IN_PAGE>pagesCount*POSTS_IN_PAGE&&pagesCount!=null)
-    //if(posts.length>0) console.log("wiecej niz 0 postów")
-    //if(page+1>pagesCount) console.log("w db wiecej nie ma")
-    //if(pagesCount!=null) console.log("mamy liczbe stron")
-    // If we dont have any post || have less pages than in db || dont know how many pages are in db
-    //if (posts.length==0||posts.length+POSTS_IN_PAGE<=pagesCount*POSTS_IN_PAGE||pagesCount==null)
-      fetchData();
-  }, [page])
   
   const fetchData = async () => {
-    console.log("fetching" + page)
     if (loading) return;
     setloading(true);
     if (fetchFailure) setfetchFailure(false);   
     try {
       const response = await axios.get(POSTS_API_ENDPOINT);
+      console.log(POSTS_API_ENDPOINT)
       dispatch(addAllPost(response.data.posts));
       setPagesCount(response.data.size);
+      console.log("fetched" + page)
     } 
     catch(error){
       console.log(error);
@@ -75,6 +61,12 @@ const PostsByPage = ({className}) => {
       setloading(false);
     }
   }
+
+  useEffect(() => {
+    if (posts?.length==0||page<pagesCount||pagesCount==null) //pagesCount is null after reload
+      fetchData();
+    else console.log("not fetching bcs page = " + page+" a pages count = " + pagesCount)
+  }, [page])
     
   return (
     
@@ -87,13 +79,16 @@ const PostsByPage = ({className}) => {
         <GoToTopArrow/>
       </div>      
       {/*If posts fetched*/}
-      {posts?.map((post, index) =>
-        (<Post post={post} key={post.id} postIndex={index}/>))}
+      {posts&&(
+        <div>
+          {posts.map((post, index) =>(<Post post={post} key={post.index} postIndex={index}/>))}
+          <div ref={observerTarget} className='h-1'></div>
+        </div>
+        )}
       {/*If data fetching*/}
       {loading&&(<LoadingCircle className="text-center py-16 m-auto"/>)}
       {/*If data fetch failure*/}
       {fetchFailure&&(<ContentNotLoading reload = {()=>fetchData()}/>)}
-      <div ref={observerTarget} className='h-1'></div>
     </div>
     
   )
