@@ -73,20 +73,33 @@ export default function DropDownMenu() {
                 
                 )}
               </Menu.Item>):
-              (<Menu.Item>
+              (<>
+              <Menu.Item>
+                {({ active }) => (
+                  <Link
+                    href="/register"
+                    className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block w-full px-4 py-2 text-left text-sm border-t')}>
+                    Register
+                  </Link>
+                )}
+              </Menu.Item>
+              <Menu.Item>
                 {({ active }) => (
                   <button
                     onClick={signIn}
                     type="submit"
                     className={classNames(
-                      active ? ' bg-red-200 text-gray-900' : 'text-gray-700',
+                      active ? ' bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block w-full px-4 py-2 text-left text-sm border-t'
                     )}
                   >
                     Sign In
                   </button>
                 )}
-              </Menu.Item>)}
+              </Menu.Item>
+              </>)}
             </form>
           </div>
         </Menu.Items>

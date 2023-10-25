@@ -11,6 +11,7 @@ import { GoToTopArrow } from './GoToTopArrow';
 const PostsByPage = () => {
   const observerTarget = useRef(null);
   const posts = useSelector(selectPost);
+  const BASE_URL =`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/page/`;
   const POSTS_IN_PAGE = 3;
   const [page,setPage] = useState(posts?.length==0?0:Math.ceil(posts?.length/POSTS_IN_PAGE));
   const [pagesCount,setPagesCount] = useState(null);
@@ -22,7 +23,7 @@ const PostsByPage = () => {
     const observer = new IntersectionObserver(
       entries => {
         if (entries[0].isIntersecting&&!loading&&(pagesCount==null||pagesCount>page)) {
-          console.log("trying, "+ pagesCount+">"+page)
+          //console.log("trying, "+ pagesCount+">"+page)
           setloading(true);
         }
       },
@@ -49,20 +50,21 @@ const PostsByPage = () => {
     if (!loading) return;
     if (fetchFailure) setfetchFailure(false);   
     try {
-      await axios.get(`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/page/${page}?size=${POSTS_IN_PAGE}`)
+      await axios.get(BASE_URL+page+"?size="+POSTS_IN_PAGE)
       .then((res) => {
         dispatch(addAllPost(res.data.posts));
-        console.log(page);
+        //console.log(page);
         setPagesCount(res.data.size);
         setPage(prev => prev +1);
       })
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
       setfetchFailure(true);
-    }
+    } 
     finally {
       setloading(false);
-      console.log("executed")
+      //console.log("executed")
     };
   }, [loading]);
     
@@ -82,7 +84,7 @@ const PostsByPage = () => {
       {/*If data fetching*/}
       {loading&&(<LoadingCircle className="text-center py-16 m-auto"/>)}
       {/*If data fetch failure*/}
-      {fetchFailure&&(<ContentNotLoading reload = {()=>fetchData()}/>)}
+      {fetchFailure&&(<ContentNotLoading reload = {()=>setloading(true)}/>)}
       <div ref={observerTarget} className=''></div>
     </div>
     

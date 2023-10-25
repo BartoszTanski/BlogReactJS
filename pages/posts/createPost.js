@@ -2,7 +2,7 @@ import React from 'react'
 import Header from '@/containers/Header';
 import LeftSidebar from '@/containers/LeftSidebar';
 import RightSideBar from '@/containers/RightSideBar';
-import Login from '@/components/Login';
+import Login from '@/staticContainers/Login';
 import { getSession } from 'next-auth/react';
 import Head from 'next/head';
 import CreatePost from '@/components/CreatePost';

@@ -7,7 +7,7 @@ const NotFoundPage = () => {
     <div className="flex flex-col bg-gray-900 overflow-hidden items-center justify-center h-screen">
       <div className='items-center justify-center'>
         <div className='text-center font-bold text-7xl text-white'>404</div>
-          <div className=' text-5xl font-semibold text-white'>Page not Found :(</div>
+          <div className=' text-xl lg:text-5xl font-semibold text-center text-white'>Page not Found :(</div>
             <Link href={{
                 pathname: "/",
                 }} >

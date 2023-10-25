@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Login from '@/components/Login'
+import Login from '@/staticContainers/Login'
 import Header from '@/containers/Header'
 import { getSession } from 'next-auth/react'
 import { FiMoreHorizontal } from 'react-icons/fi';
@@ -42,21 +42,23 @@ export default function Home({session}) {
                               }`}
                             </style>
                             <table className="myowncss">
-                              <tr>
-                                <td>Username:</td>
-                                <td>{session.user.name}</td>
-                                <td className='hover:text-rose-900'><FiMoreHorizontal/></td>
-                              </tr>
-                              <tr>
-                                <td>Email:</td>
-                                <td>{session.user.email}</td>
-                                <td className='hover:text-rose-900'><FiMoreHorizontal/></td>
-                              </tr>
-                              <tr>
-                                <td>Password:</td>
-                                <td>*********</td>
-                                <td className='hover:text-rose-900'><FiMoreHorizontal/></td>
-                              </tr>
+                              <tbody>
+                                <tr>
+                                  <td>Username:</td>
+                                  <td>{session.user.name}</td>
+                                  <td className='hover:text-rose-900'><FiMoreHorizontal/></td>
+                                </tr>
+                                <tr>
+                                  <td>Email:</td>
+                                  <td>{session.user.email}</td>
+                                  <td className='hover:text-rose-900'><FiMoreHorizontal/></td>
+                                </tr>
+                                <tr>
+                                  <td>Password:</td>
+                                  <td>*********</td>
+                                  <td className='hover:text-rose-900'><FiMoreHorizontal/></td>
+                                </tr>
+                              </tbody>
                             </table>
                         </div>
                     </div>

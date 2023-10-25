@@ -3,6 +3,7 @@ import FacebookProvider from "next-auth/providers/facebook"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import CredentialsProvider from "next-auth/providers/credentials";
+import axios from "axios";
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -28,25 +29,36 @@ export const authOptions = {
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        username: { label: "Username", type: "text", placeholder: 'enter "jack"' },
-        password: { label: "Password", type: "password", placeholder: 'enter "smith"' }
+        email: { label: "Email", type: "text", placeholder: 'enter "js@gmail.com"' },
+        password: { label: "Password", type: "password", placeholder: 'enter "password"'}
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", name: "Jack Smith", image:"https://cdn.dribbble.com/users/5534/screenshots/14230133/media/e2f853f8232acad78bf143c32f2f3a04.jpg?compress=1&resize=400x300" , email: "jsmith@example.com" }
-        if(credentials.username=="jack"&&credentials.password=="smith"){
+       
+        if(credentials.email=="js@gmail.com"&&credentials.password=="password"){
+          const user = { id: "1", name: "Jack Smith", image:"https://cdn.dribbble.com/users/5534/screenshots/14230133/media/e2f853f8232acad78bf143c32f2f3a04.jpg?compress=1&resize=400x300" , email: "jsmith@example.com"}
           return user;
         }
-        else return null;
-  
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
-          return null
-  
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+        else if (credentials.email==""||credentials.password=="")
+          return null;
+        else {
+          const AUTH_URL=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/auth/login`;
+          const authRequest = new FormData();
+          authRequest.append("email",credentials.email);
+          authRequest.append("password",credentials.password);
+          //authRequest.append("clientsecret",process.env.BLOG_CLIENT_SECRET);
+          await axios.get(AUTH_URL,authRequest,{
+            headers:{
+              Accept:"application/json" 
+            },})
+          .then((res)=>{
+            const user = res.data;
+            return user
+          })
+          .catch((error)=>{
+            console.log(error)
+            return null;
+          })
         }
       }
     })

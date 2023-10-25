@@ -14,6 +14,12 @@ export const dialogBoxMessages = {
     pleaseUploadMainImage:{messageHead:"There is no image attached!",message:"You can't upload post without a main image."},
     pleaseFillAllFields:{messageHead:"Some input fields are blank!",message:"Please make sure all necessary input fields are filled."},
     commentUploadFailure:{messageHead:"Comment upload failure!",message:"There was some error during comment upload."},
-    postFetchFailure:{messageHead:"Couldn't retrieve post data",message:"There was some error during retrieving this post data. This post could be already deleted."}
+    postFetchFailure:{messageHead:"Couldn't retrieve post data",message:"There was some error during retrieving this post data. This post could be already deleted."},
+    //Registration
+    usernameToShort:{messageHead:"Username is to short!",message:"Your username needs to have at least 5 characters."},
+    emailNotValid:{messageHead:"Email is not valid!",message:"Please make sure email you provided is valid"},
+    passwordToShort:{messageHead:"Password is to short!",message:"Your password needs to have at least 7 characters."},
+    passwordDoesNotMatch:{messageHead:"Passwords does not match!",message:"Passwords you provided do not match."},
+    userRegisteredSucessfully:{messageHead:"Registration successfull!",message:"Congratuialtions, user registration was succesfull, you can log in now."},
 }
 
