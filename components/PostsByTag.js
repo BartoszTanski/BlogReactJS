@@ -2,9 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Post from './Post'
 import SearchRegex from './SearchRegex';
-import LoadingCircle from './LoadingCircle';
-import ContentNotLoading from './ContentNotLoading';
-import { GoToTopArrow } from './GoToTopArrow';
+import LoadingCircle from './pageControlls/LoadingCircle';
+import ContentNotLoading from './pageControlls/ContentNotLoading';
+import { GoToTopArrow } from './pageControlls/GoToTopArrow';
 
 const PostsByTag = ({tagId}) => {
   const tag = tagId;

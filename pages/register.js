@@ -3,6 +3,7 @@ import Header from '@/containers/Header'
 import Register from '@/components/Register'
 
 export default function Registration() {
+
   return (
     <>
       <Head>

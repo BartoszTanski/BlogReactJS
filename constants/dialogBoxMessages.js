@@ -1,4 +1,3 @@
-import React from 'react'
 
 export const dialogBoxMessages = {
     singlePostFetchFailure:{messageHead:"Post data cannot be reached",message:"Post was NOT edited, try adding diffrent(smaller) main picture."},
@@ -16,10 +15,17 @@ export const dialogBoxMessages = {
     commentUploadFailure:{messageHead:"Comment upload failure!",message:"There was some error during comment upload."},
     postFetchFailure:{messageHead:"Couldn't retrieve post data",message:"There was some error during retrieving this post data. This post could be already deleted."},
     //Registration
-    usernameToShort:{messageHead:"Username is to short!",message:"Your username needs to have at least 5 characters."},
+    firstnameToShort:{messageHead:"Firstname is to short!",message:"Your name needs to have at least 3 characters."},
+    lastnameToShort:{messageHead:"Lastname is to short!",message:"Your lastrname needs to have at least 3 characters."},
     emailNotValid:{messageHead:"Email is not valid!",message:"Please make sure email you provided is valid"},
     passwordToShort:{messageHead:"Password is to short!",message:"Your password needs to have at least 7 characters."},
     passwordDoesNotMatch:{messageHead:"Passwords does not match!",message:"Passwords you provided do not match."},
-    userRegisteredSucessfully:{messageHead:"Registration successfull!",message:"Congratuialtions, user registration was succesfull, you can log in now."},
+    userRegisteredSucessfully:{messageHead:"Registration successfull!",message:"Congratulations, user registration was succesfull, please verify your email now."},
+    passwordResetSuccessfull:{messageHead:"Password changed successfully!",message:"Congratulations, your password was changed successfully, you will be now redirected to login."},
+    passwordResetFailure:{messageHead:"Password change failure",message:"Sorry, some error occured, we cant change your password."},
+    emailVerificationSuccessfull:{messageHead:"Email verified successfully!",message:"Congratulations, your email was verified successfully, you will be now redirected to login."},
+    emailVerificationFailure:{messageHead:"Email verification failure",message:"Sorry, some error occured, we cant varify your email."},
+    resetPasswordEmailSendFailure:{messageHead:"Email sending failure",message:"Sorry, some error occured, we cant sent you verification email."},
+    resetPasswordEmailSendSuccess:{messageHead:"Reset password link was sent",message:"Please check your email for our message with reset password link."},
 }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react'
-import LoadingCircle from '../LoadingCircle';
-import ContentNotLoading from '../ContentNotLoading';
+import LoadingCircle from '../pageControlls/LoadingCircle';
+import ContentNotLoading from '../pageControlls/ContentNotLoading';
 import axios from 'axios';
 
 

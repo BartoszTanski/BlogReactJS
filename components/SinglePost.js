@@ -4,12 +4,12 @@ import Comment from './Comment';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddComment from './AddComment';
-import BottomOfThePage from './BottomOfThePage';
+import BottomOfThePage from '../containers/BottomOfThePage';
 import Link from 'next/link';
 import DropDownMenuPost from './DropDownMenuPost';
-import DialogBox from './DialogBox';
-import ContentNotLoading from './ContentNotLoading';
-import LoadingCircle from './LoadingCircle';
+import DialogBox from './pageControlls/DialogBox';
+import ContentNotLoading from './pageControlls/ContentNotLoading';
+import LoadingCircle from './pageControlls/LoadingCircle';
 import styles from '../cssModules/content.module.css';
 import { dialogBoxMessages } from '@/constants/dialogBoxMessages';
 

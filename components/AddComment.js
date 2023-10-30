@@ -2,7 +2,7 @@ import React from 'react'
 import { useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { dialogBoxMessages} from '@/constants/dialogBoxMessages';
-import DialogBox from './DialogBox';
+import DialogBox from './pageControlls/DialogBox';
 import axios from 'axios';
 
 const AddComment = ({postId, addNewComment}) => {
@@ -18,7 +18,7 @@ const AddComment = ({postId, addNewComment}) => {
         formData.append("content", inputRef.current.value);
         formData.append("author", session?session.user.name:"Anonymous");
         formData.append("postId", postId);
-        formData.append("profilePic", session?session.user.image:"/anonimousUser.jpg");
+        formData.append("profilePic", session?session.user.image:"/resources/anonimousUser.jpg");
     
         axios.post(COMMENT_API_ENDPOINT,formData,{
           headers:{

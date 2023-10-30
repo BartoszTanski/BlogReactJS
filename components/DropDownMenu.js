@@ -56,7 +56,7 @@ export default function DropDownMenu() {
                 </Link>
               )}
             </Menu.Item>
-            <form method="POST" action={"#"}>
+            <form>
               {session?(<Menu.Item>
                 {({ active }) => (
                    

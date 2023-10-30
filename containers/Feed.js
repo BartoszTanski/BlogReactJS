@@ -1,5 +1,5 @@
 import React from 'react'
-import BottomOfThePage from '../components/BottomOfThePage';
+import BottomOfThePage from './BottomOfThePage';
 import PostsByPage from '../components/PostsByPage';
 
 const Feed=({ children }) => {

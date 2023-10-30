@@ -1,9 +1,9 @@
 import React from 'react'
-import Releases from './Releases';
+import Release from './Release';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import LoadingCircle from './LoadingCircle';
-import ContentNotLoading from './ContentNotLoading';
+import LoadingCircle from './pageControlls/LoadingCircle';
+import ContentNotLoading from './pageControlls/ContentNotLoading';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTopPosts, selectTopPosts } from '@/public/src/features/postSlice';
 
@@ -48,7 +48,7 @@ const TopPosts = () => {
         <div className='py-1 pr-2 overflow-y-auto no-scrollbar h-5/6'>
           <div> 
             {releases.filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i).sort((a, b) => a.likes > b.likes ? -1 : 1).map((release) =>
-          (<Releases release={release} key={release.id}/>))}
+          (<Release release={release} key={release.id}/>))}
           <div className='h-[20rem]'></div>
           </div>
         </div>)}

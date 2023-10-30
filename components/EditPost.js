@@ -7,12 +7,12 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import RichTextEdit from './RichTextEdit';
-import BottomOfThePage from './BottomOfThePage';
-import DialogBox from './DialogBox';
+import BottomOfThePage from '../containers/BottomOfThePage';
+import DialogBox from './pageControlls/DialogBox';
 import PostInputFields from './PostInputFields';
 import { deleteVideo } from '@/actions/videoActions';
 import { dialogBoxMessages } from '@/constants/dialogBoxMessages';
-import LoadingCircle from './LoadingCircle';
+import LoadingCircle from './pageControlls/LoadingCircle';
 
 const EditPost = ({postId}) => {
     const GET_POST_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/posts/${postId}`;
@@ -159,13 +159,14 @@ const EditPost = ({postId}) => {
 
     axios.put(EDIT_POST_API_ENDPOINT,formData,{
       headers:{
-        Accept:"application/json" 
+        Accept:"application/json",
+        Authorization: session.backend_token,
       },})
       .then((response)=>{
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
         setloading(false);
         //If new video sent - delete previous video when POST EDIT SUCCES
-        if(currentVideoId.current!=prevVideoId.current&&prevVideoId.current!=null)deleteVideo(prevVideoId.current);
+        if(currentVideoId.current!=prevVideoId.current&&prevVideoId.current!=null)deleteVideo(session,prevVideoId.current);
         prevVideoId.current = currentVideoId.current;
         setdialogBoxMessage(dialogBoxMessages.postEditSuccess);
         setdialogBoxOpen(true);
@@ -174,7 +175,7 @@ const EditPost = ({postId}) => {
         console.log(error);
         setloading(false);
         //If new video send - delete that video when POST EDIT ERROR
-        if(currentVideoId.current!=prevVideoId.current)deleteVideo(currentVideoId.current);
+        if(currentVideoId.current!=prevVideoId.current)deleteVideo(session,currentVideoId.current);
         setdialogBoxMessage(dialogBoxMessages.postEditFailure);
         setdialogBoxOpen(true);
       })

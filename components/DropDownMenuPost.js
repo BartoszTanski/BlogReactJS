@@ -3,7 +3,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { FiMoreHorizontal } from 'react-icons/fi';
 import axios from 'axios';
 import Router from 'next/router';
-import DialogBox from './DialogBox';
+import DialogBox from './pageControlls/DialogBox';
 import { useDispatch } from 'react-redux';
 import { deletePost } from '@/public/src/features/postSlice';
 import { useSession } from 'next-auth/react';
@@ -22,10 +22,9 @@ export default function DropDownMenuPost({postId, authorEmail, postVideoId}) {
   {/*Dialog Boxes states*/}
   const [dialogBoxMessage, setdialogBoxMessage] = useState(null);
   const [dialogBoxOpen, setdialogBoxOpen] = useState(false);
+  const [postDeleted, setpostDeleted] = useState(false);
   {/*If deleted successfully redirect*/}
-  const handleDeleteSucces = () => {
-    Router.push('/')
-  }
+
   {/*On EDIT BUTTON click*/}
   const handleEdit = (e) => {
     e.preventDefault();
@@ -46,15 +45,18 @@ export default function DropDownMenuPost({postId, authorEmail, postVideoId}) {
         return;
       }
       axios.delete(DELETE_API_ENDPOINT,{
-          headers:{
-            Accept:"application/json" 
-          },})
+        headers:{
+          Accept:"application/json",
+          Authorization: session.backend_token,
+        },})
       .then((response)=>{
             window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
             dispatch(deletePost(postId));
-            deleteVideo(postVideoId);
+            deleteVideo(session,postVideoId);
             setdialogBoxMessage(dialogBoxMessages.postDeleteSuccess);
+            setpostDeleted(true);
             setdialogBoxOpen(true);
+
       })
       .catch((error)=>{
             console.log(error);
@@ -105,7 +107,15 @@ export default function DropDownMenuPost({postId, authorEmail, postVideoId}) {
           </div>
         </Menu.Items>
       </Transition>
-      {dialogBoxOpen &&(<DialogBox messageHead={dialogBoxMessage?.messageHead} message={dialogBoxMessage?.message} handleSucces={()=>setdialogBoxOpen(false)}/>)}
+      {dialogBoxOpen &&(
+      <DialogBox 
+        messageHead={dialogBoxMessage?.messageHead} 
+        message={dialogBoxMessage?.message} 
+        handleSucces={() => {
+            setdialogBoxOpen(false);
+            if (postDeleted === true)
+            Router.push("/");
+          }}/>)}
     </Menu>
   )
 }

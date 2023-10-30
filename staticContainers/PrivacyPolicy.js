@@ -2,8 +2,8 @@ import React from 'react'
 
 const PrivacyPolicy = () => {
   return (
-    <div className='flex-grow h-screen pt-4 mx-6'>
-    <div className='mx-auto max-w-md md:max-w-xl overflow-y-auto lg:max-w-3xl'style={{height: "91%"}}>
+    <div className='flex-grow flex items-center justify-center h-screen md:pt-4 md:mx-6'>
+    <div className=' justify-center max-w-md md:max-w-xl overflow-y-auto lg:max-w-3xl'style={{height: "91%"}}>
         <div className='bg-white rounded-md shadow-inner shadow-gray-300 flex flex-col justify-center px-8 pb-6 overflow-y-auto no-scrollbar'>
         <style>{`
                     .myowncss p{
@@ -28,6 +28,7 @@ const PrivacyPolicy = () => {
                     }
                     .myowncss span{
                     }
+                    
                         /* width */
                     ::-webkit-scrollbar {
                     width: 13px;
@@ -48,7 +49,7 @@ const PrivacyPolicy = () => {
                     background: #555; 
                     }`}
                   </style>
-            <div className='myowncss pt-3 px-1'>
+            <div className='myowncss py-3 px-1'>
                             <h1 className='font-semibold'>Privacy Policy</h1>
                 <p>Last updated: April 13, 2023</p>
                 <p>

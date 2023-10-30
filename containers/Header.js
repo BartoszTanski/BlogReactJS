@@ -6,12 +6,12 @@ import {useSession } from 'next-auth/react';
 import Link from 'next/link';
 import DropDownMenu from '../components/DropDownMenu';
 import SearchRegex from '../components/SearchRegex';
-import ReloadPage from '../components/ReloadPage';
-
- 
+import ReloadPage from '../components/pageControlls/ReloadPage';
 
 const Header = ({className}) => {
     const {data: session} = useSession();
+    const {jwt: token} = useSession();
+
   return (
     <div className='bg-white flex items-center p-2 shadow-md top-0 sticky z-50 h-16 className'>
         <ReloadPage/>

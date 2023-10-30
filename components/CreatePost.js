@@ -7,12 +7,12 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import RichTextEdit from './RichTextEdit';
-import BottomOfThePage from './BottomOfThePage';
-import DialogBox from './DialogBox';
+import BottomOfThePage from '../containers/BottomOfThePage';
+import DialogBox from './pageControlls/DialogBox';
 import PostInputFields from './PostInputFields';
 import { deleteVideo } from '@/actions/videoActions';
 import { dialogBoxMessages } from '@/constants/dialogBoxMessages';
-import LoadingCircle from './LoadingCircle';
+import LoadingCircle from './pageControlls/LoadingCircle';
 
 const CreatePost = () => {
 
@@ -75,7 +75,8 @@ const CreatePost = () => {
     await axios.post(VIDEO_BACKEND_API_ENDPOINT,formDataVideo,{
       headers:{
             Accept:"application/json",
-            "Access-Control-Allow-Origin":'*'
+            "Access-Control-Allow-Origin":'*',
+            Authorization: session.backend_token,
       },})
       .then((response)=>{
           videoId.current = response.data;

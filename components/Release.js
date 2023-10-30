@@ -3,7 +3,7 @@ import React from 'react';
 import { HiFire } from 'react-icons/hi';
 import Link from 'next/link';
 
-const Releases = ({release}) => {
+const Release = ({release}) => {
   let newDate = new Date();
   let hour = newDate.getHours()+1-parseInt(release.time?.substring(11, 13),10);
   let minutes = newDate.getMinutes()-parseInt(release.time?.substring(14, 16),10);
@@ -34,4 +34,4 @@ const Releases = ({release}) => {
   )
 }
 
-export default Releases
+export default Release

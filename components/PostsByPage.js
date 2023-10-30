@@ -4,9 +4,10 @@ import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Post from './Post'
 import SearchRegex from './SearchRegex';
-import LoadingCircle from './LoadingCircle';
-import ContentNotLoading from './ContentNotLoading';
-import { GoToTopArrow } from './GoToTopArrow';
+import LoadingCircle from './pageControlls/LoadingCircle';
+import ContentNotLoading from './pageControlls/ContentNotLoading';
+import { GoToTopArrow } from './pageControlls/GoToTopArrow';
+import { useSession } from 'next-auth/react';
 
 const PostsByPage = () => {
   const observerTarget = useRef(null);
@@ -18,6 +19,7 @@ const PostsByPage = () => {
   const [fetchFailure, setfetchFailure] = useState(false)
   const [loading, setloading] = useState(false);
   const dispatch = useDispatch();
+  const {data: session} = useSession();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
