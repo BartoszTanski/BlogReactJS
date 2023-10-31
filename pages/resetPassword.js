@@ -6,6 +6,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import LoadingCircle from '@/components/pageControlls/LoadingCircle';
 import DialogBox from '@/components/pageControlls/DialogBox';
 import axios from 'axios';
+import { signIn } from 'next-auth/react';
 
 const resetPassword = () => {
 

@@ -17,7 +17,8 @@ const verifyRegistration = () => {
   const [verificationSuccess, setverificationSuccess] = useState(false)
 
   useEffect(() => {
-    if (token!=null&&token!=""&token) {
+    if (token!=null&&token!=""&&token) {
+        console.log("fetching")
         axios.get(VERIFY_REGISTRATION_URL,{
             headers:{
               Accept:"application/json" 
@@ -36,7 +37,7 @@ const verifyRegistration = () => {
     } else {setloading(false)
     setdialogBoxStatus({open:true,message:dialogBoxMessages.emailVerificationFailure})
     }
-}, [])
+}, [token])
   
 
   return (

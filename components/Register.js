@@ -6,7 +6,8 @@ import { dialogBoxMessages } from '@/constants/dialogBoxMessages';
 import LoadingCircle from './pageControlls/LoadingCircle';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import {signIn} from 'next-auth/react';
-import Router from 'next/router';
+import Link from 'next/link';
+
 
 const Register = () => {
     const REGISTER_API_ENDPOINT=`${process.env.NEXT_PUBLIC_PAGE_BASEURL}api/v1/auth/register`;
@@ -132,12 +133,19 @@ const Register = () => {
                    placeholder={"repeat password"}>
                   </input> 
               </div>
+              <div className='flex flex-col px-3 py-5 '>
+                  <button className='rounded-md bg-gray-300 hover:bg-gray-400 hover:text-gray-700 cursor-pointer text-gray-600 h-10 text-lg font-bold' onClick={sendRegistrationForm}>
+                  Register</button>
+              </div>
         </form>
     </div>
-          {/*SUBMIT BUTTON*/}
-        <div className='flex flex-col px-3 py-5 '>
-            <button className='rounded-md bg-gray-300 hover:bg-gray-400 hover:text-gray-700 cursor-pointer text-gray-600 h-10 text-lg font-bold' onClick={sendRegistrationForm}>
-            Register</button>
+          {/*Remeber password*/}
+        <div className='flex flex-col justify-center align-middle items-center '>
+             <Link
+                  href="/sendResetPasswordEmail"
+                  className='bg-gray-200 hover:bg-gray-300 font-medium text-center text-gray-600 block w-full px-2 rounded-sm text-sm border-t'>
+                  Reset Password
+                </Link>
         </div>
         {loading&&(<LoadingCircle className="text-center absolute left-0 top-1/2 right-0  z-50 m-auto"/>)}
           {/*Dialog Boxes*/}
